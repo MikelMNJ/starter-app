@@ -2,7 +2,7 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppProvider } from './store';
-import App from 'scenes/App/App';
+import App from 'scenes/app/App';
 import '@fortawesome/fontawesome-pro/css/all.css';
 import './index.scss';
 

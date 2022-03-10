@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import appActions from 'modules/app/appActions';
@@ -9,7 +9,8 @@ const Component = props => {
   const { className, ...rest } = props;
   const dispatch = useDispatch();
 
-  const sampleAction = payload => dispatch(appActions?.sampleAction(payload));
+  // Sample actions/selectors from global state...
+  const sampleAction = useCallback(payload => dispatch(appActions?.sampleAction(payload)), [dispatch]);
   const sampleSelector = useSelector(state => appSelectors?.sampleSelector(state));
 
   const classes = [
@@ -18,10 +19,9 @@ const Component = props => {
 
   useEffect(() => {
     if (!sampleSelector) {
-      // Example: Setting new global state value.
       sampleAction("Sample value!");
     }
-  }, [sampleSelector]);
+  }, [sampleSelector, sampleAction]);
 
   return (
     <div className={buildClasses(classes, "default")} {...rest}>
