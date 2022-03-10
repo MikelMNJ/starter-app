@@ -52,6 +52,18 @@ The following can be found in *scenes/App/App.js*:
 
 
 
+# Accessing SCSS variables in .js files
+
+This is acheived with `yarn install sass` in *package.json* and **sass-loader: 7.2.0** or higher in *package-lock.json*.
+From there, *.scss* files can be used freely throughout the project.  With that set, please take a look at *theme/colors.scss*.
+A set of sass variables are defined in this style-sheet and exported using `:export {}`.  *colors.scss* is then called in *index.scss*
+using `@import 'theme/colors.scss`, making the scss variables available in any style-sheet.  More importantly, *theme/colors.scss* can now be
+imported in any JavaScript file with: `import colors from 'theme/colors.scss';`, making color variables accessible with `colors.yourColor`.
+
+In this example, colors are being used, but any style-sheet with any sass variable can be used in this way.
+
+
+
 # State Management
 
 State is handled with React's *Context* `useContext()` and `useReducer()` hooks.  A custom `useStore()` hook is used to read from *Context* as well.
@@ -171,7 +183,7 @@ In a nutshell:
 * Loop through all reducers asking for their initial state object.
 * Loop through all reducers and combine them, as functions, letting each manage their own "slice" of state.
 * Call `useReducer()` to get the complete state object as well as the dispatch function.
-* Memoize the array to prevent every subscribed component from updating if it's "slice" hasn't been touched.
+* Memoize the array to prevent every subscribed component from updating if it's "slice" hasn't been updated.
 * Pass the final `{ state, dispatch }` object to the `<AppContext.Provider />`.
 * Wrap `<App />` in *index.js* with `<AppProvider />`
 
