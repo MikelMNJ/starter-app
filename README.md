@@ -275,3 +275,15 @@ export const AppProvider = ({ children }) => {
   );
 };
 ```
+
+
+
+# Deployment
+
+Continuous Integration/Deployment is handled with Netlify.  The script for this can be found in *package.json*
+and the command is `yarn deploy`.  You will need to have netlify-cli installed:
+`yarn add global netlify-cli` or `npm install netlify-cli -g`
+
+Once installed, make sure you are logged in with `netlify login` and perform a link to the netlify site with `netlify link`.
+Follow the instructions to link to your site ID.  You can set up web-hooks on Netlify/GitHub for auto deployment
+if changes to main have been pushed etc.

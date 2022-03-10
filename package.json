@@ -9,9 +9,14 @@
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^6.0.0",
     "@sentry/browser": "^6.18.2",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
     "formik": "^2.2.9",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "mongoose": "^6.2.5",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
@@ -29,11 +34,13 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "sass": "^1.49.9"
+    "netlify-lambda": "^2.0.15",
+    "sass": "^1.49.9",
+    "serverless-http": "^2.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && netlify-lambda build functions",
     "test": "react-scripts test",
     "deploy": "yarn build && netlify deploy --prod",
     "eject": "react-scripts eject"
