@@ -1,10 +1,11 @@
 import React from 'react';
-import './App.css';
+import Component from 'components/Component/Component';
+import './App.scss';
 
 const App = props => {
   return (
     <div>
-      myApp
+      <Component />
     </div>
   );
 };
