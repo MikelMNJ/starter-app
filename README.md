@@ -5,6 +5,19 @@ critical features such as: global state management, routing, SCSS and theme expo
 
 Feel free to clone, modify and start your own projects with this template.
 
+**Note**: This uses a version of yarn greater than v1 -- if you do not have at least yarn 2 installed, you will need to install the latest,
+cd to the project director and run `yarn set version berry` &mdash; then add `.yarnrc.yml` to the root with the following:
+
+```yml
+nodeLinker: node-modules
+npmScopes:
+  fortawesome:
+    npmRegistryServer: "https://npm.fontawesome.com/"
+    npmAlwaysAuth: true
+    npmAuthToken: ${FONT_AWESOME_AUTH_TOKEN}
+```
+See **Default theme styles** section for notes on Font Awesome.
+
 
 
 # Organization
