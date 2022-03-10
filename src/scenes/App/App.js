@@ -13,9 +13,7 @@ const App = props => {
     return (
       <Routes>
         <Route path="*" element={<NotFound />} />
-
         <Route path="/login" element={<p>Log in</p>} />
-
         <Route element={<AuthRoute auth={hasToken} />}>
           <Route path={'/'} element={<Component />} />
         </Route>
