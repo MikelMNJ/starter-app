@@ -1,7 +1,6 @@
-import { useStore } from '../../store';
+import { useStore } from 'store';
 import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
-import appSelectors from 'modules/app/appSelectors';
 
 export const actionCreator = (type, payload) => {
   return { type, payload };
@@ -10,16 +9,6 @@ export const actionCreator = (type, payload) => {
 export const useSelector = selector => {
   const { state } = useStore();
   if (selector) return selector(state);
-};
-
-export const filtered = name => {
-  if (name) {
-    const filterResults = useSelector(state => appSelectors.filterResults(state));
-    const filtered = filterResults?.includes?.(name);
-    return filtered;
-  }
-
-  return true;
 };
 
 export const useDispatch = () => {

@@ -1,18 +1,18 @@
 import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-// import { AppProvider } from './store';
+import { AppProvider } from './store';
 import App from 'scenes/App/App';
 import '@fortawesome/fontawesome-pro/css/all.css';
 import './index.scss';
 
 const MyApp = (
   <StrictMode>
-    {/* <AppProvider> */}
+    <AppProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    {/* </AppProvider> */}
+    </AppProvider>
   </StrictMode>
 );
 
