@@ -24,14 +24,12 @@ select,
 textarea {
   padding: 0.5rem 0.75rem;
   border: 0.0625rem solid $grey;
-  background-color: $offWhite;
   border-radius: 0.35rem;
   color: inherit;
   font-family: inherit;
   font-size: inherit;
-  height: 3rem;
-  width: 100%;
   margin-bottom: 1rem;
+  min-width: 7rem;
   transition: border 0.2s ease;
 }
 
@@ -42,6 +40,7 @@ textarea {
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
+  background-color: $white;
 }
 
 @media (hover: hover) {
@@ -51,18 +50,7 @@ select {
 }
 
 select > option {
-  background-color: $offWhite;
-}
-
-.customArrow {
-  position: relative;
-  top: -2.2rem;
-  right: 0.75rem;
-  transition: transform 0.2s ease;
-}
-
-select:focus ~ .customArrow {
-  transform: rotate(-90deg);
+  background-color: $white;
 }
 
 input:disabled,
@@ -112,81 +100,7 @@ input[type=radio] {
   }
 }
 
-.actionConfirmed {
-  border: 0.125rem solid $green;
-  box-shadow: 0 0 0.15rem $green;
-}
-
-.inlineGroup {
-  display: inline-flex;
-}
-
-.inlineGroup li {
-  margin: 0 0.5rem;
-  flex-grow: 1;
-  flex-shrink: 1;
-}
-
-.inlineGroup li:first-child {
-  margin-left: 0;
-}
-
-.inlineGroup li:last-child {
-  margin-right: 0;
-}
-
-.fieldWithAction {
-  display: inline-flex;
-  width: 100%;
-}
-
-.fieldWithAction input {
-  padding-right: 3rem;
-}
-
-.fieldWithAction button {
-  position: relative;
-  top: 0.1rem;
-  margin-left: -3rem;
-  width: 2.9rem !important;
-  height: 2.8rem;
-}
-
-.legal,
-.trust {
-  margin-bottom: 1rem;
-}
-
-.trust {
-  margin: 1rem auto;
-}
-
-.legal input,
-.trust input {
-  position: relative;
-  top: 0.35rem;
-  margin-right: 0.5rem !important;
-}
-
-.legal .formFeedback,
-.trust .formFeedback {
-  text-align: center;
-  margin: 0.5rem 0 0;
-}
-
 /* ========== Media Queries ========== */
-@media only screen and (max-width: 416px) {
-  .inlineGroup {
-    flex-direction: column;
-  }
+@media only screen and (max-width: 414px) {
 
-  .inlineGroup li {
-    margin: 0;
-  }
-}
-
-@media only screen and (max-width: 375px) {
-  .orderForm input::placeholder {
-    font-size: 0.8rem;
-  }
 }
