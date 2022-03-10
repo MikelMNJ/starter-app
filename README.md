@@ -52,6 +52,14 @@ The following can be found in *scenes/App/App.js*:
 
 
 
+# Monitoring
+
+Monitoring is handled with *Sentry* and is set up in *index.js*.  You will need your DSN, provided by Sentry.
+Similar to the Font Awesome section in **Default theme styles**, your DSN should be stored in an environment variable.
+If you do not wish to use *Sentry*, remove the package along with the import and environment conditional in *index.js*.
+
+
+
 # Default theme styles
 
 Default styles for forms and other common elements such as links, headers etc. can be found in *theme/common.scss* and *theme/forms.scss*.

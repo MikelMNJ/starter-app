@@ -8,6 +8,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^6.0.0",
+    "@sentry/browser": "^6.18.2",
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
