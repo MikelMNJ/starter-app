@@ -81,7 +81,7 @@ Default styles for forms and other common elements such as links, headers etc. c
 
 **About Font Awesome**<br />
 By default, **@fortawesome/fontawesome-pro** is installed as I use it in every project and have a licence for their pro icon library.  If you also have a pro license,
-You will need to set a persistant system environment variable called *FONT_AWESOME_AUTH_TOKEN* before being able to add this via yarn. You can do this on linux by doing the folowing:
+You will need to set a persistent system environment variable called *FONT_AWESOME_AUTH_TOKEN* before being able to add this via yarn. You can do this on linux by doing the folowing:
 
 ```
 cd /etc/profile.d
@@ -110,7 +110,7 @@ This is acheived with `yarn install sass` in *package.json* and **sass-loader: 7
 From there, *.scss* files can be used freely throughout the project.  With that set, please take a look at *theme/colors.scss*.
 A set of sass variables are defined in this style-sheet and exported using `:export {}`.  *colors.scss* is then called in *index.scss*
 using `@import 'theme/colors.scss`, making the scss variables available in any style-sheet.  More importantly, *theme/colors.scss* can now be
-imported in any JavaScript file with: `import colors from 'theme/colors.scss';`, making color variables accessible with `colors.yourColor`.
+imported in any JavaScript file with: `import colors from "theme/colors.scss"`, making color variables accessible with `colors.yourColor`.
 
 In this example, colors are being used, but any style-sheet with any sass variable can be used in this way.
 
@@ -118,7 +118,7 @@ In this example, colors are being used, but any style-sheet with any sass variab
 
 # State Management
 
-State is handled with React's *Context* `useContext()` and `useReducer()` hooks.  A custom `useStore()` hook is used to read from *Context* as well.
+State is handled with React's *Context*'s `useContext()` and `useReducer()` hooks.  A custom `useStore()` hook is used to read from *Context* as well.
 This has been set up in an identical way to *Redux*, since Redux, under the hood, uses these as well.
 
 **About the Reducer**<br />
@@ -130,7 +130,7 @@ reads the `action.type` and updates state accordingly.
 **About StateManager()**<br />
 I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js*
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
-`StateManager()`, however, may be more friendly and should provide everything you need. It is aware of, and sets the payload, so no need to
+`StateManager()`, however, may be more friendly and should provide everything you need. It is aware of the payload and sets it automatically &mdash; no need to
 specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key in question is a basic type,
 such as a string or number, or more complex, like an Array or Object.  Meaning, you **won't** have to call several methods such as
 `state.getIn()`, `state.setIn()`, `state.merge()`, `state.set()` etc. to update something like an array in your state.
