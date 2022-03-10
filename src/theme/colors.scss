@@ -1,0 +1,25 @@
+$black: #000;
+$white: #fff;
+$offWhite: #f5f5f5;
+$grey: #7e8489;
+$warmGrey: #b3b3b3;
+$blue: #0d97ff;
+$darkBlue: #005fa6;
+$slate: #4d5153;
+$red: #c93434;
+$yellow: #f0b800;
+$green: #50b990;
+
+:export {
+  black: $black;
+  white: $white;
+  offWhite: $offWhite;
+  grey: $grey;
+  warmGrey: $warmGrey;
+  blue: $blue;
+  darkBlue: $darkBlue;
+  slate: $slate;
+  red: $red;
+  yellow: $yellow;
+  green: $green;
+}

@@ -1,0 +1,91 @@
+@import 'theme/colors.scss';
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $blue;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+li {
+  padding: 0;
+}
+
+.inline {
+  display: inline-flex;
+  align-items: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollbar::-webkit-scrollbar {
+  min-height: 18.75rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 0.625rem;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  border-radius: 0.35rem;
+  background-color: transparent;
+}
+
+.scrollbar::-webkit-scrollbar {
+  border-radius: 0.35rem;
+  width: 0.625rem;
+  background-color: transparent;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 0.35rem;
+  background-color: $slate;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  border-radius: 0.35rem;
+  background-color: $slate;
+}
+
+.green {
+  color: $green;
+}
+
+.red {
+  color: $red;
+}
+
+.yellow {
+  color: $yellow;
+}
+
+.blue {
+  color: $blue;
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 414px) {
+
+}
