@@ -48,7 +48,15 @@ The following can be found in *scenes/App/App.js*:
 </Routes>
 ```
 
-**Note**: Absolute pathing for JavaScript module imports has been added in *jsconfig.json*
+**Note**: Absolute pathing for JavaScript module imports has been added in *jsconfig.json*.
+
+
+
+# Default theme styles
+
+Default styles for forms and other common elements such as links, headers etc. can be found in *theme/common.scss* and *theme/forms.scss*.
+*theme/common.scss* also contains class names for quick styling, such as *center*, *inline*, or common feedback colors like *red*, *green*,
+*yellow* or *blue*.
 
 
 
