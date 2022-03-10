@@ -58,6 +58,29 @@ Default styles for forms and other common elements such as links, headers etc. c
 *theme/common.scss* also contains class names for quick styling, such as *center*, *inline*, or common feedback colors like *red*, *green*,
 *yellow* or *blue*.
 
+**About Font Awesome**<br />
+By default, **@fortawesome/fontawesome-pro** is installed as I use it in every project and have a licence for their pro icon library.  If you also have a pro license,
+You will need to set a persistant system environment variable called *FONT_AWESOME_AUTH_TOKEN* before being able to add this via yarn. You can do this on linux by doing the folowing:
+
+```
+cd /etc/profile.d
+sudo touched font_awesome_auth_token.sh
+sudo gedit font_awesome_auth_token.sh
+
+# Add the following in the editor:
+# export FONT_AWESOME_AUTH_TOKEN=[Your-license-token]
+# Save and exit the editor
+# Restart
+```
+
+or you can add a `.npmrc` file with the following:
+```
+@fortawesome:registry=https://npm.fontawesome.com/
+//npm.fontawesome.com/:_authToken=[Your-license-token]
+```
+
+If you don't have a license, you can remove the pro package in *package.json* and instead install the free version with `yarn add @fortawesome/fontawesome-free`.
+
 
 
 # Accessing SCSS variables in .js files
