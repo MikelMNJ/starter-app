@@ -196,7 +196,7 @@ const Component = props => {
 
   useEffect(() => {
     if (!sampleSelector) {
-      sampleAction("Sample value!");
+      sampleAction("New value from global state!");
     }
   }, [sampleSelector, sampleAction]);
 
