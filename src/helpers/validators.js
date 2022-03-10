@@ -1,3 +1,4 @@
+
 export const hexValid = val => {
   const isValid = val?.startsWith?.("#") && (
     val?.length === 4
@@ -27,6 +28,7 @@ export const btnValid = val => {
 };
 
 export const urlValid = val => {
+  /* eslint-disable-next-line */
   const regex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/g;
   const hasProtocol = val?.includes?.("https://");
   const isValid = regex.test(val);

@@ -1,0 +1,30 @@
+@import 'theme/colors';
+
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+  height: 100%;
+  color: $blue;
+
+  .icon {
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  h2 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0.25rem 0 0 0;
+  }
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 414px) {
+
+}

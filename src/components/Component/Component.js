@@ -25,7 +25,9 @@ const Component = props => {
 
   return (
     <div className={buildClasses(classes, "default")} {...rest}>
-      {sampleSelector || "Store empty."}
+      <p>
+        {sampleSelector || "Store empty."}
+      </p>
     </div>
   );
 };
