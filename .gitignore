@@ -2,8 +2,16 @@
 
 # dependencies
 /node_modules
-/.pnp
-.pnp.js
+.yarn/*
+# Uncomment "!.yarn/cache", if using Zero-Installs
+# !.yarn/cache
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+# comment out ".pnp.*", if using Zero-Installs
+.pnp.*
 
 # testing
 /coverage
