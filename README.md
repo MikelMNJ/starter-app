@@ -287,3 +287,9 @@ and the command is `yarn deploy`.  You will need to have netlify-cli installed:
 Once installed, make sure you are logged in with `netlify login` and perform a link to the netlify site with `netlify link`.
 Follow the instructions to link to your site ID.  You can set up web-hooks on Netlify/GitHub for auto deployment
 if changes to main have been pushed etc.
+
+
+
+# Back-End Connection and API
+::TODO::
+Add notes about back-end setup.
