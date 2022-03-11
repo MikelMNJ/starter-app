@@ -118,7 +118,7 @@ In this example, colors are being used, but any style-sheet with any sass variab
 
 # State Management
 
-State is handled with React's *Context*'s `useContext()` and `useReducer()` hooks.  A custom `useStore()` hook is used to read from *Context* as well.
+State is handled with React's `useContext()` and `useReducer()` hooks.  A custom `useStore()` hook is used to read from *Context* as well.
 This has been set up in an identical way to *Redux*, since Redux, under the hood, uses these as well.
 
 **About the Reducer**<br />
@@ -128,7 +128,7 @@ The action creator passes an object with `{ type, payload }` to the reducer, whe
 reads the `action.type` and updates state accordingly.
 
 **About StateManager()**<br />
-I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js*
+I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js* &mdash; 
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
 `StateManager()`, however, may be more friendly and should provide everything you need. It is aware of the payload and sets it automatically &mdash; no need to
 specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key in question is a basic type,
@@ -146,7 +146,7 @@ Use `state.update(STATE_KEY_TO_UPDATE, "keyName")`.  Passing an object key name,
 
 **Additional Methods**<br />
 Similar to the `state.update()` method, there is also `state.remove()`, `state.get()` and `state.add()`.  All of these methods work the
-exact same way as `state.update()` when it comes to targetting specific array items, object keys or adding/removing the entire state key altogether.
+exact same way as `state.update()` when it comes to targeting specific array items, object keys or adding/removing the entire state key altogether.
 
 The following can be found in *modules/appReducer.js*:
 ```jsx
