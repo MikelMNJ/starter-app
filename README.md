@@ -6,7 +6,7 @@ critical features such as: global state management, routing, SCSS and theme expo
 Feel free to clone, modify and start your own projects with this template.
 
 **Note**: This uses a version of yarn greater than v1 -- if you do not have at least yarn 2 installed, you will need to install the latest,
-cd to the project director and run `yarn set version berry` &mdash; then add `.yarnrc.yml` to the root with the following:
+cd to the project directory and run `yarn set version berry` &mdash; then add `.yarnrc.yml` to the root with the following:
 
 ```yml
 nodeLinker: node-modules
@@ -94,7 +94,7 @@ sudo gedit font_awesome_auth_token.sh
 # Restart
 ```
 
-or you can add a `.npmrc` file with the following:
+or, if using npm, you can add a `.npmrc` file with the following:
 ```
 @fortawesome:registry=https://npm.fontawesome.com/
 //npm.fontawesome.com/:_authToken=[Your-license-token]
@@ -128,7 +128,7 @@ The action creator passes an object with `{ type, payload }` to the reducer, whe
 reads the `action.type` and updates state accordingly.
 
 **About StateManager()**<br />
-I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js* &mdash; 
+I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js* &mdash;
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
 `StateManager()`, however, may be more friendly and should provide everything you need. It is aware of the payload and sets it automatically &mdash; no need to
 specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key in question is a basic type,
@@ -288,8 +288,7 @@ Once installed, make sure you are logged in with `netlify login` and perform a l
 Follow the instructions to link to your site ID.  You can set up web-hooks on Netlify/GitHub for auto deployment
 if changes to main have been pushed etc.
 
-
-
-# Back-End Connection and API
-::TODO::
-Add notes about back-end setup.
+**Reminder**: Don't forget to change the publish directory in Netlify's deployment settings to match the *netlify.toml* file ("build").
+Also, add the following environment variables in Netlify's Environment section in site settings:
+* FONT_AWESOME_AUTH_TOKEN
+* REACT_APP_SENTRY_DSN
