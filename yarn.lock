@@ -2096,6 +2096,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@sentry/tracing@npm:^6.18.2":
+  version: 6.18.2
+  resolution: "@sentry/tracing@npm:6.18.2"
+  dependencies:
+    "@sentry/hub": 6.18.2
+    "@sentry/minimal": 6.18.2
+    "@sentry/types": 6.18.2
+    "@sentry/utils": 6.18.2
+    tslib: ^1.9.3
+  checksum: fe923e68d466de36344298634d81a1bb4acc0ab3e8b8baee12f41beb2a07ff477b428393d12c1db386c65fff182dd05d7a57d9ab6a15fc8c0b95f9195f4878cc
+  languageName: node
+  linkType: hard
+
 "@sentry/types@npm:6.18.2":
   version: 6.18.2
   resolution: "@sentry/types@npm:6.18.2"
@@ -3588,6 +3601,7 @@ __metadata:
     "@babel/runtime": ^7.17.2
     "@fortawesome/fontawesome-pro": ^6.0.0
     "@sentry/browser": ^6.18.2
+    "@sentry/tracing": ^6.18.2
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.4
     "@testing-library/user-event": ^13.5.0

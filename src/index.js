@@ -2,14 +2,19 @@ import React, { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { AppProvider } from './store';
-import App from 'scenes/App/App';
+import { BrowserTracing } from "@sentry/tracing";
 import * as Sentry from '@sentry/browser';
+import App from 'scenes/App/App';
 import '@fortawesome/fontawesome-pro/css/all.css';
 import './index.scss';
 
-if (process.env.NODE_ENV === 'production') {
+const { NODE_ENV, REACT_APP_SENTRY_DSN } = process.env;
+
+if (NODE_ENV === 'production') {
   Sentry.init({
-    dsn: "${SENTRY_BROWSER_URL}"
+    dsn: REACT_APP_SENTRY_DSN,
+    integrations: [ new BrowserTracing() ],
+    tracesSampleRate: 1.0,
   });
 };
 

@@ -9,6 +9,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^6.0.0",
     "@sentry/browser": "^6.18.2",
+    "@sentry/tracing": "^6.18.2",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
@@ -40,9 +41,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && netlify-lambda build functions",
+    "build": "react-scripts build",
+    "build:functions": "netlify-lambda build functions",
     "test": "react-scripts test",
-    "deploy": "yarn build && netlify deploy --prod",
+    "deploy": "yarn build && yarn build:functions && netlify deploy --prod",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
