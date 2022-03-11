@@ -1,6 +1,4 @@
 
-export const swatchStyle = color => ({ color, fontSize: "0.6rem" });
-
 export const resetPage = (navigate, pathname) => {
   navigate(pathname || '/');
   window.scrollTo(0, 0);
