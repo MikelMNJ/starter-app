@@ -19,7 +19,8 @@ The structure of this template is as followed:
 * Anything state and API related > *modules*.
 * Utility related functions > *helpers*.
 * Errors and debugging > *errors*.
-* Anything static, image or theme related > *themes*.
+* Anything theme related > *themes*.
+* Custom SVG, fonts or image files > *static*.
 * Reusable components > *components*.
 
 
