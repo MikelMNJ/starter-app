@@ -77,7 +77,6 @@ router.post('/', [
         lastSession: user.lastSession,
         sessionEnd: decoded.exp,
         user: email,
-        accountLevel: user.accountLevel
       });
     });
   } catch(error) {
