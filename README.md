@@ -6,16 +6,8 @@ critical features such as: global state management, routing, SCSS and theme expo
 Feel free to clone, modify and start your own projects with this template.
 
 **Note**: This uses a version of yarn greater than v1 -- if you do not have at least yarn 2 installed, you will need to install the latest,
-cd to the project directory and run `yarn set version berry` &mdash; then add `.yarnrc.yml` to the root with the following:
+cd to the project directory and run `yarn set version berry` &mdash; then run `yarn`.
 
-```yml
-nodeLinker: node-modules
-npmScopes:
-  fortawesome:
-    npmRegistryServer: "https://npm.fontawesome.com/"
-    npmAlwaysAuth: true
-    npmAuthToken: ${FONT_AWESOME_AUTH_TOKEN}
-```
 See **Default theme styles** section for notes on Font Awesome.
 
 
@@ -109,7 +101,18 @@ or, if using npm, you can add a `.npmrc` file with the following:
 //npm.fontawesome.com/:_authToken=[Your-license-token]
 ```
 
-If you don't have a license, you can remove the pro package in *package.json* and instead install the free version with `yarn add @fortawesome/fontawesome-free`.
+You will also need to update the `.yarnrc.yml` file with the following:
+
+```yml
+nodeLinker: node-modules
+npmScopes:
+  fortawesome:
+    npmRegistryServer: "https://npm.fontawesome.com/"
+    npmAlwaysAuth: true
+    npmAuthToken: ${FONT_AWESOME_AUTH_TOKEN}
+```
+
+If you don't have a license, you can ignore the .yml update above and remove the pro package in *package.json*. Instead, install the free version with `yarn add @fortawesome/fontawesome-free`.
 
 
 
