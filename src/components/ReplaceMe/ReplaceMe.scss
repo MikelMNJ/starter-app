@@ -11,6 +11,7 @@
 
   .layout {
     display: grid;
+    align-items: center;
     grid-template-columns: auto 1fr;
     gap: 2rem;
     height: fit-content;
@@ -44,10 +45,18 @@
 }
 
 /* ========== Media Queries ========== */
-@media only screen and (max-width: 690px) {
+@media only screen and (max-width: 800px) {
   .replaceMe {
+    height: unset;
+
     .layout {
+      gap: 1rem;
       grid-template-columns: 1fr;
+    }
+
+    .checklist {
+      border-right: unset;
+      border-bottom: 0.0625rem solid gainsboro;
     }
   }
 }

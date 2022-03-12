@@ -3,7 +3,7 @@ import React from 'react';
 const Details = props => {
   return (
     <div className="details">
-      <h2>App Status</h2>
+      <h2>Next Steps...</h2>
       <p>
         See any red? Iron things out before proceeding.<br />
         Green or grey? You're ready to start building your app!

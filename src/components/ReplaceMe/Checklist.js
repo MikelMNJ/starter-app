@@ -53,6 +53,7 @@ const Checklist = props => {
 
   return (
     <div className={buildClasses(classes, "checklist")} {...rest}>
+      <h2>App Status</h2>
       <h3>Front-End</h3>
       {/* Routing */}
       <Status
