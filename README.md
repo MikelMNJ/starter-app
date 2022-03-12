@@ -79,7 +79,7 @@ If you do not wish to use *Sentry*, remove the package along with the import and
 
 Default styles for forms and other common elements such as links, headers etc. can be found in *theme/common.scss* and *theme/forms.scss*.
 *theme/common.scss* also contains class names for quick styling, such as *center*, *inline*, or common feedback colors like *red*, *green*,
-*yellow* or *blue*. Additional colors can be added in *theme/colors*.
+*yellow* or *blue*. Additional colors can be added in *theme/colors.scss*.
 
 **About Font Awesome**<br />
 By default, **@fortawesome/fontawesome-pro** is installed as I use it in every project and have a licence for their pro icon library.  If you also have a pro license,
