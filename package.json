@@ -10,6 +10,7 @@
     "@fortawesome/fontawesome-pro": "^6.0.0",
     "@sentry/browser": "^6.18.2",
     "@sentry/tracing": "^6.18.2",
+    "axios": "^0.26.1",
     "bcryptjs": "^2.4.3",
     "express": "^4.17.3",
     "express-validator": "^6.14.0",
