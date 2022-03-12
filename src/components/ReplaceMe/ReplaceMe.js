@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import { fadeIn } from 'helpers/animationHelpers';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 import Checklist from './Checklist';
@@ -22,7 +23,7 @@ const ReplaceMe = props => {
 
   return (
     <div className="replaceMe">
-      <div className="layout">
+      <div className={`layout ${fadeIn}`}>
         <Checklist apiTestPath={apiTestPath} sampleSelector={sampleSelector} />
         <NextSteps />
       </div>
