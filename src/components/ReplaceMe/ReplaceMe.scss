@@ -1,0 +1,53 @@
+@import 'theme/colors.scss';
+
+.replaceMe {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background-color: $offWhite;
+  padding: 1rem;
+  font-size: 0.95rem;
+
+  .layout {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    height: fit-content;
+  }
+
+  .code {
+    font-size: 0.8rem;
+    color: $grey;
+  }
+
+  .checklist {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    width: 100%;
+    max-width: 28rem;
+    border-right: 0.0625rem solid gainsboro;
+
+    h3 {
+      margin-bottom: 0.25rem;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    p {
+      margin: 0.25rem 0;
+    }
+  }
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 690px) {
+  .replaceMe {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+  }
+}
