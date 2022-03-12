@@ -122,7 +122,7 @@ If you don't have a license, you can ignore the .yml update above and remove the
 This is acheived with `yarn install sass` in *package.json* and **sass-loader: 7.2.0** or higher in *package-lock.json*.
 From there, *.scss* files can be used freely throughout the project.  With that set, please take a look at *theme/colors.scss*.
 A set of sass variables are defined in this style-sheet and exported using `:export {}`.  *colors.scss* is then called in *index.scss*
-using `@import 'theme/colors.scss`, making the scss variables available in any style-sheet.  More importantly, *theme/colors.scss* can now be
+using `@import 'theme/colors.scss`, making the scss variables available in *index.scss*.  More importantly, *theme/colors.scss* can now be
 imported in any JavaScript file with: `import colors from "theme/colors.scss"`, making color variables accessible with `colors.yourColor`.
 
 In this example, colors are being used, but any style-sheet with any sass variable can be used in this way.
