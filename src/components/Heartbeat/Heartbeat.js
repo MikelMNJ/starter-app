@@ -26,7 +26,7 @@ const Heartbeat = props => {
     }, time || 10000);
 
     return () => clearInterval(heartbeat);
-  }, [offline]);
+  }, [offline, disabled, time]);
 
   const offlineContent = () => {
     return (

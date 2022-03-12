@@ -1,4 +1,5 @@
 import { actionCreator } from 'helpers/stateHelpers';
+/* eslint-disable-next-line */
 import * as api from './appApi';
 import constants from './appConstants';
 
