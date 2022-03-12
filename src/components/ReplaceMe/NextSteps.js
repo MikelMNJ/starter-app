@@ -53,10 +53,15 @@ const NextSteps = props => {
         <li>
           <span className="code">favicon.ico</span>
         </li>
+
+        <li>
+          <span className="code">manifest.json (if needed)</span>
+        </li>
       </ul>
 
       <p>
-        <strong>Optional: Remove /components/ReplaceMe.</strong><br />
+        <strong>Optional: Add apple-touch-icon.png in /public.</strong><br />
+        <strong>Optional: Remove /components/ReplaceMe.</strong>
       </p>
       <p>
         See <a href="https://github.com/MikelMNJ/app-template" rel="noreferrer" target="_blank">Documentation</a> for details.
