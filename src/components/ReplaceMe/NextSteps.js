@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Details = props => {
+const NextSteps = props => {
   return (
-    <div className="details">
+    <div className="nextSteps">
       <h2>Next Steps...</h2>
       <p>
         See any red? Iron things out before proceeding.<br />
@@ -21,7 +21,7 @@ const Details = props => {
       </p>
 
       <p>
-        <strong>Step 2: Update/Disable any Auth. Routes or Redirects</strong>:<br />
+        <strong>Step 2: Update or Remove any Auth. Routes or Redirects</strong>:<br />
         <span className="code">
         <strong>20</strong>:&nbsp; &lt;Route element=&#123;&lt;AuthRoute auth=&#123;hasToken&#125; /&gt;&#125;&gt;<br />
         <strong>21</strong>:&nbsp; &nbsp;&nbsp;&lt;Route<br />
@@ -59,10 +59,10 @@ const Details = props => {
         <strong>Optional: Remove /components/ReplaceMe.</strong><br />
       </p>
       <p>
-        See <a href="https://github.com/MikelMNJ/app-template" target="_blank">Documentation</a> for details.
+        See <a href="https://github.com/MikelMNJ/app-template" rel="noreferrer" target="_blank">Documentation</a> for details.
       </p>
     </div>
   );
 };
 
-export default Details;
+export default NextSteps;

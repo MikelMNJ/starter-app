@@ -118,7 +118,7 @@ const Checklist = props => {
         }
       />
 
-      <h3>Monitoring</h3>
+      <h3>Integration</h3>
       {/* Heartbeat */}
       <Status
         color={inProduction ? colors.green : colors.grey}

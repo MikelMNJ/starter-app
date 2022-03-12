@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 import Checklist from './Checklist';
-import Details from './Details';
+import NextSteps from './NextSteps';
 import './ReplaceMe.scss';
 
 const ReplaceMe = props => {
@@ -24,7 +24,7 @@ const ReplaceMe = props => {
     <div className="replaceMe">
       <div className="layout">
         <Checklist apiTestPath={apiTestPath} sampleSelector={sampleSelector} />
-        <Details />
+        <NextSteps />
       </div>
     </div>
   );
