@@ -55,9 +55,18 @@ The following can be found in *scenes/App/App.js*:
 <Routes>
   <Route path="*" element={<NotFound />} />
   <Route path="/login" element={<p>Log in</p>} />
-  <Route element={<AuthRoute auth={hasToken} />}>
-    <Route path={'/'} element={<Component />} />
+  <Route path="/ready" element={<ReplaceMe testPath="/test" />} />
+
+  {/* Authenticated route example */}
+  <Route element={<AuthRoute auth={tokenFromState} />}>
+    <Route
+      path="/authenticated-route"
+      element={<p>Authenticated Content</p>}
+    />
   </Route>
+
+  {/* Redirect example */}
+  <Route path="/" element={<Navigate to="/ready" />} />
 </Routes>
 ```
 
@@ -194,14 +203,14 @@ const appSelectors = {
 
 **Calling an action or reading a state selector from a component**<br />
 The process of using an action/selector to update or read from a targeted reducer is identical to *Redux*.
-A more complete example can be found in *components/Component/Component.js*:
+A more complete example can be found in *components/ReplaceMe/CheckState.js*:
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 
-const Component = props => {
+const YourComponent = props => {
   // Sample actions/selectors from global state...
   const dispatch = useDispatch();
   const sampleAction = useCallback(payload => dispatch(appActions?.sampleAction(payload)), [dispatch]);
@@ -220,7 +229,7 @@ const Component = props => {
   );
 };
 
-export default Component;
+export default YourComponent;
 ```
 
 **About store.js**<br />

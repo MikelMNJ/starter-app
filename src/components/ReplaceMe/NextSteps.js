@@ -1,5 +1,10 @@
 import React from 'react';
-import { authAndRedirects, updatePublic, documentation, removeFromApp } from './strings';
+import {
+  authAndRedirects,
+  updatePublic,
+  documentation,
+  removeFromApp
+} from './codeStrings';
 
 const NextSteps = props => {
   return (

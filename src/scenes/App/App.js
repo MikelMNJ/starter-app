@@ -8,16 +8,16 @@ import './App.scss';
 const App = props => {
 
   const renderApp = () => {
-    const hasToken = true;
+    const tokenFromState = true;
 
     return (
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<p>Log in</p>} />
-        <Route path="/ready" element={<ReplaceMe apiTestPath="/test" />} />
+        <Route path="/ready" element={<ReplaceMe testPath="/test" />} />
 
         {/* Authenticated route example */}
-        <Route element={<AuthRoute auth={hasToken} />}>
+        <Route element={<AuthRoute auth={tokenFromState} />}>
           <Route
             path="/authenticated-route"
             element={<p>Authenticated Content</p>}

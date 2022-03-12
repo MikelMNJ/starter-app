@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 
 export const removeFromApp = `import ReplaceMe from 'components/ReplaceMe/ReplaceMe';
-<Route path="/ready" element={<ReplaceMe apiTestPath="/test" />} />`;
+<Route path="/ready" element={<ReplaceMe testPath="/test" />} />`;
 
 export const authAndRedirects = `{/* Authenticated route example */}
-<Route element={<AuthRoute auth={hasToken} />}>
+<Route element={<AuthRoute auth={tokenFromState} />}>
   <Route
     path="/authenticated-route"
     element={<p>Authenticated Content</p>}
