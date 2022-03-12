@@ -9,15 +9,20 @@
   padding: 1rem;
   font-size: 0.95rem;
 
+  h2 {
+    margin-top: 0;
+  }
+
   .layout {
     display: grid;
     align-items: center;
     grid-template-columns: auto 1fr;
-    gap: 2rem;
+    gap: 1rem;
     height: fit-content;
   }
 
   .code {
+    white-space: pre-wrap;
     font-size: 0.8rem;
     color: $grey;
   }
@@ -26,6 +31,7 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    height: 100%;
     width: 100%;
     max-width: 28rem;
     border-right: 0.0625rem solid gainsboro;
@@ -41,6 +47,10 @@
     p {
       margin: 0.25rem 0;
     }
+  }
+
+  .nextSteps {
+    padding: 1rem;
   }
 }
 
