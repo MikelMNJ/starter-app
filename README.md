@@ -155,7 +155,7 @@ Use `state.update(STATE_KEY_TO_UPDATE)`.  It will replace the entire state key v
 Use `state.update(STATE_KEY_TO_UPDATE, index)`.  Passing an index, as a number, will replace that array item with the payload.
 
 **Updating objects**<br />
-Use `state.update(STATE_KEY_TO_UPDATE, "keyName")`.  Passing an object key name, as a string, will replaced that object's key value with the payload.
+Use `state.update(STATE_KEY_TO_UPDATE, "keyName")`.  Passing an object key name, as a string, will replace that object's key value with the payload.
 
 **Additional Methods**<br />
 Similar to the `state.update()` method, there is also `state.remove()`, `state.get()` and `state.add()`.  All of these methods work the
