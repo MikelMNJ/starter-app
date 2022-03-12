@@ -4,15 +4,17 @@ import { BrowserRouter } from 'react-router-dom';
 import { AppProvider } from './store';
 import { BrowserTracing } from "@sentry/tracing";
 import * as Sentry from '@sentry/browser';
+import Heartbeat from 'components/Heartbeat/Heartbeat';
 import App from 'scenes/App/App';
 import '@fortawesome/fontawesome-pro/css/all.css';
 import './index.scss';
 
-const { NODE_ENV, REACT_APP_SENTRY_DSN } = process.env;
+const { NODE_ENV, REACT_APP_SENTRY_DSN: dsn } = process.env;
+const inProduction = NODE_ENV === 'production';
 
-if (NODE_ENV === 'production') {
+if (inProduction && dsn) {
   Sentry.init({
-    dsn: REACT_APP_SENTRY_DSN,
+    dsn,
     integrations: [ new BrowserTracing() ],
     tracesSampleRate: 1.0,
   });
@@ -22,7 +24,9 @@ const MyApp = (
   <StrictMode>
     <AppProvider>
       <BrowserRouter>
-        <App />
+        <Heartbeat disabled={!inProduction}>
+          <App />
+        </Heartbeat>
       </BrowserRouter>
     </AppProvider>
   </StrictMode>
