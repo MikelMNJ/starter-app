@@ -1,21 +1,16 @@
-import React, { useEffect, useCallback } from 'react';
-import { buildClasses } from 'helpers/utilityHelpers';
+import React, { Fragment, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
-import './Component.scss';
+import Status from 'components/Status/Status';
+import colors from 'theme/colors.scss';
 
-const Component = props => {
-  const { className, ...rest } = props;
+export const CheckState = props => {
   const dispatch = useDispatch();
 
   // Sample actions/selectors from global state...
   const sampleAction = useCallback(payload => dispatch(appActions?.sampleAction(payload)), [dispatch]);
   const sampleSelector = useSelector(state => appSelectors?.sampleSelector(state));
-
-  const classes = [
-    { condition: className, name: className }
-  ];
 
   useEffect(() => {
     if (!sampleSelector) {
@@ -24,12 +19,18 @@ const Component = props => {
   }, [sampleSelector, sampleAction]);
 
   return (
-    <div className={buildClasses(classes, "default")} {...rest}>
-      <p>
-        {sampleSelector || "Store empty."}
-      </p>
-    </div>
+    <Fragment>
+      <Status color={sampleSelector ? colors.green : colors.red} text={
+        <p>
+          <strong>
+            Global state {sampleSelector ? "accessible" : "inaccessible"}
+          </strong>:<br />
+
+          Reducer {sampleSelector ? "successfully updated" : "could not be reached"}.
+        </p>
+      } />
+    </Fragment>
   );
 };
 
-export default Component;
+export default CheckState;

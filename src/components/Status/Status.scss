@@ -1,0 +1,18 @@
+@import 'theme/colors';
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  margin: 0.25rem;
+
+  i {
+    font-size: 0.6rem;
+    transition: color 0.2s ease;
+    margin: 0 0.5rem;
+  }
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 414px) {
+
+}
