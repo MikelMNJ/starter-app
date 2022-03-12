@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { iconValid } from 'helpers/validators';
 import { buildClasses } from 'helpers/utilityHelpers';
+import './Heartbeat.scss';
 
 const Heartbeat = props => {
   const { time, icon, text, disabled, children, className, ...rest } = props;
