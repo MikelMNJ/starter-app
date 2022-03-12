@@ -1,5 +1,22 @@
 @import 'theme/colors.scss';
 
+a {
+  color: $blue;
+  text-decoration: underline;
+
+  &:active {
+    color: $blue;
+  }
+
+  &:visited {
+    color: $blue;
+  }
+
+  &:hover {
+    color: $darkBlue;
+  }
+}
+
 h1,
 h2,
 h3,
