@@ -15,6 +15,7 @@ import constants from './appConstants';
 
 const appActions = {
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
+  updateNotifications: payload => actionCreator(constants.UPDATE_NOTIFICATIONS, payload),
 };
 
 export default appActions;
