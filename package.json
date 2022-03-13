@@ -43,10 +43,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:server": "netlify-lambda serve functions",
     "build": "react-scripts build",
-    "build:functions": "netlify-lambda build functions",
+    "build:server": "netlify-lambda build functions",
     "test": "react-scripts test",
-    "deploy": "yarn build && yarn build:functions && netlify deploy --prod",
+    "deploy": "yarn build && yarn build:server && netlify deploy --prod",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
