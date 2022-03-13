@@ -15,7 +15,7 @@ export const CheckRouting = props => {
             Routing {pathMatch ? "established" : "unknown"}
           </strong>:<br />
 
-          Route {pathMatch ? "match" : "mismatch"}.
+          Redirect path {pathMatch ? "match" : "mismatch"}.
         </p>
       } />
     </Fragment>
