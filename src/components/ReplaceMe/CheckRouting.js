@@ -12,10 +12,10 @@ export const CheckRouting = props => {
       <Status color={pathMatch ? colors.green : colors.grey} text={
         <p>
           <strong>
-            Routing {pathMatch ? "established" : "unknown"}
+            Routes {pathMatch ? "established" : "unknown"}
           </strong>:<br />
 
-          Redirect path {pathMatch ? "match" : "mismatch"}.
+          Redirect {pathMatch ? "successful" : "failed"}.
         </p>
       } />
     </Fragment>
