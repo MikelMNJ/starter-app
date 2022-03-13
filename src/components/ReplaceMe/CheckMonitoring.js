@@ -7,8 +7,6 @@ const {
   REACT_APP_SENTRY_DSN,
 } = process.env;
 
-console.log(process.env);
-
 const CheckMonitoring = props => {
   const inProduction = NODE_ENV === 'production';
   const sentryDSN = REACT_APP_SENTRY_DSN;
