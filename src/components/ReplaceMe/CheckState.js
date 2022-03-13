@@ -23,7 +23,7 @@ export const CheckState = props => {
       <Status color={sampleSelector ? colors.green : colors.red} text={
         <p>
           <strong>
-            Global state {sampleSelector ? "accessible" : "inaccessible"}
+            Global state {sampleSelector ? "ready" : "offline"}
           </strong>:<br />
 
           Reducer {sampleSelector ? "updated" : "could not be reached"}.

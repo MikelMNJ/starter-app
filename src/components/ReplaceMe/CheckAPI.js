@@ -41,13 +41,13 @@ export const CheckAPI = props => {
       <Status color={mongoURI ? (statusOK ? colors.green : colors.red) : colors.grey} text={
         <p>
           <strong>
-            API {mongoURI ? (statusOK ? "connected" : "offline") : "unknown"}
+            API {mongoURI ? (statusOK ? "ready" : "offline") : "unknown"}
           </strong>:<br />
 
           {!mongoURI && "No database connection. "}
           {mongoURI && (
             statusOK
-              ? "Response received."
+              ? `Response ${status?.code}: ${status?.text}`
               : `Error ${status?.code}: ${status?.text || "No test path provided."}`
           )}
         </p>
