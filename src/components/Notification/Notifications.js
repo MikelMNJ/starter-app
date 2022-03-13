@@ -16,7 +16,9 @@ const Notifications = props => {
 
       return () => clearTimeout(timer);
     }
-  }, [notifications, noTime, removeMessage, time]);
+
+    /* eslint-disable-next-line */
+  }, [notifications]);
 
   function removeMessage(i) {
     const updatedMsgs = [ ...notifications ];
