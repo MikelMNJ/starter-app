@@ -37,11 +37,11 @@ const NextSteps = props => {
       </p>
 
       <p>
-        <strong>Step 4: Remove /components/ReplaceMe.</strong>
+        <strong>Optional: Add apple-touch-icon.png in /public.</strong>
       </p>
 
       <p>
-        <strong>Optional: Add apple-touch-icon.png in /public.</strong>
+        <strong>Step 4: Remove /components/ReplaceMe.</strong>
       </p>
 
       <p>

@@ -8,9 +8,10 @@ const basePath = '/.netlify/functions/server';
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
+app.use(express.json({}));
 
 // Define routes
+app.use(`${basePath}/test`, require('./routes/test'));
 app.use(`${basePath}/auth`, require('./routes/auth'));
 
 module.exports.handler = serverless(app);

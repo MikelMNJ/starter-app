@@ -9,18 +9,17 @@ export const CheckAPI = props => {
   const { path } = props;
   const [ status, setStatus ] = useState(null);
   const mongoURI = REACT_APP_MONGO_URI;
-  const statusOK = status === 200;
+  const statusOK = status?.code === 200;
 
   useEffect(() => {
-    apiStatus();
+    if (!status) apiStatus();
     /* eslint-disable-next-line */
-  }, []);
+  }, [status]);
 
   async function apiStatus() {
     const details = res => ({
       code: res.status,
       text: res.statusText,
-      method: res.config.method?.toUpperCase(),
     });
 
     try {
@@ -42,16 +41,14 @@ export const CheckAPI = props => {
       <Status color={mongoURI ? (statusOK ? colors.green : colors.red) : colors.grey} text={
         <p>
           <strong>
-            API {mongoURI ? (statusOK ? "connected" : "offline") : "unknown"}
+            API {mongoURI ? (statusOK ? "ready" : "offline") : "unknown"}
           </strong>:<br />
 
           {!mongoURI && "No database connection. "}
           {mongoURI && (
             statusOK
-              ? "Response received."
-              : `Error ${status?.code}:
-                  ${status?.text || "No test path provided."}
-                  ${path && ` (${status?.method} ${path}).`}`
+              ? `Response ${status?.code}: ${status?.text}`
+              : `Error ${status?.code}: ${status?.text || "No test path provided."}`
           )}
         </p>
       } />
