@@ -6,7 +6,7 @@ require('dotenv').config();
 // @route   GET api/v1/test
 // @desc    API test response endpoint.
 // @access  Public
-router.get('/test', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     res.json({
       message: "API response received.",

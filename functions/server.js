@@ -11,6 +11,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 // Define routes
-app.use(`${basePath}/auth`, require('./routes/auth'));
+app.use(`${basePath}/test`, require('./routes/test'));
+// app.use(`${basePath}/auth`, require('./routes/auth'));
 
 module.exports.handler = serverless(app);
