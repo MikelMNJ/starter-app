@@ -13,7 +13,7 @@ export const CheckStyles = props => {
             Stylesheet vars {stylesheetVar ? "accessible" : "inaccessible"}
           </strong>:<br />
 
-          SCSS vars {stylesheetVar ? "successfully used" : "failed"} in JS file.
+          SCSS var {stylesheetVar ? "used" : "failed"} in JS file.
         </p>
       } />
     </Fragment>

@@ -2,6 +2,7 @@ import React from 'react';
 import { buildClasses } from 'helpers/utilityHelpers';
 import CheckRouting from './CheckRouting';
 import CheckState from './CheckState';
+import CheckNotifications from './CheckNotifications';
 import CheckStyles from './CheckStyles';
 import CheckDB from './CheckDB';
 import CheckAPI from './CheckAPI';
@@ -20,6 +21,7 @@ const Checklist = props => {
       <h3>Front-End</h3>
       <CheckRouting />
       <CheckState />
+      <CheckNotifications />
       <CheckStyles />
 
       <h3>Back-End</h3>

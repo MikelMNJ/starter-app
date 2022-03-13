@@ -10,6 +10,7 @@ import constants from './appConstants';
 
 const appSelectors = {
   sampleSelector: state => state.app[constants.STATE_KEY_SAMPLE_SELECTOR],
+  notifications: state => state.app[constants.STATE_KEY_NOTIFICATIONS],
 };
 
 export default appSelectors;

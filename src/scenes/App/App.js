@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import AuthRoute from 'components/AuthRoute/AuthRoute';
 import NotFound from 'components/NotFound/NotFound';
 import ReplaceMe from 'components/ReplaceMe/ReplaceMe';
+import Notifications from 'components/Notification/Notifications';
+import appSelectors from 'modules/app/appSelectors';
+import appActions from 'modules/app/appActions';
 import './App.scss';
 
 const App = props => {
+  const dispatch = useDispatch();
+
+  // Actions and Selectors
+  const updateNotifications = useCallback(payload => dispatch(appActions?.updateNotifications(payload)), [dispatch]);
+  const notifications = useSelector(state => appSelectors?.notifications(state));
 
   const renderApp = () => {
     const tokenFromState = true;
@@ -33,6 +42,11 @@ const App = props => {
   return (
     <div id="app">
       {renderApp()}
+
+      <Notifications
+        notifications={notifications}
+        setNotifications={updateNotifications}
+      />
     </div>
   );
 };

@@ -26,7 +26,7 @@ export const CheckState = props => {
             Global state {sampleSelector ? "accessible" : "inaccessible"}
           </strong>:<br />
 
-          Reducer {sampleSelector ? "successfully updated" : "could not be reached"}.
+          Reducer {sampleSelector ? "updated" : "could not be reached"}.
         </p>
       } />
     </Fragment>
