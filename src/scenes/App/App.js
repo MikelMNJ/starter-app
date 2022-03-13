@@ -18,12 +18,13 @@ const App = props => {
 
   const renderApp = () => {
     const tokenFromState = true;
+    const testPath = "/.netlify/functions/server/test";
 
     return (
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<p>Log in</p>} />
-        <Route path="/ready" element={<ReplaceMe testPath="/test" />} />
+        <Route path="/ready" element={<ReplaceMe testPath={testPath} />} />
 
         {/* Authenticated route example */}
         <Route element={<AuthRoute auth={tokenFromState} />}>

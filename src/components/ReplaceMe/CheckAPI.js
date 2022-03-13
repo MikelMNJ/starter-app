@@ -9,18 +9,17 @@ export const CheckAPI = props => {
   const { path } = props;
   const [ status, setStatus ] = useState(null);
   const mongoURI = REACT_APP_MONGO_URI;
-  const statusOK = status === 200;
+  const statusOK = status?.code === 200;
 
   useEffect(() => {
-    apiStatus();
+    if (!status) apiStatus();
     /* eslint-disable-next-line */
-  }, []);
+  }, [status]);
 
   async function apiStatus() {
     const details = res => ({
       code: res.status,
       text: res.statusText,
-      method: res.config.method?.toUpperCase(),
     });
 
     try {
@@ -49,9 +48,7 @@ export const CheckAPI = props => {
           {mongoURI && (
             statusOK
               ? "Response received."
-              : `Error ${status?.code}:
-                  ${status?.text || "No test path provided."}
-                  ${path && ` (${status?.method} ${path}).`}`
+              : `Error ${status?.code}: ${status?.text || "No test path provided."}`
           )}
         </p>
       } />

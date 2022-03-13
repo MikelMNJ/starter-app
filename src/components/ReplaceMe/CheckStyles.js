@@ -10,10 +10,10 @@ export const CheckStyles = props => {
       <Status color={stylesheetVar ? colors.green : colors.red} text={
         <p>
           <strong>
-            Stylesheet vars {stylesheetVar ? "accessible" : "inaccessible"}
+            Style sheet exports {stylesheetVar ? "loaded" : "failed"}
           </strong>:<br />
 
-          SCSS var {stylesheetVar ? "used" : "failed"} in JS file.
+          Style variables {stylesheetVar ? "used" : "failed"} in JS.
         </p>
       } />
     </Fragment>
