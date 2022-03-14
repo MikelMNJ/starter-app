@@ -18,19 +18,25 @@ const Checklist = props => {
     <div className={buildClasses(classes, "checklist")} {...rest}>
       <h2>App Status</h2>
 
-      <h3>Front-End</h3>
-      <CheckRouting />
-      <CheckState />
-      <CheckNotifications />
-      <CheckStyles />
+      <div className="checklistSection">
+        <h3>Front-End</h3>
+        <CheckRouting />
+        <CheckState />
+        <CheckNotifications />
+        <CheckStyles />
+      </div>
 
-      <h3>Back-End</h3>
-      <CheckDB />
-      <CheckAPI />
+      <div className="checklistSection">
+        <h3>Back-End</h3>
+        <CheckDB />
+        <CheckAPI />
+      </div>
 
-      <h3>Integration</h3>
-      <CheckHeartbeat />
-      <CheckMonitoring />
+      <div className="checklistSection">
+        <h3>Integration</h3>
+        <CheckHeartbeat />
+        <CheckMonitoring />
+      </div>
     </div>
   );
 };

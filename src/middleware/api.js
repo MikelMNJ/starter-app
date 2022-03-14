@@ -10,7 +10,11 @@ const updateReducer = async (type, data) => {
   console.log(action.payload);
 };
 
-const apiRelay = async args => {
+const apiMiddleware = () => {
+  // console.log('Middleware!')
+}
+
+export const apiRelay = async args => {
   const { type, path, meta, onSuccess, onFail, onComplete, ...rest } = args;
 
   try {
@@ -21,10 +25,9 @@ const apiRelay = async args => {
     if (res.status === 200) {
       updateReducer(type, data);
       if (onSuccess) onSuccess(res);
-      return;
     }
 
-    throw new Error();
+    return data;
   } catch (e) {
     if (onFail) onFail(e);
   } finally {
@@ -32,4 +35,4 @@ const apiRelay = async args => {
   };
 };
 
-export default apiRelay;
+export default apiMiddleware;

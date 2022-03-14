@@ -19,7 +19,7 @@ const CheckMonitoring = props => {
             Error monitoring {inProduction && sentryDSN ? "enabled" : "disabled"}
           </strong>:<br />
 
-          {!inProduction && "Development environment. "}
+          {!inProduction && "Dev. environment "}
           {inProduction && (sentryDSN ? "Sentry DSN provided." : "Sentry DSN not provided.")}
         </p>
       } />

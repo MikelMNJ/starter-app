@@ -1,4 +1,4 @@
-import apiRelay from "middleware/apiMiddleware";
+import apiRelay from "middleware/api";
 
 export const sampleAPICall = args => {
   const { type, callback } = args;
