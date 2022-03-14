@@ -1,21 +1,22 @@
-import { actionCreator } from "helpers/stateHelpers";
 import { prepPath } from 'helpers/middlewareHelpers.js';
+import { actionCreator } from 'helpers/stateHelpers';
 
 const { REACT_APP_API_BASE_PATH: basePath } = process.env;
 
-const updateReducer = async (type, data) => {
-  const action = actionCreator(type, data);
+const apiMiddleware = (dispatch, action) => {
+  const isAPIRequest = action.path || action.method;
+  // console.log(action);
 
-  // TODO: Need middleware for dispatch...
-  console.log(action.payload);
+  if (isAPIRequest) {
+    apiRelay({ ...action, dispatch });
+    return;
+  }
+
+  return action;
 };
 
-const apiMiddleware = () => {
-  // console.log('Middleware!')
-}
-
 export const apiRelay = async args => {
-  const { type, path, meta, onSuccess, onFail, onComplete, ...rest } = args;
+  const { type, path, meta, onSuccess, onFail, onComplete, dispatch, ...rest } = args;
 
   try {
     const url = `${basePath || '/'}${prepPath(path || "")}`;
@@ -23,7 +24,7 @@ export const apiRelay = async args => {
     const data = await res.json();
 
     if (res.status === 200) {
-      updateReducer(type, data);
+      dispatch(actionCreator(type, data))
       if (onSuccess) onSuccess(res);
     }
 

@@ -1,8 +1,7 @@
-import React, { useReducer } from 'react';
+import { useEffect, useReducer, useRef, useMemo } from 'react';
 import { useStore } from 'store';
 import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
-import apiMiddleware from 'middleware/api';
 
 export const actionCreator = (type, payload) => {
   return { type, payload };
@@ -18,6 +17,28 @@ export const useDispatch = () => {
   return dispatch;
 };
 
+export const useReducerWithMiddleware = (reducer, initialState, middlewares, afterwares) => {
+  const [ state, dispatch ] = useReducer(reducer, initialState);
+  const actionRef = useRef();
+
+  const dispatchWithMiddleware = action => {
+    middlewares?.forEach(middleware =>  {
+      middleware(dispatch, action, state);
+    });
+
+    actionRef.current = action;
+    // dispatch(action);
+  };
+
+  useEffect(() => {
+    if (!actionRef.current) return;
+    afterwares?.forEach(afterware => afterware(actionRef.current, state));
+    actionRef.current = null;
+  }, [afterwares, state]);
+
+  return [ state, dispatchWithMiddleware ];
+};
+
 export const makeInitialState = reducers => (
   Object.keys(reducers).reduce((prevState, key) => {
     const reducer = reducers[key];
@@ -27,14 +48,6 @@ export const makeInitialState = reducers => (
   }, {})
 );
 
-const useReducerWithMiddleware = (reducer, initialState, middleware) => {
-  const [ state, dispatch ] = useReducer(reducer, initialState);
-
-  // do something with middleware
-
-
-  return [ state, dispatch ];
-};
 
 export const combineReducers = reducers => (initialState, action) => (
   Object.keys(reducers).reduce((prevState, key) => {
