@@ -36,25 +36,24 @@ export const CheckAPI = props => {
   };
 
   const makeDesc = res => {
-    const { status, statusText } = res;
+    const warning = (
+      <span>
+        Request successful,<br />
+        but no response from reducer.
+      </span>
+    );
 
     if (!mongoURI) return "No database connection.";
     if (!basePath) return "No test path provided.";
-    if (!sampleAPIResponse) {
-      return (
-        <span>
-          Request successful,<br />
-          but no response from reducer.
-        </span>
-      );
-    }
+    if (!sampleAPIResponse && res?.status === 200) return warning;
+    if (!res?.status && !res?.satusText) return "Request failed.";
 
-    return `Response ${status}: ${statusText}`;
+    return `Response ${res?.status}: ${res?.statusText}`;
   };
 
   useEffect(() => {
-    if (!sampleAPIResponse) {
-      const callback = res => {
+    if (!sampleAPIResponse && mongoURI && basePath) {
+      const onSuccess = res => {
         if (res) {
           setStatus({
             code: res.status,
@@ -64,9 +63,11 @@ export const CheckAPI = props => {
         }
       };
 
-      sampleAPICall(null, callback);
+      sampleAPICall(null, onSuccess);
     }
-  }, [sampleAPIResponse, sampleAPICall, setStatus]);
+
+    /* eslint-disable-next-line */
+  }, [sampleAPIResponse]);
 
   return (
     <Fragment>
@@ -76,7 +77,7 @@ export const CheckAPI = props => {
             API {makeStatus()}
           </strong>:<br />
 
-          {status.desc || "Request failed."}
+          {status.desc || makeDesc()}
         </p>
       } />
     </Fragment>
