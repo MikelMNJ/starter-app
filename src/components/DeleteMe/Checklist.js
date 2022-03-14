@@ -8,10 +8,10 @@ import CheckDB from './CheckDB';
 import CheckAPI from './CheckAPI';
 import CheckHeartbeat from './CheckHeartbeat';
 import CheckMonitoring from './CheckMonitoring';
-import './ReplaceMe.scss';
+import './DeleteMe.scss';
 
 const Checklist = props => {
-  const { path, className, ...rest } = props;
+  const { className, ...rest } = props;
   const classes = [{ condition: className, name: className }];
 
   return (
@@ -26,7 +26,7 @@ const Checklist = props => {
 
       <h3>Back-End</h3>
       <CheckDB />
-      <CheckAPI path={path} />
+      <CheckAPI />
 
       <h3>Integration</h3>
       <CheckHeartbeat />

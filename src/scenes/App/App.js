@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import AuthRoute from 'components/AuthRoute/AuthRoute';
 import NotFound from 'components/NotFound/NotFound';
-import ReplaceMe from 'components/ReplaceMe/ReplaceMe';
+import DeleteMe from 'components/DeleteMe/DeleteMe';
 import Notifications from 'components/Notification/Notifications';
 import appSelectors from 'modules/app/appSelectors';
 import appActions from 'modules/app/appActions';
@@ -18,13 +18,12 @@ const App = props => {
 
   const renderApp = () => {
     const tokenFromState = true;
-    const testPath = "/.netlify/functions/server/test";
 
     return (
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<p>Log in</p>} />
-        <Route path="/ready" element={<ReplaceMe testPath={testPath} />} />
+        <Route path="/ready" element={<DeleteMe />} />
 
         {/* Authenticated route example */}
         <Route element={<AuthRoute auth={tokenFromState} />}>
