@@ -4,6 +4,7 @@ import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
+import { isEmpty } from 'lodash';
 
 const {
   REACT_APP_MONGO_URI: mongoURI,
@@ -12,6 +13,7 @@ const {
 
 export const CheckAPI = props => {
   const [ status, setStatus ] = useState({});
+  const [ desc, setDesc ] = useState(null);
   const dispatch = useDispatch();
 
   // Actions/Selectors
@@ -35,7 +37,7 @@ export const CheckAPI = props => {
     return "offline";
   };
 
-  const makeDesc = res => {
+  const makeDesc = () => {
     const warning = (
       <span>
         Request successful,<br />
@@ -45,11 +47,15 @@ export const CheckAPI = props => {
 
     if (!mongoURI) return "No database connection.";
     if (!basePath) return "No test path provided.";
-    if (!sampleAPIResponse && res?.status === 200) return warning;
-    if (!res?.status && !res?.satusText) return "Request failed.";
+    if (!sampleAPIResponse && status.code === 200) return warning;
+    if (!status.code && !status.satusText) return "Request failed.";
 
-    return `Response ${res?.status}: ${res?.statusText}`;
+    return `Response ${status.code}: ${status.text}`;
   };
+
+  useEffect(() => {
+    if (status) setDesc(makeDesc());
+  }, [status]);
 
   useEffect(() => {
     if (!sampleAPIResponse && mongoURI && basePath) {
@@ -58,7 +64,6 @@ export const CheckAPI = props => {
           setStatus({
             code: res.status,
             text: res.statusText,
-            desc: makeDesc(res),
           });
         }
       };
@@ -77,7 +82,7 @@ export const CheckAPI = props => {
             API {makeStatus()}
           </strong>:<br />
 
-          {status.desc || makeDesc()}
+          {desc}
         </p>
       } />
     </Fragment>
