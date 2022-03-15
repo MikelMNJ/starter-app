@@ -7,8 +7,6 @@ const {
   REACT_APP_SENTRY_DSN,
 } = process.env;
 
-console.log(process.env);
-
 const CheckMonitoring = props => {
   const inProduction = NODE_ENV === 'production';
   const sentryDSN = REACT_APP_SENTRY_DSN;
@@ -21,7 +19,7 @@ const CheckMonitoring = props => {
             Error monitoring {inProduction && sentryDSN ? "enabled" : "disabled"}
           </strong>:<br />
 
-          {!inProduction && "Development environment. "}
+          {!inProduction && "Dev. environment "}
           {inProduction && (sentryDSN ? "Sentry DSN provided." : "Sentry DSN not provided.")}
         </p>
       } />

@@ -8,12 +8,9 @@ require('dotenv').config();
 // @access  Public
 router.get('/', async (req, res) => {
   try {
-    res.json({
-      message: "API response received.",
-      type: "success"
-    });
+    res.json({ message: "API test complete." });
   } catch(err) {
-    res.status(500).send('Server error.');
+    res.status(500).send(err);
   }
 });
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
-export const removeFromApp = `import ReplaceMe from 'components/ReplaceMe/ReplaceMe';
-<Route path="/ready" element={<ReplaceMe testPath="/test" />} />`;
+export const removeFromApp = `import DeleteMe from 'components/DeleteMe/DeleteMe';
+<Route path="/ready" element={<DeleteMe />} />`;
 
 export const authAndRedirects = `{/* Authenticated route example */}
 <Route element={<AuthRoute auth={tokenFromState} />}>
