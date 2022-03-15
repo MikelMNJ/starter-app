@@ -6,7 +6,7 @@ import { BrowserTracing } from "@sentry/tracing";
 import * as Sentry from '@sentry/browser';
 import Heartbeat from 'components/Heartbeat/Heartbeat';
 import App from 'scenes/App/App';
-import '@fortawesome/fontawesome-pro/css/all.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import './index.scss';
 
 const { NODE_ENV, REACT_APP_SENTRY_DSN: dsn } = process.env;

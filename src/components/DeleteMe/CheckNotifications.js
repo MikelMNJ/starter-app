@@ -15,7 +15,7 @@ export const CheckNotifications = props => {
   useEffect(() => {
     const newMessage = {
       message: "Notification system ready.",
-      icon: "fa-regular fa-face-party",
+      icon: "fa-regular fa-message",
       type: "success"
     };
 
