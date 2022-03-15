@@ -27,12 +27,17 @@ export const useReducerWithMiddleware = (reducer, initialState, middlewares, aft
     });
 
     actionRef.current = action;
+    // TODO: Figure out why dispatch(action) causes infinite looping.
     // dispatch(action);
   };
 
   useEffect(() => {
     if (!actionRef.current) return;
-    afterwares?.forEach(afterware => afterware(actionRef.current, state));
+
+    afterwares?.forEach(afterware => {
+      return afterware(dispatch, actionRef.current, state);
+    });
+
     actionRef.current = null;
   }, [afterwares, state]);
 
