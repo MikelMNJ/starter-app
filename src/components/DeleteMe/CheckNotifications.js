@@ -22,7 +22,7 @@ export const CheckNotifications = props => {
     updateNotifications([ ...notifications, newMessage ]);
 
     /* eslint-disable-next-line */
-  }, [updateNotifications]);
+  }, []);
 
   return (
     <Fragment>
