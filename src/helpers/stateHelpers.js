@@ -23,7 +23,7 @@ export const useDispatch = () => {
   return dispatch;
 };
 
-export const useReducerWithMiddleware = args => {
+export const useReducerWithWares = args => {
   const { rootReducer, initialState, middlewares, afterwares } = args;
   const [ state, dispatch ] = useReducer(rootReducer, initialState);
   const actionRef = useRef();

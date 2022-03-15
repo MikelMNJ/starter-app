@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useMemo } from 'react';
-import { makeInitialState, combineReducers, useReducerWithMiddleware } from 'helpers/stateHelpers';
+import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
 import app from 'modules/app/appReducer';
 import apiMiddleware from 'middleware/api';
 
@@ -23,7 +23,7 @@ const afterwares = [];
 
 export const AppProvider = ({ children }) => {
   const reducerArgs = { rootReducer, initialState, middlewares, afterwares };
-  const [ state, dispatch ] = useReducerWithMiddleware(reducerArgs);
+  const [ state, dispatch ] = useReducerWithWares(reducerArgs);
   const memoized = useMemo(() => [ state, dispatch ], [state, dispatch]);
   const store = { state: memoized[0], dispatch: memoized[1] };
 

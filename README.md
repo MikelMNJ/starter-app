@@ -26,11 +26,17 @@ The following back-end features are coming:<br />
 * Cors configuration.
 
 Feel free to clone, modify and start your own projects with this template.
-See **Default theme styles** section for notes on Font Awesome.
 
 
 
 # Getting up and running
+
+**Note to Yarn users**: This was created with a modern version of Yarn.  It will change how you go about setting up *.yarnrc.yml*.
+
+**Note to NPM users**: You will need to remove *yarn.lock* and *.yarnrc.yml* and change the deploy script in *package.json* from:<br />
+`"deploy": "yarn build && yarn build:server && netlify deploy --prod",`<br />
+to:<br />
+`"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
 
 1. Clone the repo.
 2. Add *.env.development.local* to the project root with the following variables:
@@ -46,12 +52,6 @@ For NPM users, run `npm i` in the project directory and see additional note belo
 
 See deployment section for additional steps to take before deployment to Netlify.
 
-**Note to Yarn users**: This was created with a modern version of Yarn.  It will change how you go about setting up *.yarnrc.yml*.
-
-**Note to NPM users**: You will need to remove *yarn.lock* and *.yarnrc.yml* and change the deploy script in *package.json* from:
-`"deploy": "yarn build && yarn build:server && netlify deploy --prod",`<br />
-to:<br />
-`"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
 
 **Note about deployment services**: This has not been tested with other deployment services, like Heroku etc.  Any changes are likely to be in the
 use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*.
@@ -174,7 +174,7 @@ Default styles for common elements, such as forms, links, headers etc. can be fo
 *yellow* or *blue*. Additional colors can be added and exported in *theme/colors.scss*.
 
 ## Accessing SCSS variables in .js files
-This is acheived with `yarn install sass` in *package.json* and **sass-loader: 7.2.0** or higher in *package-lock.json*.
+This is acheived with `yarn install sass` in *package.json* and **sass-loader: 7.2.0** or higher in *yarn.lock* (*package-lock.json* for npm).
 From there, *.scss* files can be used freely throughout the project.  With that set, please take a look at *theme/colors.scss*.
 A set of sass variables are defined in this style-sheet and exported using `:export {}`.  *colors.scss* is then called in *index.scss*
 using `@import 'theme/colors.scss`, making the scss variables available in *index.scss*.  More importantly, *theme/colors.scss* can now be
@@ -248,8 +248,8 @@ export default reducer;
 Don't forget to add any new reducers in *store.js* &mdash; they should be added to `const reducers = {}`.
 
 ## About Middleware and Afterware
-A middleware function is used execute something prior to the reducer's state update.  Afterware is much the same, but runs after the state update has occured.
-Middlewares and afterwares can be added to the arrays of the same name in *store.js*, example: `const middlewares = [ apiMiddleware ];`
+A middleware function is used to execute something prior to the reducer's state update.  Afterware is much the same, but runs after the state update has occured.
+Middleware and afterware can be added to the arrays of the same name in *store.js*, example: `const middlewares = [ apiMiddleware ];`
 
 An example of middleware that this app uses can be found when any API action is called. Please see *middleware/api.js* for the full example, including the `apiRelay()` function:
 ```jsx
@@ -267,7 +267,7 @@ const apiMiddleware = (dispatch, action) => {
 
 A modified version of `useReducer()` is being used to handle the injection of these wares and can be found in *helpers/stateHelpers.js*:
 ```jsx
-export const useReducerWithMiddleware = args => {
+export const useReducerWithWares = args => {
   const { rootReducer, initialState, middlewares, afterwares } = args;
   const [ state, dispatch ] = useReducer(rootReducer, initialState);
   const actionRef = useRef();
@@ -432,7 +432,7 @@ In a nutshell:
 * Loop through all reducers asking for their initial state object.
 * Loop through all reducers and combine them, as functions, letting each manage their own "slice" of state.
 * Add any middelware/afterware to appropriate arrays.
-* Call modified `useReducerWithMiddleware()` to get the complete state object, execute wares as well as get the dispatch function.
+* Call modified `useReducerWithWares()` to get the complete state object, execute wares as well as get the dispatch function.
 * Memoize the array to prevent every subscribed component from updating if it's "slice" hasn't been updated.
 * Pass the final `{ state, dispatch }` object to the `<AppContext.Provider />`.
 * Wrap `<App />` in *index.js* with `<AppProvider />`
@@ -442,7 +442,7 @@ And that completes the Redux-like global state management flow!
 The following can be found in *store.js*:
 ```jsx
 import React, { createContext, useContext, useMemo } from 'react';
-import { makeInitialState, combineReducers, useReducerWithMiddleware } from 'helpers/stateHelpers';
+import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
 import app from 'modules/app/appReducer';
 import apiMiddleware from 'middleware/api';
 
@@ -466,7 +466,7 @@ const afterwares = [];
 
 export const AppProvider = ({ children }) => {
   const reducerArgs = { rootReducer, initialState, middlewares, afterwares };
-  const [ state, dispatch ] = useReducerWithMiddleware(reducerArgs);
+  const [ state, dispatch ] = useReducerWithWares(reducerArgs);
   const memoized = useMemo(() => [ state, dispatch ], [state, dispatch]);
   const store = { state: memoized[0], dispatch: memoized[1] };
 
@@ -483,7 +483,7 @@ export const AppProvider = ({ children }) => {
 # Deployment
 
 Continuous Integration/Deployment is handled with Netlify.  The script for this can be found in *package.json*
-and the command is `yarn deploy`.  You will need to have netlify-cli installed:
+and the command is `yarn deploy`.  You will need to have *netlify-cli* installed:
 `yarn add global netlify-cli` or `npm install netlify-cli -g`
 
 **note for npm users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`
