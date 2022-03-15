@@ -19,7 +19,7 @@ const Checklist = props => {
       <h2>App Status</h2>
 
       <div className="checklistSection">
-        <h3>Front-End</h3>
+        <h3>Front-end</h3>
         <CheckRouting />
         <CheckState />
         <CheckNotifications />
@@ -27,7 +27,7 @@ const Checklist = props => {
       </div>
 
       <div className="checklistSection">
-        <h3>Back-End</h3>
+        <h3>Back-end</h3>
         <CheckDB />
         <CheckAPI />
       </div>

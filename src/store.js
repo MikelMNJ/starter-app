@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useMemo } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import { makeInitialState, combineReducers, useReducerWithMiddleware } from 'helpers/stateHelpers';
 import app from 'modules/app/appReducer';
 import apiMiddleware from 'middleware/api';
@@ -22,9 +22,9 @@ const afterwares = [];
 // See 'helpers/stateHelpers' for custom hooks, action creator and StateManager methods.
 
 export const AppProvider = ({ children }) => {
-  // const [ state, dispatch ] = useReducer(rootReducer, initialState );
-  const [ state, dispatch ] = useReducerWithMiddleware(rootReducer, initialState, middlewares, afterwares);
-  const memoized = useMemo(() => [ state, dispatch ], [state]);
+  const reducerArgs = { rootReducer, initialState, middlewares, afterwares };
+  const [ state, dispatch ] = useReducerWithMiddleware(reducerArgs);
+  const memoized = useMemo(() => [ state, dispatch ], [state, dispatch]);
   const store = { state: memoized[0], dispatch: memoized[1] };
 
   return (

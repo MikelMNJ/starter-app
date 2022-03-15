@@ -16,7 +16,9 @@ export const CheckState = props => {
     if (!sampleSelector) {
       sampleAction("New value from global state!");
     }
-  }, [sampleSelector, sampleAction]);
+
+    /* eslint-disable-next-line */
+  }, [sampleSelector]);
 
   return (
     <Fragment>

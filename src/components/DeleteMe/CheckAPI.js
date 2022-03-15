@@ -4,7 +4,6 @@ import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
-import { isEmpty } from 'lodash';
 
 const {
   REACT_APP_MONGO_URI: mongoURI,
@@ -55,6 +54,7 @@ export const CheckAPI = props => {
 
   useEffect(() => {
     if (status) setDesc(makeDesc());
+    /* eslint-disable-next-line */
   }, [status]);
 
   useEffect(() => {
