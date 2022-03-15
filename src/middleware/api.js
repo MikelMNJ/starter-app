@@ -5,13 +5,13 @@ const { REACT_APP_API_BASE_PATH: basePath } = process.env;
 
 const apiMiddleware = (dispatch, action) => {
   const isAPIRequest = action.path || action.method;
-  console.log(action);
 
   if (isAPIRequest) {
-    // TODO: Make sure this isn't causing an infinite loop
-    // because there is only one API action right now.
     apiRelay({ ...action, dispatch });
+    return;
   }
+
+  dispatch(action);
 };
 
 export const apiRelay = async args => {

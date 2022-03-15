@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef, useMemo } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { useStore } from 'store';
 import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
@@ -17,27 +17,19 @@ export const useDispatch = () => {
   return dispatch;
 };
 
-export const useReducerWithMiddleware = (reducer, initialState, middlewares, afterwares) => {
-  const [ state, dispatch ] = useReducer(reducer, initialState);
+export const useReducerWithMiddleware = args => {
+  const { rootReducer, initialState, middlewares, afterwares } = args;
+  const [ state, dispatch ] = useReducer(rootReducer, initialState);
   const actionRef = useRef();
 
   const dispatchWithMiddleware = action => {
-    middlewares?.forEach(middleware =>  {
-      middleware(dispatch, action, state);
-    });
-
+    middlewares?.forEach(middleware => middleware(dispatch, action, state));
     actionRef.current = action;
-    // TODO: Figure out why dispatch(action) causes infinite looping.
-    // dispatch(action);
   };
 
   useEffect(() => {
     if (!actionRef.current) return;
-
-    afterwares?.forEach(afterware => {
-      return afterware(dispatch, actionRef.current, state);
-    });
-
+    afterwares?.forEach(afterware => afterware(dispatch, actionRef.current, state));
     actionRef.current = null;
   }, [afterwares, state]);
 
