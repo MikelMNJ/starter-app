@@ -47,7 +47,7 @@ to:<br />
     REACT_APP_SENTRY_DSN=""
     ```
 3. In terminal, run `cd /path/to/project` then `yarn set version berry` (if not on a modern version of yarn already), followed by `yarn`.
-For npm users, run `npm i` in the project directory and see additional note below about modifying build script and yarn file clean-up.
+For NPM users, run `npm i` in the project directory and see additional note below about modifying build script and yarn file clean-up.
 4. Finally, run `yarn start` and `yarn start:server` or `npm run start` and `npm run start:server`.
 
 See deployment section for additional steps to take before deployment to Netlify.
