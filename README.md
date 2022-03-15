@@ -7,7 +7,7 @@ features to get you started:
 
 **Front-end**:<br />
 * Routing.
-* Global state management (Similar to Redux).
+* Global state management (equal to Redux).
 * Front-end middleware/afterware support for global state updates.
 * Notification system.
 * Style-sheet variable compatibility in JavaScript files.
@@ -47,7 +47,7 @@ to:<br />
     REACT_APP_SENTRY_DSN=""
     ```
 3. In terminal, run `cd /path/to/project` then `yarn set version berry` (if not on a modern version of yarn already), followed by `yarn`.
-For NPM users, run `npm i` in the project directory and see additional note below about modifying build script and yarn file clean-up.
+For npm users, run `npm i` in the project directory and see additional note below about modifying build script and yarn file clean-up.
 4. Finally, run `yarn start` and `yarn start:server` or `npm run start` and `npm run start:server`.
 
 See deployment section for additional steps to take before deployment to Netlify.
@@ -67,7 +67,7 @@ The structure of this template is as follows:
 * Errors and debugging > *errors*.
 * Utility related functions > *helpers*.
 * Front-end middleware/afterware > *middleware*.
-* Anything state and API related > *modules*.
+* Anything state related > *modules*.
 * Main route components > *scenes*.
 * Anything theme related > *theme*.
 * Custom SVG, fonts or image files > *static*.
