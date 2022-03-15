@@ -3,8 +3,14 @@ import { useStore } from 'store';
 import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
 
-export const actionCreator = (type, payload) => {
-  return { type, payload };
+export const actionCreator = (type, payload, meta) => {
+  const action = { type, payload };
+
+  if (meta) {
+    action.meta = meta;
+  }
+
+  return action;
 };
 
 export const useSelector = selector => {

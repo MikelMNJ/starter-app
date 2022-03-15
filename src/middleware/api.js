@@ -23,7 +23,7 @@ export const apiRelay = async args => {
     const data = await res.json();
 
     if (res.status === 200) {
-      dispatch(actionCreator(type, data))
+      dispatch(actionCreator(type, data, meta))
       if (onSuccess) onSuccess(res);
     }
 
