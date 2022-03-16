@@ -9,18 +9,16 @@ export const CheckNotifications = props => {
   const dispatch = useDispatch();
 
   // Actions and Selectors
-  const updateNotifications = useCallback(payload => dispatch(appActions?.updateNotifications(payload)), [dispatch]);
+  const addNotifications = useCallback(payload => dispatch(appActions?.addNotification(payload)), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
 
   useEffect(() => {
     const newMessage = {
       message: "Notification system ready.",
       icon: "fa-regular fa-message",
-      type: "success"
     };
 
-    updateNotifications([ ...notifications, newMessage ]);
-
+    addNotifications(newMessage);
     /* eslint-disable-next-line */
   }, []);
 

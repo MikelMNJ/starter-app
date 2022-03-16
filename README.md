@@ -10,7 +10,7 @@ The app contains the following features to get you started:
 * Routing.
 * Global state management (equal to Redux).
 * Front-end middleware/afterware support for global state updates.
-* Notification system.
+* Notification system &mdash; dispatch from front-end to send UI feedback or send from back-end to convey server feedback (see **About the Back-end** section for details).
 * Style-sheet variable compatibility in JavaScript files.
 
 **Back-end Features**:<br />
@@ -402,19 +402,23 @@ that describes everything the middleware needs to make the call.  Anything you w
 There are extra keys the middleware will use that you should be aware of:
   * **type**, this is the `action.type` dispatch will need.
   * **onSuccess**, executes your callback only after 200 response.
-  * **onFail**, executes your callback for anything **not** a 200 response.
+  * **onFail**, executes your callback for anything >= 400 response.
   * **onComplete**, executes your callback after call is complete, regardless of response code.
   * **meta**, passes additional data for use in the reducer &mdash; accessible in the reducer with `action.meta`.
 
 ```jsx
+// modules/app/appApi.js
 export const sampleAPICall = args => {
-  const { type, payload, callback } = args;
+  const { type, callback } = args;
 
  return {
     type,
-    path: "/test",
+    path: "/test2",
     method: "GET",
     onSuccess: res => callback(res),
+    onFail: res => callback(res),
+    onComplete: () => console.log("Call complete."),
+    meta: null,
   };
 };
 ```

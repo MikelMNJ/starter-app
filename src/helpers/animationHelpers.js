@@ -16,7 +16,7 @@ export const dismiss = args => {
   });
 
   if (onClose) {
-    setTimeout(() => onClose(), time || 350);
+    setTimeout(() => onClose(), time || 200);
   }
 };
 

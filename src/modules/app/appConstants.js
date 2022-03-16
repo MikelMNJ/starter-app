@@ -2,7 +2,8 @@
 const constants = {
   // Actions
   SAMPLE_ACTION: "modules/app/SAMPLE_ACTION",
-  UPDATE_NOTIFICATIONS: "modules/app/UPDATE_NOTIFICATIONS",
+  ADD_NOTIFICATION: "modules/app/ADD_NOTIFICATION",
+  REMOVE_NOTIFICATION: "modules/app/REMOVE_NOTIFICATION",
   SAMPLE_API_CALL: "modules/app/SAMPLE_API_CALL",
 
   // Selectors
