@@ -15,7 +15,7 @@ export const CheckHeartbeat = props => {
             Heartbeat {inProduction ? "enabled" : "disabled"}
           </strong>:<br />
 
-          {inProduction ? "Prod." : "Dev."} environment.
+          In {inProduction ? "production" : "development"} env.
         </p>
       } />
     </Fragment>

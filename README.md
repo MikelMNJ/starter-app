@@ -38,8 +38,9 @@ to:<br />
 `"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
 
 1. Clone the repo.
-2. Add *.env.development.local* to the project root with the following variables:
+2. Add *.env.development.local* and *.env.production.local* to the project root with the following variables:
     ```
+    REACT_APP_API_BASE_PATH="/.netlify/functions/server/"
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
@@ -52,8 +53,8 @@ See deployment section for additional steps to take before deployment to Netlify
 
 
 **Note about deployment services**: This has not been tested with other deployment services, like Heroku etc.  Any changes are likely to be in the
-use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. The base URL of `/.netlify/functions/server/` for API calls
-will need to be updated in *middleware/api.js* and *setupProxy.js* as well.  Finally, you will likely need to make modifications to how the *functions*
+use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. `REACT_APP_API_BASE_PATH="/.netlify/functions/server/"`
+will need to be updated in *.env.development.local* and *.env.production.local* as well.  Finally, you will likely need to make modifications to how the *functions*
 folder is handled by your service.
 
 
@@ -117,7 +118,7 @@ The following can be found in *scenes/App/App.js*:
 # Monitoring
 
 Monitoring is handled with *Sentry* and is set up in *index.js*.  You will need your DSN, provided by Sentry.
-Your DSN should be stored in REACT_APP_SENTRY_DSN in *.env.development.local* &mdash; emphasis on ".local", this file is ignored at build time and not added to your repo.
+Your DSN should be stored in REACT_APP_SENTRY_DSN in *.env.development.local* and *.env.production.local* &mdash; emphasis on **.local**, these files are not added to your repo.
 Do **not** add this, or any other sensitive secret/key, to the normal *.env*, *.env.production* or *.env.development* files! Those are either added to repo's for teams or used at build time.
 
 It is recommended to directly add sensitive environment variables directly in Netlify for production or via a carefully managed *netlify.toml* environments configuration.
@@ -494,6 +495,7 @@ if changes to main have been pushed etc.
 
 **Reminder**: Don't forget to change the publish directory in Netlify's deployment settings to match the *netlify.toml* file ("build").
 Also, add your environment variables in Netlify's *Site settings > Build  and deploy > Environment* section:
+* REACT_APP_API_BASE_PATH="/.netlify/functions/server/"
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET

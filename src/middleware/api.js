@@ -13,8 +13,9 @@ const apiMiddleware = (dispatch, action) => {
 };
 
 export const apiRelay = args => {
+  const { REACT_APP_API_BASE_PATH: basePath } = process.env;
   const { type, path, meta, onSuccess, onFail, onComplete, dispatch, ...rest } = args;
-  const url = `/.netlify/functions/server/${prepPath(path) || ""}`;
+  const url = `${basePath}${prepPath(path) || ""}`;
   const options = { ...rest };
 
   // Netlify has an issue with try/catch, async/await -- using promise chains for now...
