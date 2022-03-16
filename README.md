@@ -31,8 +31,6 @@ Feel free to clone, modify and start your own projects with this template.
 
 # Getting up and running
 
-**Note to Yarn users**: This was created with a modern version of Yarn.  It will change how you go about setting up *.yarnrc.yml*.
-
 **Note to NPM users**: You will need to remove *yarn.lock* and *.yarnrc.yml* and change the deploy script in *package.json* from:<br />
 `"deploy": "yarn build && yarn build:server && netlify deploy --prod",`<br />
 to:<br />
@@ -47,7 +45,7 @@ to:<br />
     REACT_APP_SENTRY_DSN=""
     ```
 3. In terminal, run `cd /path/to/project` then `yarn set version berry` (if not on a modern version of yarn already), followed by `yarn`.
-For NPM users, run `npm i` in the project directory and see additional note below about modifying build script and yarn file clean-up.
+For NPM users, run `npm i` in the project directory.
 4. Finally, run `yarn start` and `yarn start:server` or `npm run start` and `npm run start:server`.
 
 See deployment section for additional steps to take before deployment to Netlify.
@@ -486,7 +484,7 @@ Continuous Integration/Deployment is handled with Netlify.  The script for this 
 and the command is `yarn deploy`.  You will need to have *netlify-cli* installed:
 `yarn add global netlify-cli` or `npm install netlify-cli -g`
 
-**note for npm users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`
+**Note for NPM users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`
 
 Once installed, make sure you are logged in with `netlify login` and perform a link to the netlify site with `netlify link`.
 Follow the instructions to link to your site ID.  You can set up web-hooks on Netlify/GitHub for auto deployment
