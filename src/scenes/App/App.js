@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import AuthRoute from 'components/AuthRoute/AuthRoute';
 import NotFound from 'components/NotFound/NotFound';
-import DeleteMe from 'components/DeleteMe/DeleteMe';
+import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 import Notifications from 'components/Notification/Notifications';
 import appSelectors from 'modules/app/appSelectors';
 import appActions from 'modules/app/appActions';

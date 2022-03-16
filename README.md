@@ -329,7 +329,7 @@ const appSelectors = {
 
 **Calling a simple action or reading a state selector from a component**<br />
 The process of using an action/selector to update or read from a targeted reducer is identical to *Redux*.
-A more complete example can be found in *components/DeleteMe/CheckState.js*:
+A more complete example can be found in *scenes/DeleteMe/CheckState.js*:
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
@@ -363,7 +363,7 @@ API actions are called in the same way as above, but can be passed a callback fu
 will be executed after the server responds.
 
 Below is an example of how an API action is called, note the use of the secondary *callback* argument.
-A more complete exmple of this can be found in *components/DeleteMe/CheckAPI.js*:
+A more complete exmple of this can be found in *scenes/DeleteMe/CheckAPI.js*:
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';

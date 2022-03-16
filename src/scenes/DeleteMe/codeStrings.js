@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 
-export const removeFromApp = `import DeleteMe from 'components/DeleteMe/DeleteMe';
+export const removeFromApp = `import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 <Route path="/ready" element={<DeleteMe />} />`;
 
 export const authAndRedirects = `{/* Authenticated route example */}

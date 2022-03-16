@@ -42,7 +42,7 @@ const NextSteps = props => {
       </p>
 
       <p>
-        <strong>Step 4: Remove /components/DeleteMe.</strong>
+        <strong>Step 4: Remove /scenes/DeleteMe.</strong>
       </p>
     </div>
   );
