@@ -36,7 +36,7 @@ export const CheckAPI = props => {
     );
 
     if (!sampleAPIResponse && status.code === 200) return warning;
-    if (!status.code && !status.satusText) return "Request failed.";
+    if (!status.code && !status.satusText) return "No res.json() sent.";
 
     return `Response ${status.code}: ${status.text}`;
   };
@@ -49,6 +49,7 @@ export const CheckAPI = props => {
   useEffect(() => {
     if (!sampleAPIResponse) {
       const onSuccess = res => {
+        console.log("Success")
         if (res) {
           setStatus({
             code: res.status,
