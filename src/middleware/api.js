@@ -12,34 +12,36 @@ const apiMiddleware = (dispatch, action) => {
   dispatch(action);
 };
 
-export const apiRelay = async args => {
+export const apiRelay = args => {
   const { type, path, meta, onSuccess, onFail, onComplete, dispatch, ...rest } = args;
+  const url = `/.netlify/functions/server/${prepPath(path) || ""}`;
 
-  const options = {
-    ...rest,
-    headers: {
-      accept: "application/json",
-      "content-type": "application/json",
-      ...rest.headers,
-    },
-  };
+  fetch(url, { ...rest })
+    .then(res => res.status < 500 ? res : Promise.reject(Error(res.status)))
+    .then(res => {
+      if (res.status === 200) {
+        dispatch(actionCreator(type, res.json(), meta))
+        if (onSuccess) onSuccess(res);
+      }
+    })
+    .catch(e => onFail && onFail(e))
+    .finally(() => onComplete && onComplete());
 
-  try {
-    const url = `/.netlify/functions/server/${prepPath(path) || ""}`;
-    const res = await fetch(url, options);
-    const data = await res.json();
+  // try {
+  //   const res = await fetch(url, { ...rest });
+  //   const data = await res.json();
 
-    if (res.status === 200) {
-      dispatch(actionCreator(type, data, meta))
-      if (onSuccess) onSuccess(res);
-    }
+  //   if (res.status === 200) {
+  //     dispatch(actionCreator(type, data, meta))
+  //     if (onSuccess) onSuccess(res);
+  //   }
 
-    return data;
-  } catch (e) {
-    if (onFail) onFail(e);
-  } finally {
-    if (onComplete) onComplete();
-  };
+  //   return data;
+  // } catch (e) {
+  //   if (onFail) onFail(e);
+  // } finally {
+  //   if (onComplete) onComplete();
+  // };
 };
 
 export default apiMiddleware;

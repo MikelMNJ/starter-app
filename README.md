@@ -483,7 +483,8 @@ Continuous Integration/Deployment is handled with Netlify.  The script for this 
 and the command is `yarn deploy`.  You will need to have *netlify-cli* installed:
 `yarn add global netlify-cli` or `npm install netlify-cli -g`
 
-**Note for NPM users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`
+**Note for NPM users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`.  Also
+update the *netlify.toml* build command from `command = "yarn build"` to `command = "npm run build"`.
 
 Once installed, make sure you are logged in with `netlify login` and perform a link to the netlify site with `netlify link`.
 Follow the instructions to link to your site ID.  You can set up web-hooks on Netlify/GitHub for auto deployment
