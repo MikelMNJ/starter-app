@@ -2,8 +2,9 @@
 
 This project is created with create-react-app and heavily modified with
 features that enable you to quickly get up and running with a highly scalable, production-ready, web app.
-It is also made specifically for MongoDB and Netlify with Netlify lambda functions.  The app contains the following
-features to get you started:
+It is also made specifically for MongoDB and Netlify with Netlify lambda functions and built on Node 16.x
+
+The app contains the following features to get you started:
 
 **Front-end**:<br />
 * Routing.
