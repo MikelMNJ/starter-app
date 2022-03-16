@@ -1,7 +1,7 @@
 import { startsWith } from 'lodash';
 
 export const prepPath = path => {
-  if (startsWith('/', path)) {
+  if (startsWith(path, '/')) {
     return path.substring(1);
   }
 
