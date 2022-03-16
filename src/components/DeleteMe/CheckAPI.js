@@ -5,11 +5,6 @@ import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
 
-const {
-  REACT_APP_MONGO_URI: mongoURI,
-  REACT_APP_API_BASE_PATH: basePath,
-} = process.env;
-
 export const CheckAPI = props => {
   const [ status, setStatus ] = useState({});
   const [ desc, setDesc ] = useState(null);
@@ -22,17 +17,13 @@ export const CheckAPI = props => {
   ), [dispatch]);
 
   const makeColor = () => {
-    if (!mongoURI) return colors.grey;
     if (sampleAPIResponse && status?.code === 200) return colors.green;
     if (!sampleAPIResponse && status?.code === 200) return colors.yellow;
-
     return colors.red;
   };
 
   const makeStatus = () => {
-    if (!mongoURI) return "unknown";
     if (status?.code === 200) return "ready";
-
     return "offline";
   };
 
@@ -44,8 +35,6 @@ export const CheckAPI = props => {
       </span>
     );
 
-    if (!mongoURI) return "No database connection.";
-    if (!basePath) return "No test path provided.";
     if (!sampleAPIResponse && status.code === 200) return warning;
     if (!status.code && !status.satusText) return "Request failed.";
 
@@ -58,7 +47,7 @@ export const CheckAPI = props => {
   }, [status]);
 
   useEffect(() => {
-    if (!sampleAPIResponse && mongoURI && basePath) {
+    if (!sampleAPIResponse) {
       const onSuccess = res => {
         if (res) {
           setStatus({

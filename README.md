@@ -39,7 +39,6 @@ to:<br />
 1. Clone the repo.
 2. Add *.env.development.local* to the project root with the following variables:
     ```
-    REACT_APP_API_BASE_PATH="/.netlify/functions/server"
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
@@ -495,5 +494,3 @@ Also, add your environment variables in Netlify's *Site settings > Build  and de
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
-
-No need to include *REACT_APP_API_BASE_URL* for production.
