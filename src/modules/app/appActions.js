@@ -15,7 +15,8 @@ import constants from './appConstants';
 
 const appActions = {
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
-  updateNotifications: payload => actionCreator(constants.UPDATE_NOTIFICATIONS, payload),
+  addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
+  removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
   sampleAPICall: (payload, callback) => {
     const args = { type: constants.SAMPLE_API_CALL, payload,  callback };
     return api.sampleAPICall(args);

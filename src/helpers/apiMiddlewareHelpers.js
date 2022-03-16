@@ -1,6 +1,5 @@
 import { Fragment } from 'react';
 import { startsWith, isArray } from 'lodash';
-import appSelectors from 'modules/app/appSelectors';
 import appActions from 'modules/app/appActions';
 
 export const prepPath = path => {
@@ -16,22 +15,21 @@ export const handleNotify = (dispatch, data) => {
   const errorMessages = data?.error || data?.errors;
 
   if (messages || errorMessages) {
-    const updateNotifications = payload => dispatch(appActions?.updateNotifications(payload));
-    const notify = message => updateNotifications([ message ]);
+    const addNotification = payload => dispatch(appActions?.addNotification(payload));
     const msgArr = isArray(messages);
     const errMsgArr = isArray(errorMessages);
 
-    if (msgArr) return messages.forEach(item => notify(item));
+    if (msgArr) return messages.forEach(item => addNotification(item));
 
-    if (errMsgArr) return errorMessages.forEach(item => notify({
+    if (errMsgArr) return errorMessages.forEach(item => addNotification({
       message: item.message || item,
       icon: item.icon,
       type: item.type || "error",
     }));
 
-    if (messages) notify(messages);
+    if (messages) addNotification(messages);
 
-    if (errorMessages) notify({
+    if (errorMessages) addNotification({
       message: errorMessages.message || errorMessages,
       icon: errorMessages.icon,
       type: errorMessages.type || "error"
@@ -46,7 +44,7 @@ export const handleOtherResponses = args => {
   const notification = {
     message:
       <Fragment>
-        <strong>{status}</strong>
+        <strong>{status}</strong>&nbsp;
         {statusText ? text : ""} ({path})
       </Fragment>,
     type: status < 400 ? "info" : "error",

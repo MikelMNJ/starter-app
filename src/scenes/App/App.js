@@ -13,7 +13,7 @@ const App = props => {
   const dispatch = useDispatch();
 
   // Actions and Selectors
-  const updateNotifications = useCallback(payload => dispatch(appActions?.updateNotifications(payload)), [dispatch]);
+  const removeNotification = useCallback(payload => dispatch(appActions?.removeNotification(payload)), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
 
   const renderApp = () => {
@@ -45,7 +45,7 @@ const App = props => {
 
       <Notifications
         notifications={notifications}
-        setNotifications={updateNotifications}
+        removeNotification={removeNotification}
       />
     </div>
   );
