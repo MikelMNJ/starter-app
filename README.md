@@ -10,7 +10,7 @@ The app contains the following features to get you started:
 * Routing.
 * Global state management (equal to Redux).
 * Front-end middleware/afterware support for global state updates.
-* Notification system.
+* Notification system &mdash; dispatch from front-end to send UI feedback or send from back-end to convey server feedback (see **About the Back-end** section for details).
 * Style-sheet variable compatibility in JavaScript files.
 
 **Back-end Features**:<br />
