@@ -51,8 +51,9 @@ See deployment section for additional steps to take before deployment to Netlify
 
 
 **Note about deployment services**: This has not been tested with other deployment services, like Heroku etc.  Any changes are likely to be in the
-use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*.
-There will likely need to be modifications to how the *functions* folder is handled by your service.
+use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. The base URL of `/.netlify/functions/server/` for API calls
+will need to be updated in *middleware/api.js* and *setupProxy.js* as well.  Finally, you will likely need to make modifications to how the *functions*
+folder is handled by your service.
 
 
 

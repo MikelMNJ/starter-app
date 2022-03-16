@@ -44,12 +44,11 @@ export const CheckAPI = props => {
   useEffect(() => {
     if (status) setDesc(makeDesc());
     /* eslint-disable-next-line */
-  }, [status]);
+  }, [status, sampleAPIResponse]);
 
   useEffect(() => {
     if (!sampleAPIResponse) {
       const onSuccess = res => {
-        console.log("Success")
         if (res) {
           setStatus({
             code: res.status,
