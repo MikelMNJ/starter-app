@@ -11,14 +11,13 @@ export const prepPath = path => {
   return path;
 };
 
-export const handleNotify = (dispatch, state, data) => {
+export const handleNotify = (dispatch, data) => {
   const messages = data?.notification || data?.notifications;
   const errorMessages = data?.error || data?.errors;
 
   if (messages || errorMessages) {
     const updateNotifications = payload => dispatch(appActions?.updateNotifications(payload));
-    const notifications = appSelectors?.notifications(state);
-    const notify = message => updateNotifications([ ...notifications, message ]);
+    const notify = message => updateNotifications([ message ]);
     const msgArr = isArray(messages);
     const errMsgArr = isArray(errorMessages);
 
@@ -41,7 +40,7 @@ export const handleNotify = (dispatch, state, data) => {
 };
 
 export const handleOtherResponses = args => {
-  const { dispatch, state, res, path, onFail } = args;
+  const { dispatch, res, path, onFail } = args;
   const { status, statusText } = res;
   const text = `: ${statusText}`
   const notification = {
@@ -54,5 +53,5 @@ export const handleOtherResponses = args => {
   };
 
   if (status >= 400 && onFail) onFail(res);
-  handleNotify(dispatch, state, { notification });
+  handleNotify(dispatch, { notification });
 };

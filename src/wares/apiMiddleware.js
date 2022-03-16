@@ -23,7 +23,7 @@ export const apiRelay = args => {
     .then(res => {
       if (res.status === 200 && onSuccess) onSuccess(res);
       if (res.status >= 400) {
-        const resArgs = { dispatch, state, res, path, onFail };
+        const resArgs = { dispatch, res, path, onFail };
         handleOtherResponses(resArgs);
       }
 
@@ -32,7 +32,7 @@ export const apiRelay = args => {
     .then(data => {
       if (data) {
         const { notification, notifications, error, errors, ...payload } = data;
-        handleNotify(dispatch, state, data);
+        handleNotify(dispatch, data);
 
         if (payload && (!errors || !error)) {
           dispatch(actionCreator(type, payload, meta));
@@ -40,7 +40,7 @@ export const apiRelay = args => {
       }
     })
     .catch(res => {
-      handleNotify(dispatch, state, res);
+      handleNotify(dispatch, res);
     })
     .finally(() => onComplete && onComplete());
 };
