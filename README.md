@@ -491,8 +491,9 @@ Follow the instructions to link to your site ID.  You can set up web-hooks on Ne
 if changes to main have been pushed etc.
 
 **Reminder**: Don't forget to change the publish directory in Netlify's deployment settings to match the *netlify.toml* file ("build").
-Also, add your environment variables from *.env.development.local* in Netlify's Environment section in site settings:
-* REACT_APP_API_BASE_PATH
+Also, add your environment variables in Netlify's *Site settings > Build  and deploy > Environment* section:
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
+
+No need to include *REACT_APP_API_BASE_URL* for production.
