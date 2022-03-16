@@ -23,7 +23,7 @@ export const apiRelay = args => {
     .then(res => {
       if (res.status === 200 && onSuccess) onSuccess(res);
       if (res.status >= 400) {
-        const resArgs = { dispatch, res, path, onFail };
+        const resArgs = { dispatch, res, onFail };
         handleOtherResponses(resArgs);
       }
 

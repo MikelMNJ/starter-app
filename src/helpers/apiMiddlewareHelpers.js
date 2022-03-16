@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { startsWith, isArray } from 'lodash';
 import appActions from 'modules/app/appActions';
 
@@ -38,7 +37,7 @@ export const handleNotify = (dispatch, data) => {
 };
 
 export const handleOtherResponses = args => {
-  const { dispatch, res, path, onFail } = args;
+  const { dispatch, res, onFail } = args;
   const { status, statusText } = res;
   const text = `: ${statusText}`
   const notification = {
