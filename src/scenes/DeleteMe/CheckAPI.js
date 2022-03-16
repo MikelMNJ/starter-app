@@ -49,14 +49,14 @@ export const CheckAPI = props => {
 
   useEffect(() => {
     if (!sampleAPIResponse) {
-      const onSuccess = res => {
+      const onRes = res => {
         setStatus({
           code: res.status,
           text: res.statusText,
         });
       };
 
-      sampleAPICall(null, onSuccess);
+      sampleAPICall(null, onRes);
     }
 
     /* eslint-disable-next-line */
