@@ -66,10 +66,10 @@ The structure of this template is as follows:
 * Reusable components > *components*.
 * Errors and debugging > *errors*.
 * Utility related functions > *helpers*.
-* Front-end middleware/afterware > *middleware*.
 * Anything state related > *modules*.
 * Main route components > *scenes*.
 * Anything theme related > *theme*.
+* Front-end middleware/afterware > *wares*.
 * Custom SVG, fonts or image files > *static*.
 
 **Note**: Absolute pathing for JavaScript module imports has been added in *jsconfig.json*.
@@ -251,7 +251,7 @@ Don't forget to add any new reducers in *store.js* &mdash; they should be added 
 A middleware function is used to execute something prior to the reducer's state update.  Afterware is much the same, but runs after the state update has occured.
 Middleware and afterware can be added to the arrays of the same name in *store.js*, example: `const middlewares = [ apiMiddleware ];`
 
-An example of middleware that this app uses can be found when any API action is called. Please see *middleware/api.js* for the full example, including the `apiRelay()` function:
+An example of middleware that this app uses can be found when any API action is called. Please see *wares/apiMiddleware.js* for the full example, including the `apiRelay()` function:
 ```jsx
 const apiMiddleware = (dispatch, action) => {
   const isAPIRequest = action.path || action.method;
@@ -444,7 +444,7 @@ The following can be found in *store.js*:
 import React, { createContext, useContext, useMemo } from 'react';
 import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
 import app from 'modules/app/appReducer';
-import apiMiddleware from 'middleware/api';
+import apiMiddleware from 'wares/apiMiddleware';
 
 export const AppContext = createContext();
 AppContext.displayName = "AppContext";

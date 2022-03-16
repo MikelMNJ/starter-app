@@ -10,7 +10,9 @@ router.get('/', async (req, res) => {
   try {
     res.json({ message: "API test complete." });
   } catch(err) {
-    res.status(500).send(err);
+    res.status(500).json({
+      errors: [ err ]
+    });
   }
 });
 

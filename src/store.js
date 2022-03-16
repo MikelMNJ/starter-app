@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
 import app from 'modules/app/appReducer';
-import apiMiddleware from 'middleware/api';
+import apiMiddleware from 'wares/apiMiddleware';
 
 export const AppContext = createContext();
 AppContext.displayName = "AppContext";
