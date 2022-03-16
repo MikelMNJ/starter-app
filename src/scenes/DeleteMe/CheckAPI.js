@@ -39,7 +39,7 @@ export const CheckAPI = props => {
     if (!sampleAPIResponse && status.code === 200) return warning;
     if (!status.code && !status.text) return "No data received.";
 
-    return `Response ${status.code}${status.text && text}.`;
+    return `${status.code}${status.text ? text : " Response"}.`;
   };
 
   useEffect(() => {

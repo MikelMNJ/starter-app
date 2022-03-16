@@ -42,11 +42,7 @@ export const handleOtherResponses = args => {
   const { status, statusText } = res;
   const text = `: ${statusText}`
   const notification = {
-    message:
-      <Fragment>
-        <strong>{status}</strong>&nbsp;
-        {statusText ? text : ""} ({path})
-      </Fragment>,
+    message: `${status}${statusText ? text : " Response"}.`,
     type: status < 400 ? "info" : "error",
   };
 
