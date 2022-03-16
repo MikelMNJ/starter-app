@@ -50,12 +50,10 @@ export const CheckAPI = props => {
   useEffect(() => {
     if (!sampleAPIResponse) {
       const onSuccess = res => {
-        if (res) {
-          setStatus({
-            code: res.status,
-            text: res.statusText,
-          });
-        }
+        setStatus({
+          code: res.status,
+          text: res.statusText,
+        });
       };
 
       sampleAPICall(null, onSuccess);

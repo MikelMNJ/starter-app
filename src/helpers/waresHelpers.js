@@ -29,8 +29,9 @@ export const handleNotify = (dispatch, state, notification) => {
   }
 };
 
-export const handleOtherResponses = (dispatch, state, res, path) => {
+export const handleOtherResponses = args => {
   // Handles 300-500 response codes.
+  const { dispatch, state, res, path, onFail } = args;
   const { status, statusText } = res;
   const text = `: ${statusText}`
   const notification = {
@@ -38,5 +39,6 @@ export const handleOtherResponses = (dispatch, state, res, path) => {
     type: status < 400 ? "info" : "error",
   };
 
+  if (status >= 400 && onFail) onFail(res);
   handleNotify(dispatch, state, notification);
 };
