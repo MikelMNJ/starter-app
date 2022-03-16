@@ -16,7 +16,6 @@ export const CheckNotifications = props => {
     const newMessage = {
       message: "Notification system ready.",
       icon: "fa-regular fa-message",
-      type: "success"
     };
 
     updateNotifications([ ...notifications, newMessage ]);
