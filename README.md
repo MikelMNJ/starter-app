@@ -431,8 +431,7 @@ export const sampleAPICall = args => {
 
 
 ## About store.js
-Now that the reducer has been explored, constants/actions/selectors defined, how to dispatch
-actions and read state selector values from components, let's take a look at the heart of it &mdash; the store.
+Now that the reducer has been explored with constants/actions/selectors defined and used in components, let's take a look at the heart of it all &mdash; the store.
 
 In a nutshell:
 * Create state by creating *Context* for our app.
