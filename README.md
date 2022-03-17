@@ -202,8 +202,7 @@ I have made a custom class that handles state updates in an immutable manner, se
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
 `StateManager()`, however, may be more friendly and should provide everything you need. It is aware of the payload and sets it automatically &mdash; no need to
 specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key being modified is a basic type,
-such as a string or number, or more complex, like an Array or Object.  Meaning, you **won't** have to call several methods such as
-`state.getIn()`, `state.setIn()` etc. to update something like an array.
+such as a string or number, or more complex, like an Array or Object.  Meaning you **won't** have to call methods such as Immutable's `state.getIn()`, `state.setIn()` etc. to update something like an array.
 
 **Updating basic or complex key values in state**<br />
 Use `state.update(STATE_KEY_TO_UPDATE)`.  It will replace the entire state key value with the payload.
