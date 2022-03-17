@@ -1,8 +1,10 @@
 # About
 
+**View app**: https://my-app-template.netlify.app
+
 This project is created with create-react-app and heavily modified with
 features that enable you to quickly get up and running with a highly scalable, production-ready, web app.
-It is also made specifically for MongoDB and Netlify with Netlify lambda functions and built on Node 16.x
+It is also made specifically for MongoDB and Netlify, with Netlify lambda functions and built on Node 16.x
 
 The app contains the following features to get you started:
 
@@ -10,7 +12,7 @@ The app contains the following features to get you started:
 * Routing.
 * Global state management (equal to Redux).
 * Front-end middleware/afterware support for global state updates.
-* Notification system &mdash; dispatch from front-end to send UI feedback or send from back-end to convey server feedback (see **About the Back-end** section for details).
+* Notification system &mdash; dispatch from front-end to send UI feedback or send from back-end to convey server feedback (see the **Back-end** section for details).
 * Style-sheet variable compatibility in JavaScript files.
 
 **Back-end Features**:<br />
@@ -79,7 +81,7 @@ The structure of this template is as follows:
 # Testing
 
 Tests were set up as part of *create-react-app*.  The script command for testing, and others, can be found
-in *package.json*.  It uses *Jest* and only requires the name *[componentName].test.js* &mdash; see *scenes/App/App.test.js*.
+in *package.json*.  It uses *Jest* and only requires the name *[componentName].test.js* &mdash; see *scenes/DeleteMe/DeleteMe.test.js*.
 
 
 
@@ -119,9 +121,9 @@ The following can be found in *scenes/App/App.js*:
 
 Monitoring is handled with *Sentry* and is set up in *index.js*.  You will need your DSN, provided by Sentry.
 Your DSN should be stored in REACT_APP_SENTRY_DSN in *.env.development.local* and *.env.production.local* &mdash; emphasis on **.local**, these files are not added to your repo.
-Do **not** add this, or any other sensitive secret/key, to the normal *.env*, *.env.production* or *.env.development* files! Those are either added to repo's for teams or used at build time.
+Do **not** add this, or any other sensitive secret/key, to the normal *.env*, *.env.production* or *.env.development* files! Those are added to your repo or expose sensitive variables at build time.
 
-It is recommended to directly add sensitive environment variables directly in Netlify for production or via a carefully managed *netlify.toml* environments configuration.
+It is recommended to directly add sensitive environment variables directly in Netlify for production or via a carefully managed *netlify.toml* context configuration.
 See Deployment section for more info regarding production environment variables.
 
 If you do not wish to use *Sentry*, remove the package along with the import and environment conditional in *index.js*.
@@ -133,7 +135,7 @@ By default, **@fortawesome/fontawesome-free** is used. If this is all you need, 
 
 If you have a pro license, you'll need to do the following:
 1. `yarn remove @fortawesome/fontawesome-free`.
-2. Set a persistent system environment variable called *FONT_AWESOME_AUTH_TOKEN*. You can do this on linux by doing the folowing:
+2. Set a persistent system environment variable called *FONT_AWESOME_AUTH_TOKEN*. You can do this in Terminal by doing the folowing:
 
 ```
 cd /etc/profile.d
@@ -199,9 +201,9 @@ reads the `action.type` and updates state accordingly.
 I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js* &mdash;
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
 `StateManager()`, however, may be more friendly and should provide everything you need. It is aware of the payload and sets it automatically &mdash; no need to
-specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key in question is a basic type,
+specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key being modified is a basic type,
 such as a string or number, or more complex, like an Array or Object.  Meaning, you **won't** have to call several methods such as
-`state.getIn()`, `state.setIn()`, `state.merge()`, `state.set()` etc. to update something like an array in your state.
+`state.getIn()`, `state.setIn()` etc. to update something like an array.
 
 **Updating basic or complex key values in state**<br />
 Use `state.update(STATE_KEY_TO_UPDATE)`.  It will replace the entire state key value with the payload.
@@ -231,8 +233,11 @@ const reducer = (initialState = initial, action = {}) => {
   switch(action.type) {
     case constants.SAMPLE_ACTION:
       return state.update(constants.STATE_KEY_SAMPLE_SELECTOR);
-    case constants.UPDATE_NOTIFICATIONS:
-      return state.update(constants.STATE_KEY_NOTIFICATIONS);
+    case constants.ADD_NOTIFICATION:
+      return state.add(constants.STATE_KEY_NOTIFICATIONS);
+    case constants.REMOVE_NOTIFICATION:
+      const index = action.payload;
+      return state.remove(constants.STATE_KEY_NOTIFICATIONS, index);
     case constants.SAMPLE_API_CALL:
       return state.update(constants.STATE_KEY_SAMPLE_API_RESPONSE);
 
@@ -244,7 +249,7 @@ const reducer = (initialState = initial, action = {}) => {
 export default reducer;
 ```
 
-**Note**: It's recommended to create a new folder in *modules* for any other reducers, actions, selectors etc. you wish to have.
+**Note**: It's recommended to create a new folder in *modules* for other sections of your site. These other reducers, actions, selectors etc. will keep things scalable and manageable.
 Don't forget to add any new reducers in *store.js* &mdash; they should be added to `const reducers = {}`.
 
 ## About Middleware and Afterware
@@ -297,7 +302,8 @@ Actions and Selectors are defined in objects for their specific module &mdash; t
 // appConstants.js
 const constants = {
   SAMPLE_ACTION: "modules/app/SAMPLE_ACTION",
-  UPDATE_NOTIFICATIONS: "modules/app/UPDATE_NOTIFICATIONS",
+  ADD_NOTIFICATION: "modules/app/ADD_NOTIFICATION",
+  REMOVE_NOTIFICATION: "modules/app/REMOVE_NOTIFICATION",
   SAMPLE_API_CALL: "modules/app/SAMPLE_API_CALL",
 
   STATE_KEY_SAMPLE_SELECTOR: "sampleSelector",
@@ -309,7 +315,8 @@ const constants = {
 const appActions = {
   // Simple actions, directly updates the reducer.
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
-  updateNotifications: payload => actionCreator(constants.UPDATE_NOTIFICATIONS, payload),
+  addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
+  removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
 
   // API actions go through middleware, then passes the server res.json() back to the reducer, as payload.
   sampleAPICall: (payload, callback) => {
@@ -351,7 +358,7 @@ const YourComponent = props => {
 
   return (
     <div>
-      {sampleSelector || "Store empty."}
+      {sampleSelector || "No state key value."}
     </div>
   );
 };
@@ -425,7 +432,7 @@ export const sampleAPICall = args => {
 
 
 ## About store.js
-Now that you are very familiar with how the reducer works, how to define constants/actions/selectors, and how to dispatch
+Now that the reducer has been explored, constants/actions/selectors defined, how to dispatch
 actions and read state selector values from components, let's take a look at the heart of it &mdash; the store.
 
 In a nutshell:
