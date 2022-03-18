@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { iconValid } from 'helpers/validators';
-import { dismiss, slideIn } from 'helpers/animationHelpers';
+import { slideIn } from 'helpers/animationHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { isObject, isArray, lowerCase } from 'lodash';
 import './Notification.scss';

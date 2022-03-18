@@ -1,5 +1,4 @@
 import React, { createRef, useEffect, useRef } from 'react';
-import { dismiss } from 'helpers/animationHelpers';
 import Message from './Message';
 import './Notification.scss';
 
