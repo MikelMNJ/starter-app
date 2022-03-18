@@ -3595,6 +3595,7 @@ __metadata:
     "@testing-library/user-event": ^13.5.0
     bcryptjs: ^2.4.3
     express: ^4.17.3
+    express-rate-limit: ^6.3.0
     express-validator: ^6.14.0
     formik: ^2.2.9
     http-proxy-middleware: ^2.0.4
@@ -6705,6 +6706,15 @@ __metadata:
   dependencies:
     on-headers: ^1.0.0
   checksum: c05851ffcece310791c9f9d50687a527ddbd197595d5e270d2d253a3ee3bc79a79618ac4685608ad321a930fa5c2d2b5c4ef2b3738f91d55c71b38c6da9e4085
+  languageName: node
+  linkType: hard
+
+"express-rate-limit@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "express-rate-limit@npm:6.3.0"
+  peerDependencies:
+    express: ^4
+  checksum: c5ab0a16cc87b317aaef27d6a270ea93513bf5e3ad5041e55ddd1d91bd2e2888030cdcf95b54fba4852a22b76ef23fa83d1787d7b7fcb0627fd0a6731ea7cf01
   languageName: node
   linkType: hard
 
