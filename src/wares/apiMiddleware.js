@@ -21,13 +21,13 @@ export const apiRelay = args => {
   // Netlify has an issue with try/catch, async/await -- using promise chains for now...
   fetch(url, options)
     .then(res => {
-      if (res.status === 200 && onSuccess) onSuccess(res);
       if (res.status >= 400) {
         const resArgs = { dispatch, res, onFail };
         handleOtherResponses(resArgs);
       }
 
-      return res.json();
+      if (res.status === 200 && onSuccess) onSuccess(res);
+      if (res.status < 400) return res.json();
     })
     .then(data => {
       if (data) {
@@ -39,8 +39,9 @@ export const apiRelay = args => {
         }
       }
     })
-    .catch(res => {
-      handleNotify(dispatch, res);
+    .catch(error => {
+      console.error(error)
+      handleNotify(dispatch, { error })
     })
     .finally(() => onComplete && onComplete());
 };
