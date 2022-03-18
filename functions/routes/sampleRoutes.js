@@ -21,8 +21,8 @@ const cacheTime = '2 minutes';
 
 // Routes
 router.get('/', cache(cacheTime), getSample);
-router.get('/', cache(cacheTime), postSample);
-router.get('/:id', cache(cacheTime), putSample);
-router.get('/:id', cache(cacheTime), deleteSample);
+router.post('/', cache(cacheTime), postSample);
+router.put('/:id', cache(cacheTime), putSample);
+router.delete('/:id', cache(cacheTime), deleteSample);
 
 module.exports = router;
