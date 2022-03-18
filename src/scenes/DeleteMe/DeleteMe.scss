@@ -9,7 +9,8 @@
   padding: 1rem;
   font-size: 0.95rem;
 
-  h2 {
+  h2,
+  h3 {
     width: 100%;
     margin-top: 0;
   }
@@ -34,8 +35,9 @@
 
   .code {
     white-space: pre-wrap;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: $grey;
+    margin-top: 0;
   }
 
   .checklist {
@@ -69,10 +71,31 @@
   .nextSteps {
     height: 100%;
     padding: 1rem;
+
+    .stepTabs {
+      max-width: 37rem;
+
+      .tabNames {
+        font-size: 0.85rem;
+        min-width: 37rem;
+      }
+    }
   }
 }
 
 /* ========== Media Queries ========== */
+@media only screen and (max-width: 860px) {
+  .nextSteps {
+    .stepTabs {
+      max-width: unset !important;
+
+      .tabNames {
+        min-width: unset !important;
+      }
+    }
+  }
+}
+
 @media only screen and (max-width: 800px) {
   .deleteMe {
     height: unset;
@@ -83,8 +106,15 @@
     }
 
     .checklist {
+      display: inline-flex;
+      flex-wrap: wrap;
+      max-width: unset;
       border-right: unset;
       border-bottom: 0.0625rem solid gainsboro;
+
+      .checklistSection {
+        flex-direction: unset;
+      }
     }
   }
 }

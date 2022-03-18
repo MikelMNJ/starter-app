@@ -1,0 +1,71 @@
+@import 'theme/colors';
+
+.tabContainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.35rem;
+  width: 100%;
+  min-height: 4.710625rem;
+
+  .tabSlider {
+    position: relative;
+    background-color: $blue;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.1rem 0.15rem #00000080;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .tabNames {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 1rem;
+    text-align: center;
+    background-color: $slate;
+    border-radius: 0.35rem;
+
+
+    .name {
+      $borderSize: 0.0625rem;
+
+      display: flex;
+      position: relative;
+      z-index: 1;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      background-color: transparent;
+      color: $offWhite;
+      width: 100%;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter ease 0.2s;
+      user-select: none;
+
+      &.active {
+
+      }
+
+      @media (hover: hover) {
+        &:hover {
+          // color: $blue;
+        }
+      }
+    }
+  }
+
+  .tabContent {
+    width: 100%;
+    height: 100%;
+
+    .content {
+      padding: 1rem;
+    }
+  }
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 414px) {
+
+}
