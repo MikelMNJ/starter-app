@@ -20,9 +20,12 @@ let cache = apicache.middleware;
 const cacheTime = '2 minutes';
 
 // Routes
-router.get('/', cache(cacheTime), getSample);
-router.post('/', cache(cacheTime), postSample);
-router.put('/:id', cache(cacheTime), putSample);
-router.delete('/:id', cache(cacheTime), deleteSample);
+router.route('/')
+  .get(cache(cacheTime), getSample)
+  .post(cache(cacheTime), postSample);
+
+router.route('/:id')
+  .put(cache(cacheTime), putSample)
+  .delete(cache(cacheTime), deleteSample);
 
 module.exports = router;
