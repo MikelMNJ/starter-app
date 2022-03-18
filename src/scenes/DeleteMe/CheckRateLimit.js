@@ -1,4 +1,5 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import { isEmpty } from 'lodash';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
@@ -27,20 +28,19 @@ export const CheckAPI = props => {
   }, [status]);
 
   useEffect(() => {
-    const onRes = res => {
-      if (res.status === 429) {
+    if (isEmpty(status) || status.code === 200) {
+      const onRes = res => {
         setStatus({
           code: res.status,
           text: res.statusText,
         });
-      }
-    };
+      };
 
-    // Intentionally triggering twice...
-    testRateLimit(null, onRes);
-    testRateLimit(null, onRes);
+      testRateLimit(null, onRes);
+    }
+
     /* eslint-disable-next-line */
-  }, []);
+  }, [status]);
 
   return (
     <Fragment>
