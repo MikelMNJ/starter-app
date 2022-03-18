@@ -8,7 +8,6 @@ const basePath = '/.netlify/functions/server';
 // Connect database
 connectDB();
 
-
 // Init middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

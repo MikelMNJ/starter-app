@@ -7,7 +7,15 @@ const {
   deleteSample
 } = require('../controllers/sampleController');
 
-router.route('/').get(getSample).post(postSample);
-router.route('/:id').put(putSample).delete(deleteSample);
+// Caching
+const apicache = require('apicache');
+let cache = apicache.middleware;
+
+
+// Routes
+router.get('/', cache('2 minutes'), getSample);
+router.get('/', cache('2 minutes'), postSample);
+router.get('/:id', cache('2 minutes'), putSample);
+router.get('/:id', cache('2 minutes'), deleteSample);
 
 module.exports = router;
