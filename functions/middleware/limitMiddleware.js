@@ -5,9 +5,9 @@ const limiter = (max, windowMs, message) => rateLimit({
   windowMs: windowMs || 5000,
   keyGenerator: (req, res) => req.ip,
   handler: (req, res, next) => {
-    const error = message || "Too many requests.";
-    res.status(429).json({ error });
-    next();
+    res.status(429).json({
+      error: message || "Too many requests.",
+    });
   }
 });
 
