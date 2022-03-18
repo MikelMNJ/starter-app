@@ -21,12 +21,13 @@ The app contains the following features to get you started:
 * Sample Mongoose user model schema.
 * Back-end middleware for route authentication checks.
 * Sample /auth and /test routes for API testing.
+* Cors configuration.
+* API Cache.
 
 The following back-end features are coming:<br />
 * Authentication.
 * Email dispatching.
 * API rate limiting.
-* Cors configuration.
 
 Feel free to clone, modify and start your own projects with this template.
 
