@@ -1,6 +1,7 @@
 const connectDB = require('./connectDB/db');
 const express = require('express');
 const serverless = require('serverless-http');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -8,6 +9,9 @@ const basePath = '/.netlify/functions/server';
 
 // Connect database
 connectDB();
+
+// Enable cors
+app.use(cors());
 
 // Init middleware
 app.use(express.json());
