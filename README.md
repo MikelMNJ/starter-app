@@ -17,17 +17,14 @@ The app contains the following features to get you started:
 
 **Back-end Features**:<br />
 * MongoDB connect.
-* Express with express-validator.
-* Mongoose with sample userModel schema.
-* Auth. middleware for private routes.
-* Sample routes for getting started or testing.
+* Express server with payload validation.
+* DB interaction with Mongoose.
+* Sample userModel schema.
+* Sample routes for getting started and testing.
+* Auth. middleware for accessing private routes.
 * Cors middleware.
-* API Caching.
-
-The following back-end features are coming:<br />
-* Authentication.
-* Email dispatching.
-* API rate limiting.
+* API caching middleware.
+* API rate limiting middleware. Defaults to IP address but can be configured for user ID (or both) with the custom keyGenerator() in the limiter.
 
 Feel free to clone, modify and start your own projects with this template.
 
