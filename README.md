@@ -20,8 +20,8 @@ The app contains the following features to get you started:
 * Express server with express-validator for payload validation.
 * Sample Mongoose user model schema.
 * Back-end middleware for route authentication checks.
-* Sample /auth and /test routes for API testing.
-* Cors configuration.
+* Sample routes for API testing.
+* Cors.
 * API Cache.
 
 The following back-end features are coming:<br />
