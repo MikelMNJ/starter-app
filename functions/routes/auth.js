@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const auth = require('../middleware/auth');
+const auth = require('../middleware/authMiddleware');
 const moment = require('moment');
-const User = require('../models/User');
+const userModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 
@@ -18,7 +18,7 @@ const aMonth = 2592000;
 // @access  Public
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await userModel.findById(req.user.id).select('-password');
     res.json(user);
   } catch(err) {
     res.status(500).send('Server error.');
@@ -43,7 +43,7 @@ router.post('/', [
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   try {
-    let user = await User.findOne({ email });
+    let user = await userModel.findOne({ email });
 
     if (!user) {
       return res.status(400).json({
