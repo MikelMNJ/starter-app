@@ -1,6 +1,8 @@
 const connectDB = require('./connectDB/db');
 const express = require('express');
 const serverless = require('serverless-http');
+require('dotenv').config();
+
 const app = express();
 const basePath = '/.netlify/functions/server';
 

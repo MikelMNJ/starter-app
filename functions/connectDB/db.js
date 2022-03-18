@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-
-require('dotenv').config();
 const { REACT_APP_MONGO_URI: db } = process.env;
 
 const options = { useNewUrlParser: true };
