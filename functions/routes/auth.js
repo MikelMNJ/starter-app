@@ -6,6 +6,8 @@ const moment = require('moment');
 const userModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
+
+require('dotenv').config();
 const { REACT_APP_JWT_SECRET: jwtSecret } = process.env;
 
 const twoHours = 7200;

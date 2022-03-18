@@ -1,4 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
+require('dotenv').config();
+
 const { REACT_APP_API_BASE_PATH } = process.env;
 
 module.exports = app => {
