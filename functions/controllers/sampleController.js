@@ -10,7 +10,7 @@ const message = type => ({
 // @desc    API test response endpoint.
 const getSample = async (req, res) => {
   try {
-    res.json({ message: message("GET") });
+    res.status(200).json({ results: message("GET").message });
   } catch(error) {
     res.status(500).json({ error });
   }
