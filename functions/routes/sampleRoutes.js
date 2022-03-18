@@ -1,5 +1,12 @@
 const express = require('express');
 const router = express.Router();
+// const {
+//   getLimit,
+//   postLimit,
+//   putLimit,
+//   deleteLimit
+// } = require('../apiLimiters/sampleLimiters');
+
 const {
   getSample,
   postSample,
