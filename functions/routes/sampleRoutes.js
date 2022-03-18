@@ -1,11 +1,6 @@
 const express = require('express');
 const router = express.Router();
-// const {
-//   getLimit,
-//   postLimit,
-//   putLimit,
-//   deleteLimit
-// } = require('../apiLimiters/sampleLimiters');
+const limiter = require('../middleware/limitMiddleware');
 
 const {
   getSample,
@@ -17,15 +12,15 @@ const {
 // Caching
 const apicache = require('apicache');
 let cache = apicache.middleware;
-const cacheTime = '2 minutes';
+const defaultCache = '2 minutes';
 
 // Routes
 router.route('/')
-  .get(cache(cacheTime), getSample)
-  .post(cache(cacheTime), postSample);
+  .get(limiter(), cache(defaultCache), getSample)
+  .post(limiter(), cache(defaultCache), postSample);
 
 router.route('/:id')
-  .put(cache(cacheTime), putSample)
-  .delete(cache(cacheTime), deleteSample);
+  .put(limiter(), cache(defaultCache), putSample)
+  .delete(limiter(), cache(defaultCache), deleteSample);
 
 module.exports = router;
