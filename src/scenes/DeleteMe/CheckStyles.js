@@ -10,7 +10,7 @@ export const CheckStyles = props => {
       <Status color={stylesheetVar ? colors.green : colors.red} text={
         <p>
           <strong>
-            Style exports {stylesheetVar ? "ready" : "failed"}
+            Style exports {stylesheetVar ? "available" : "unavailable"}
           </strong>:<br />
 
           Style vars {stylesheetVar ? "used" : "failed"} in JS.
