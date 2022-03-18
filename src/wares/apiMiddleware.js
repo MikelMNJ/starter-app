@@ -31,10 +31,10 @@ export const apiRelay = args => {
     })
     .then(data => {
       if (data) {
-        const { notification, notifications, error, errors, ...payload } = data;
+        const { message, messages, error, errors, ...payload } = data;
         handleNotify(dispatch, data);
 
-        if (payload && (!errors || !error)) {
+        if (payload && (!error || !errors)) {
           dispatch(actionCreator(type, payload, meta));
         }
       }

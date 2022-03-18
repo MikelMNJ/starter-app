@@ -10,7 +10,7 @@ export const prepPath = path => {
 };
 
 export const handleNotify = (dispatch, data) => {
-  const messages = data?.notification || data?.notifications;
+  const messages = data?.message || data?.messages;
   const errorMessages = data?.error || data?.errors;
 
   if (messages || errorMessages) {
@@ -40,11 +40,11 @@ export const handleOtherResponses = args => {
   const { dispatch, res, onFail } = args;
   const { status, statusText } = res;
   const text = `: ${statusText}`
-  const notification = {
+  const message = {
     message: `${status}${statusText ? text : " Response"}.`,
     type: status < 400 ? "info" : "error",
   };
 
   if (status >= 400 && onFail) onFail(res);
-  handleNotify(dispatch, { notification });
+  handleNotify(dispatch, { message });
 };
