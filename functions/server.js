@@ -5,6 +5,8 @@ const cors = require('cors');
 const app = express();
 const basePath = '/.netlify/functions/server';
 
+app.set('trust proxy', 1);
+
 // Connect database
 connectDB();
 
