@@ -16,13 +16,13 @@ The app contains the following features to get you started:
 * Style-sheet variable compatibility in JavaScript files.
 
 **Back-end Features**:<br />
-* MongoDB compatible connection.
-* Express server with express-validator for payload validation.
-* Sample Mongoose user model schema.
-* Back-end middleware for route authentication checks.
-* Sample routes for API testing.
-* Cors.
-* API Cache.
+* MongoDB connect.
+* Express with express-validator.
+* Mongoose with sample userModel schema.
+* Auth. middleware for private routes.
+* Sample routes for getting started or testing.
+* Cors middleware.
+* API Caching.
 
 The following back-end features are coming:<br />
 * Authentication.
