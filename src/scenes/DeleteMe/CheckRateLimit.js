@@ -48,8 +48,9 @@ export const CheckAPI = props => {
           <strong>
             Rate limiter&nbsp;
             {status?.code === 429 ? "active" : "inactive"}
-          </strong>:<br />
+          </strong>
 
+          {status?.code === 429 ? ":" : ""}<br />
           {desc}
         </p>
       } />
