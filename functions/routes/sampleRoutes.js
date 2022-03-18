@@ -17,12 +17,12 @@ const {
 // Caching
 const apicache = require('apicache');
 let cache = apicache.middleware;
-
+const cacheTime = '2 minutes';
 
 // Routes
-router.get('/', cache('2 minutes'), getSample);
-router.get('/', cache('2 minutes'), postSample);
-router.get('/:id', cache('2 minutes'), putSample);
-router.get('/:id', cache('2 minutes'), deleteSample);
+router.get('/', cache(cacheTime), getSample);
+router.get('/', cache(cacheTime), postSample);
+router.get('/:id', cache(cacheTime), putSample);
+router.get('/:id', cache(cacheTime), deleteSample);
 
 module.exports = router;
