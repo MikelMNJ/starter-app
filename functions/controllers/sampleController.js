@@ -1,7 +1,6 @@
 
 const message = type => ({
-  message: `${type} /sample successful.`,
-  icon: "fa-regular fa-file-code",
+  message: `API ${type} complete.`,
   type: "success"
 });
 
@@ -10,9 +9,20 @@ const message = type => ({
 // @desc    API test response endpoint.
 const getSample = async (req, res) => {
   try {
-    res.status(200).json({ results: message("GET").message });
+    res.status(200).json({ message: message("GET") });
   } catch(error) {
     res.status(500).json({ error });
+  }
+};
+
+// @access  Public
+// @route   GET api/v1/sample/limitTest
+// @desc    API test endpoint for rate limiter.
+const getLimitTest = async (req, res) => {
+  try {
+    res.status(200).json({ result: "Rate call complete." });
+  } catch(error) {
+    res.status(500).send("Server error.");
   }
 };
 
@@ -53,6 +63,7 @@ const deleteSample = async (req, res) => {
 
 module.exports = {
   getSample,
+  getLimitTest,
   postSample,
   putSample,
   deleteSample,

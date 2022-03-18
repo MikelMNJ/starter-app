@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const limiter = require('../middleware/limitMiddleware');
+const customMessage = message => ({ message, type: "success" });
 
 const {
   getSample,
+  getLimitTest,
   postSample,
   putSample,
   deleteSample
@@ -14,13 +16,18 @@ const apicache = require('apicache');
 let cache = apicache.middleware;
 const defaultCache = '2 minutes';
 
-// Routes
+// Starter routes
 router.route('/')
   .get(limiter(), cache(defaultCache), getSample)
   .post(limiter(), cache(defaultCache), postSample);
 
-router.route('/:id')
+
+  router.route('/:id')
   .put(limiter(), cache(defaultCache), putSample)
   .delete(limiter(), cache(defaultCache), deleteSample);
+
+// Test routes
+router.route('/limitTest')
+  .get(limiter(1, 10000, customMessage("Rate limit tested!")), getLimitTest);
 
 module.exports = router;
