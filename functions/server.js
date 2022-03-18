@@ -4,15 +4,15 @@ const serverless = require('serverless-http');
 const app = express();
 const basePath = '/.netlify/functions/server';
 
-// Connect Database
+// Connect database
 connectDB();
 
-// Init Middleware
+// Init middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // Define routes
-app.use(`${basePath}/test`, require('./routes/test'));
+app.use(`${basePath}/sample`, require('./routes/sampleRoutes'));
 app.use(`${basePath}/auth`, require('./routes/auth'));
 
 module.exports.handler = serverless(app);

@@ -4,7 +4,7 @@ export const sampleAPICall = args => {
 
  return {
     type,
-    path: "/test",
+    path: "/sample",
     method: "GET",
     onSuccess: res => callback(res),
     onFail: res => callback(res),
