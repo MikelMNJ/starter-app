@@ -7,7 +7,7 @@ module.exports = function(req, res, next) {
   const token = req.header('x-auth-token');
 
   if (!token) {
-    return res.status(401).json({ errors: [{ msg: 'Unauthorized: No token found.' }] });
+    return res.status(401).json({ error: 'Unauthorized: No token found.' });
   };
 
   try {
@@ -15,6 +15,6 @@ module.exports = function(req, res, next) {
     req.user = decoded.user;
     next();
   } catch(err) {
-    res.status(401).json({ errors: [{ msg: 'Invalid token.' }] });
+    res.status(401).json({ error: 'Invalid token.' });
   };
 };

@@ -1,34 +1,30 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const auth = require('../middleware/auth');
-const moment = require('moment');
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
+const moment = require('moment');
+const userModel = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 require('dotenv').config();
 const { REACT_APP_JWT_SECRET: jwtSecret } = process.env;
 
-const twoHours = 7200;
-const aMonth = 2592000;
-
 // @route   GET api/v1/auth
 // @desc    Authenticate provided user credentials
 // @access  Public
-router.get('/', auth, async (req, res) => {
+const checkCredentials = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await userModel.findById(req.user.id).select('-password');
     res.json(user);
-  } catch(err) {
-    res.status(500).send('Server error.');
+  } catch(error) {
+    res.status(500).json({ error });
   }
-});
+};
 
 // @route   POST api/v1/auth
 // @desc    Authenticate user and get token
 // @access  Public
-router.post('/', [
+const twoHours = 7200;
+const aMonth = 2592000;
+const checkLoginPayload = [
   check('email')
     .notEmpty().withMessage('Email is required.')
     .isEmail().withMessage('Invalid email.'),
@@ -36,18 +32,20 @@ router.post('/', [
     .notEmpty().withMessage('Password is required.'),
   check('trustedDevice', 'Tusted device payload type must be boolean.')
     .optional().not().isString().isBoolean(),
-], async (req, res) => {
+];
+
+const login = async (req, res) => {
   const { email, password, trustedDevice } = req.body;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
 
   try {
-    let user = await User.findOne({ email });
+    let user = await userModel.findOne({ email });
 
     if (!user) {
       return res.status(400).json({
-        errors: [{ msg: 'Unauthorized: Invalid credentials.' }]
+        error: 'Unauthorized: Invalid credentials.'
       });
     };
 
@@ -55,7 +53,7 @@ router.post('/', [
 
     if (!isMatch) {
       return res.status(400).json({
-        errors: [{ msg: 'Unauthorized: Invalid credentials.' }]
+        error: 'Unauthorized: Invalid credentials.'
       });
     };
 
@@ -80,8 +78,12 @@ router.post('/', [
       });
     });
   } catch(error) {
-    res.status(500).send('Server error.');
+    res.status(500).json({ error });
   };
-});
+};
 
-module.exports = router;
+module.exports = {
+  checkCredentials,
+  checkLoginPayload,
+  login,
+};

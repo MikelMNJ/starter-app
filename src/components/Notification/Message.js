@@ -1,17 +1,17 @@
 import React, { forwardRef } from "react";
 import { iconValid } from 'helpers/validators';
-import { dismiss, slideIn } from 'helpers/animationHelpers';
+import { slideIn } from 'helpers/animationHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { isObject, isArray, lowerCase } from 'lodash';
 import './Notification.scss';
 
 const defaultIcon = "fa-solid fa-info-circle";
-const defaultSuccess = "fa-solid fa-circle-check";
+const defaultSuccess = "fa-solid fa-check";
 const defaultWarning = "fa-solid fa-triangle-exclamation";
 const defaultError = "fa-solid fa-circle-exclamation";
 
 const Message = forwardRef((props, ref) => {
-  const { message, noIcons, className, args, ...rest } = props;
+  const { message, noIcons, className, args, onClose, ...rest } = props;
 
   const classes = [
     { condition: className, name: className },
@@ -56,7 +56,7 @@ const Message = forwardRef((props, ref) => {
         {buildMessage()}
       </div>
 
-      <div className="close" onClick={() => dismiss(args)}>
+      <div className="close" onClick={onClose}>
         <i className="fa-solid fa-times" />
       </div>
     </div>

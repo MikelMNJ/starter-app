@@ -16,17 +16,15 @@ The app contains the following features to get you started:
 * Style-sheet variable compatibility in JavaScript files.
 
 **Back-end Features**:<br />
-* MongoDB compatible connection.
-* Express server with express-validator for payload validation.
-* Sample Mongoose user model schema.
-* Back-end middleware for route authentication checks.
-* Sample /auth and /test routes for API testing.
-
-The following back-end features are coming:<br />
-* Authentication.
-* Email dispatching.
-* API rate limiting.
-* Cors configuration.
+* MongoDB connect.
+* Express server with payload validation.
+* DB interaction with Mongoose.
+* Sample userModel schema.
+* Sample routes for getting started and testing.
+* Auth. middleware for accessing private routes.
+* Cors middleware.
+* API caching middleware.
+* API rate limiting middleware. Defaults to IP address but can be configured for user ID (or both) with the custom keyGenerator() in the limiter.
 
 Feel free to clone, modify and start your own projects with this template.
 
@@ -40,7 +38,7 @@ to:<br />
 `"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
 
 1. Clone the repo.
-2. Add *.env.development.local* and *.env.production.local* to the project root with the following variables:
+2. Add *.env* to the project root with the following variables:
     ```
     REACT_APP_API_BASE_PATH="/.netlify/functions/server/"
     REACT_APP_MONGO_URI=""
@@ -56,7 +54,7 @@ See deployment section for additional steps to take before deployment to Netlify
 
 **Note about deployment services**: This has not been tested with other deployment services, like Heroku etc.  Any changes are likely to be in the
 use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. `REACT_APP_API_BASE_PATH="/.netlify/functions/server/"`
-will need to be updated in *.env.development.local* and *.env.production.local* as well.  Finally, you will likely need to make modifications to how the *functions*
+will need to be updated in *.env*.  Finally, you will likely need to make modifications to how the *functions*
 folder is handled by your service.
 
 
@@ -120,11 +118,7 @@ The following can be found in *scenes/App/App.js*:
 # Monitoring
 
 Monitoring is handled with *Sentry* and is set up in *index.js*.  You will need your DSN, provided by Sentry.
-Your DSN should be stored in REACT_APP_SENTRY_DSN in *.env.development.local* and *.env.production.local* &mdash; emphasis on **.local**, these files are not added to your repo.
-Do **not** add this, or any other sensitive secret/key, to the normal *.env*, *.env.production* or *.env.development* files! Those are added to your repo or expose sensitive variables at build time.
-
-It is recommended to directly add sensitive environment variables directly in Netlify for production or via a carefully managed *netlify.toml* context configuration.
-See Deployment section for more info regarding production environment variables.
+Your DSN should be stored as REACT_APP_SENTRY_DSN in *.env*
 
 If you do not wish to use *Sentry*, remove the package along with the import and environment conditional in *index.js*.
 

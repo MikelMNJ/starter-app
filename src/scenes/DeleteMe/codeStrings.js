@@ -1,7 +1,42 @@
 import React, { Fragment } from 'react';
 
-export const removeFromApp = `import DeleteMe from 'scenes/DeleteMe/DeleteMe';
+
+export const cleanApp = `import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 <Route path="/ready" element={<DeleteMe />} />`;
+
+export const cleanConstants = `TEST_RATE_LIMIT: "modules/app/TEST_RATE_LIMIT",`;
+
+export const cleanActions = `testRateLimit: (payload, callback) => {
+  const args = { type: constants.TEST_RATE_LIMIT, payload,  callback };
+  return api.testRateLimit(args);
+},`;
+
+export const cleanAppAPI = `export const testRateLimit = args => {
+  const { type, callback } = args;
+
+ return {
+    type,
+    path: "/sample/limitTest",
+    method: "GET",
+    onSuccess: res => callback(res),
+    onFail: res => callback(res),
+  };
+};`
+
+export const cleanSampleRoutes = `// Remove "getLimitTest" from import.
+router.route('/limitTest')
+  .get(limiter(1, 5000, customMessage("Rate limit tested!")), getLimitTest);`;
+
+export const cleanSampleController = `// @access  Public
+// @route   GET api/v1/sample/limitTest
+// @desc    API test endpoint for rate limiter.
+const getLimitTest = async (req, res) => {
+  try {
+    res.status(200).json({ result: "Rate call complete." });
+  } catch(error) {
+    res.status(500).send("Server error.");
+  }
+};`;
 
 export const authAndRedirects = `{/* Authenticated route example */}
 <Route element={<AuthRoute auth={tokenFromState} />}>

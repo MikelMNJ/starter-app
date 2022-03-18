@@ -21,6 +21,10 @@ const appActions = {
     const args = { type: constants.SAMPLE_API_CALL, payload,  callback };
     return api.sampleAPICall(args);
   },
+  testRateLimit: (payload, callback) => {
+    const args = { type: constants.TEST_RATE_LIMIT, payload,  callback };
+    return api.testRateLimit(args);
+  },
 };
 
 export default appActions;

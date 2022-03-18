@@ -6,6 +6,7 @@ import CheckNotifications from './CheckNotifications';
 import CheckStyles from './CheckStyles';
 import CheckDB from './CheckDB';
 import CheckAPI from './CheckAPI';
+import CheckRateLimit from './CheckRateLimit';
 import CheckHeartbeat from './CheckHeartbeat';
 import CheckMonitoring from './CheckMonitoring';
 import './DeleteMe.scss';
@@ -30,6 +31,7 @@ const Checklist = props => {
         <h3>Back-end</h3>
         <CheckDB />
         <CheckAPI />
+        <CheckRateLimit />
       </div>
 
       <div className="checklistSection">

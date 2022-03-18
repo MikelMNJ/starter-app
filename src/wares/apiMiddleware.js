@@ -1,4 +1,4 @@
-import { prepPath, handleNotify, handleOtherResponses } from 'helpers/apiMiddlewareHelpers';
+import { prepPath, handleNotify, handleInitialRes } from 'helpers/apiMiddlewareHelpers';
 import { actionCreator } from 'helpers/stateHelpers';
 
 const apiMiddleware = (dispatch, action, state) => {
@@ -20,27 +20,19 @@ export const apiRelay = args => {
 
   // Netlify has an issue with try/catch, async/await -- using promise chains for now...
   fetch(url, options)
-    .then(res => {
-      if (res.status === 200 && onSuccess) onSuccess(res);
-      if (res.status >= 400) {
-        const resArgs = { dispatch, res, onFail };
-        handleOtherResponses(resArgs);
-      }
-
-      return res.json();
-    })
+    .then(res => handleInitialRes({ res, onSuccess, onFail, dispatch }))
     .then(data => {
       if (data) {
-        const { notification, notifications, error, errors, ...payload } = data;
+        const { message, messages, error, errors, ...payload } = data;
         handleNotify(dispatch, data);
 
-        if (payload && (!errors || !error)) {
+        if (payload && (!error || !errors)) {
           dispatch(actionCreator(type, payload, meta));
         }
       }
     })
-    .catch(res => {
-      handleNotify(dispatch, res);
+    .catch(error => {
+      console.error(error);
     })
     .finally(() => onComplete && onComplete());
 };
