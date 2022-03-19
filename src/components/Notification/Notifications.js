@@ -1,4 +1,5 @@
 import React, { createRef, useEffect, useRef } from 'react';
+import { dismiss } from 'helpers/animationHelpers';
 import Message from './Message';
 import './Notification.scss';
 
@@ -9,11 +10,10 @@ const Notifications = props => {
   useEffect(() => {
     if (!noTime && notifications?.length >= 1) {
       const timer = setTimeout(() => {
-        // dismiss({
-        //   targets: [ targets.current[0] ],
-        //   onClose: () => removeMessage(0)
-        // });
-        removeMessage(0);
+        dismiss({
+          targets: [ targets.current[0] ],
+          onClose: () => removeMessage(0)
+        });
         clearTimeout(timer);
       }, time || 4000);
 
@@ -36,6 +36,8 @@ const Notifications = props => {
     targets.current = [ ...refs ];
 
     return notifications?.map((msg, i) => {
+      const args = { targets: [ targets.current[i] ], onClose: () => removeMessage(i) };
+
       return (
         <Message
           key={i}
@@ -43,7 +45,7 @@ const Notifications = props => {
           message={msg}
           noIcons={noIcons}
           onClose={() => removeMessage(i)}
-          args={{ targets: [ targets.current[i] ], onClose: () => removeMessage(i) }}
+          args={{ targets: [ targets.current[i] ], onClose: () => dismiss(args) }}
           {...rest}
         />
       );
