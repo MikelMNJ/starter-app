@@ -631,8 +631,8 @@ finer control over whether you want a route to be exempt from rate limiting, cac
 the same middlware function, differently, for each individual route &mdash; so rate limits, for example, can be different from one route to another.
 
 ### About the limiter() middleware
-The default `express-rate-limit` middleware has been expanded in this implementation to be fully customizable.  `limiter()` takes three arguments:
-`limiter(maxNumOfReqs, timeInMilliseconds, "Your custom message")`.  Your custom message will interface with the front-end notification system when a 429 is returned.  If using an object, the front-end notification system will need either a single string (shown previously) or an object with the following keys:
+The default `express-rate-limit` middleware has been expanded in this implementation to be fully customizable.  `limiter()` takes four arguments:
+`limiter(maxNumOfReqs, timeInMilliseconds, "Your custom message", "objKeyName")`.  Your custom message will interface with the front-end notification system when a 429 is returned.  If using an object, the front-end notification system will need either a single string (shown previously) or an object with the following keys:
 ```javascript
 const message = {
   message: "My custom message string.",
@@ -650,13 +650,13 @@ The following can be found in *middleware/limitMiddleware.js*:
 ```javascript
 const { rateLimit } = require('express-rate-limit');
 
-const limiter = (max, windowMs, message) => rateLimit({
+const limiter = (max, windowMs, message, keyName) => rateLimit({
   max: max || 2,
   windowMs: windowMs || 5000,
   keyGenerator: (req, res) => req.ip,
   handler: (req, res, next) => {
     res.status(429).json({
-      error: message || "Too many requests.",
+      [keyName || "error"]: message || "Too many requests.",
     });
 
     next();
