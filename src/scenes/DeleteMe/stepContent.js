@@ -63,10 +63,10 @@ const content = [
       </div>
   },
   {
-    name: "Front-end cleanup (optional)",
+    name: "Front-end cleanup (recommended)",
     content:
       <div>
-        <h3>Front-end cleanup (optional)</h3>
+        <h3>Front-end cleanup (recommended)</h3>
         {terminationWarning("Removing DeleteMe imports, components or folders")}
         <p>
           <strong>Step 4: Remove entire /scenes/DeleteMe folder (This component).</strong>
