@@ -621,7 +621,7 @@ const message = {
 ```
 
 There is also a middleware handler within the `limiter()` responsible for returning the 429 status, your message (if provided) and this handler can also
-be used for more advanced functionality such as charing users prior to shutting them off etc.
+be used for more advanced functionality such as charging user fees prior to cutting them off etc.
 
 The following can be found in *middleware/limitMiddleware.js*:
 ```javascript
