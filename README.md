@@ -127,6 +127,14 @@ If you do not wish to use *Sentry*, remove the package along with the import and
 
 
 
+# Heartbeat
+
+Should your internet connection fail while the user is using your app, the application will alert the user that the internet connection has failed.
+Once the connection is restored, the app will continue rendering normally.  This is handled with a custom `<Heartbeat />` component that wraps the main
+app in *index.js*.  It is disabled in development and also takes a `time={}` prop (in seconds) to control the interval it checks the connection in production.
+
+
+
 # About Font Awesome
 By default, **@fortawesome/fontawesome-free** is used. If this is all you need, then there is nothing further for you to do.
 
