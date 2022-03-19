@@ -24,7 +24,9 @@ export const cleanAppAPI = `export const testRateLimit = args => {
 };`
 
 export const cleanSampleRoutes = `const customMessage = message => ({ message, type: "success" });
+
 // Remove "getLimitTest" from require module.
+
 router.route('/limitTest')
   .get(limiter(1, 5000, customMessage("Rate limit tested!")), getLimitTest);`;
 

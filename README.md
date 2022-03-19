@@ -32,10 +32,10 @@ Feel free to clone, modify and start your own projects with this template.
 
 # Getting up and running
 
-**Note to NPM users**: You will need to remove *yarn.lock* and *.yarnrc.yml* and change the deploy script in *package.json* from:<br />
-`"deploy": "yarn build && yarn build:server && netlify deploy --prod",`<br />
-to:<br />
-`"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
+> **NPM users**: You will need to remove *yarn.lock* and *.yarnrc.yml* and change the deploy script in *package.json* from:<br />
+> `"deploy": "yarn build && yarn build:server && netlify deploy --prod",`<br />
+> to:<br />
+> `"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
 
 1. Clone the repo.
 2. Add *.env* to the project root with the following variables:
@@ -155,11 +155,11 @@ npmScopes:
     npmAuthToken: ${FONT_AWESOME_AUTH_TOKEN}
 ```
 
-**Note**: NPM users can add a `.npmrc` file with the following:
-```
-@fortawesome:registry=https://npm.fontawesome.com/
-//npm.fontawesome.com/:_authToken=[Your-license-token]
-```
+> **NPM users**: Add `.npmrc` with the following:
+> ```
+> @fortawesome:registry=https://npm.fontawesome.com/
+> //npm.fontawesome.com/:_authToken=[Your-license-token]
+> ```
 
 
 
@@ -485,12 +485,12 @@ export const AppProvider = ({ children }) => {
 
 # Deployment
 
+> **NPM users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`.  Also
+> update the *netlify.toml* build command from `command = "yarn build"` to `command = "npm run build"`.
+
 Continuous Integration/Deployment is handled with Netlify.  The script for this can be found in *package.json*
 and the command is `yarn deploy`.  You will need to have *netlify-cli* installed:
 `yarn add global netlify-cli` or `npm install netlify-cli -g`
-
-**Note for NPM users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`.  Also
-update the *netlify.toml* build command from `command = "yarn build"` to `command = "npm run build"`.
 
 Once installed, make sure you are logged in with `netlify login` and perform a link to the netlify site with `netlify link`.
 Follow the instructions to link to your site ID.  You can set up web-hooks on Netlify/GitHub for auto deployment
