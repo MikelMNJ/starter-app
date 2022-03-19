@@ -63,7 +63,7 @@ export const documentation = (
     <a
       target="_blank"
       rel="noreferrer"
-      href="https://github.com/MikelMNJ/app-template"
+      href="https://github.com/MikelMNJ/starter-app"
     >
       Documentation
     </a>
