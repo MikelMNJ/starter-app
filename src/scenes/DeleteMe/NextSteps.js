@@ -1,7 +1,7 @@
 import React from 'react';
+import { documentation } from './codeStrings';
 import Tabs from 'components/Tabs/Tabs';
 import content from './stepContent';
-import { documentation } from './codeStrings';
 
 const NextSteps = props => {
   return (
