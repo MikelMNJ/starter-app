@@ -21,7 +21,7 @@ const content = [
         {terminationWarning("Modifying redirect from /ready", "stop rendering")}
 
         <p>
-          <strong>Step 1: Update authenticated routes or redirects</strong>
+          <strong>Step 1: Update authenticated routes or redirects.</strong>
         </p>
 
         <strong className="code">
@@ -30,7 +30,7 @@ const content = [
         <p className="code">{authAndRedirects}</p>
 
         <p>
-          <strong>Step 2: Update the following</strong>
+          <strong>Step 2: Update the following.</strong>
         </p>
 
         <strong className="code">
@@ -48,7 +48,7 @@ const content = [
       <div>
         <h3>Back-end cleanup (optional)</h3>
         <p>
-          <strong>Step 3: Remove the rate limit test route</strong>:
+          <strong>Step 3: Remove the rate limit test route.</strong>
         </p>
 
         <strong className="code">
@@ -78,7 +78,7 @@ const content = [
         <p className="code">{cleanApp}</p>
 
         <p>
-          <strong>Step 5: Remove the rate limit constant, actions and API test call</strong>:
+          <strong>Step 5: Remove the rate limit constant, actions and API test call.</strong>
         </p>
 
         <strong className="code">

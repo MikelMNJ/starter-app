@@ -40,7 +40,7 @@ to:<br />
 1. Clone the repo.
 2. Add *.env* to the project root with the following variables:
     ```
-    REACT_APP_API_BASE_PATH="/.netlify/functions/server/"
+    REACT_APP_API_BASE_PATH="/.netlify/functions/server"
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
@@ -53,7 +53,7 @@ See deployment section for additional steps to take before deployment to Netlify
 
 
 **Note about deployment services**: This has not been tested with other deployment services, like Heroku etc.  Any changes are likely to be in the
-use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. `REACT_APP_API_BASE_PATH="/.netlify/functions/server/"`
+use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. `REACT_APP_API_BASE_PATH="/.netlify/functions/server"`
 will need to be updated in *.env*.  Finally, you will likely need to make modifications to how the *functions*
 folder is handled by your service.
 
@@ -498,7 +498,7 @@ if changes to main have been pushed etc.
 
 **Reminder**: Don't forget to change the publish directory in Netlify's deployment settings to match the *netlify.toml* file ("build").
 Also, add your environment variables in Netlify's *Site settings > Build  and deploy > Environment* section:
-* REACT_APP_API_BASE_PATH="/.netlify/functions/server/"
+* REACT_APP_API_BASE_PATH="/.netlify/functions/server"
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET

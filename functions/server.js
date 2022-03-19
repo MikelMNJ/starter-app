@@ -3,7 +3,8 @@ const express = require('express');
 const serverless = require('serverless-http');
 const cors = require('cors');
 const app = express();
-const basePath = '/.netlify/functions/server';
+
+const { REACT_APP_API_BASE_PATH: basePath } = process.env;
 
 app.set('trust proxy', 1);
 

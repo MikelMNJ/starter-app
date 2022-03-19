@@ -24,6 +24,7 @@ const Tabs = props => {
       const resizeObserver = new ResizeObserver(posX);
       resizeObserver.observe(slider.current)
     }
+    /* eslint-disable-next-line */
   }, [activeTab]);
 
   function posX() {
@@ -84,6 +85,8 @@ const Tabs = props => {
             </div>
           );
         }
+
+        return null;
       })}
     </div>
   );
