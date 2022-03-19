@@ -77,6 +77,7 @@
       .tabNames {
         font-size: 0.85rem;
         min-width: 45rem;
+        min-height: 2.5rem;
       }
     }
   }
@@ -94,18 +95,6 @@
     }
   }
 }
-
-// @media only screen and (max-width: 860px) {
-//   .nextSteps {
-//     .stepTabs {
-//       max-width: unset !important;
-
-//       .tabNames {
-//         min-width: unset !important;
-//       }
-//     }
-//   }
-// }
 
 @media only screen and (max-width: 800px) {
   .deleteMe {
