@@ -10,26 +10,34 @@ export const handleNotify = (dispatch, data) => {
   const messages = data?.message || data?.messages;
   const errorMessages = data?.error || data?.errors;
 
+
   if (messages || errorMessages) {
     const addNotification = payload => dispatch(appActions?.addNotification(payload));
     const msgArr = isArray(messages);
     const errMsgArr = isArray(errorMessages);
+    const buildNotification = (item, typeFallback) => {
+      const { message, msg, icon, type } = item;
 
-    if (msgArr) return messages.forEach(item => addNotification(item));
+      return {
+        message: message || msg || item,
+        icon,
+        type: type || typeFallback,
+      }
+    };
 
-    if (errMsgArr) return errorMessages.forEach(item => addNotification({
-      message: item.message || item,
-      icon: item.icon,
-      type: item.type || "error",
-    }));
+    if (msgArr) return messages.forEach(item => (
+      addNotification(buildNotification(item))
+    ));
 
-    if (messages) addNotification(messages);
+    if (errMsgArr) return errorMessages.forEach(item => (
+      addNotification(buildNotification(item, "error"))
+    ));
 
-    if (errorMessages) addNotification({
-      message: errorMessages.message || errorMessages,
-      icon: errorMessages.icon,
-      type: errorMessages.type || "error"
-    });
+    if (messages) addNotification(buildNotification(messages));
+
+    if (errorMessages) {
+      addNotification(buildNotification(errorMessages, "error"));
+    }
   }
 };
 
