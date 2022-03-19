@@ -13,9 +13,10 @@ export const CheckHeartbeat = props => {
         <p>
           <strong>
             Heartbeat {inProduction ? "enabled" : "disabled"}
-          </strong>:<br />
+          </strong>
 
-          In {inProduction ? "production" : "development"} env.
+          {!inProduction && ":"}<br />
+          {!inProduction && "In development env."}
         </p>
       } />
     </Fragment>

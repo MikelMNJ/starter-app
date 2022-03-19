@@ -78,10 +78,11 @@ export const CheckAPI = props => {
       <Status color={status?.cache ? colors.green : colors.grey} text={
         <p>
           <strong>
-            API cache {status?.cache ? "present" : "absent"}
-          </strong>:<br />
+            API cache {status?.cache ? "returned" : "absent"}
+          </strong>
 
-          {status?.cache ? `${status?.cache}.` : "No cache-control."}
+          {status?.cache && ":"}<br />
+          {status?.cache && `"${status?.cache}".`}
         </p>
       } />
     </Fragment>

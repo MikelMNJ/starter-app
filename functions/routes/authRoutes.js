@@ -9,7 +9,8 @@ const {
 } = require('../controllers/authController');
 
 
-router.get('/', auth, checkCredentials);
-router.post('/', checkLoginPayload, login);
+router.route('/')
+  .get(auth, checkCredentials)
+  .post(checkLoginPayload, login);
 
 module.exports = router;
