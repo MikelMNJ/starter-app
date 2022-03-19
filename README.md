@@ -591,7 +591,7 @@ module.exports = router;
 
 Express' `router.route()` method is a clean way to consolidate identical route paths for an endpoint. It saves a few lines of code and minimizes any chance
 of errors from typing the same route string over and over. As noted in their documentation, middlewares for each route type defined like this should be
-placed before the controller function is called. as shown above, **not** where the route is defined.
+placed before the controller function is called, as shown above, **not** where the route is defined.
 
 ## About Middleware
 > All custom back-end middleware functions should be kept in the *functions/middleware* folder.
@@ -607,7 +607,7 @@ router.route('/')
 Instead of defining the middleware for the entire server, as is the case with `app.use(cors())` and others (in *server.js*), we can inject them on a
 per route basis for modular control. In the above example, `limiter()` and `cache()` are examples of per-route middleware.  Doing it this way allows for much
 finer control over whether you want a route to be exempt from rate limiting, caching or other middleware you may have.  Furthermore, it allows you to customize
-the same middlware function, differently for each individual route &mdash; so rate limits, for example, can be different from one route to another.
+the same middlware function, differently, for each individual route &mdash; so rate limits, for example, can be different from one route to another.
 
 ### About the limiter() middleware
 The default `express-rate-limit` middleware has been expanded in this implementation to be fully customizable.  `limiter()` takes three arguments:
@@ -622,6 +622,8 @@ const message = {
 
 There is also a middleware handler within the `limiter()` responsible for returning the 429 status, your message (if provided) and this handler can also
 be used for more advanced functionality such as charging user fees prior to cutting them off etc.
+
+> Rate limiting is done by IP address by default, but can be changed in the `keyGenerator` to use user ID.
 
 The following can be found in *middleware/limitMiddleware.js*:
 ```javascript
