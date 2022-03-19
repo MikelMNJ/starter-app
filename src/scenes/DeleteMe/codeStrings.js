@@ -31,7 +31,7 @@ router.route('/limitTest')
   .get(limiter(1, 5000, customMessage("Rate limit tested!")), getLimitTest);`;
 
 export const cleanSampleController = `// @access  Public
-// @route   GET api/v1/sample/limitTest
+// @route   GET server/v1/sample/limitTest
 // @desc    API test endpoint for rate limiter.
 const getLimitTest = async (req, res) => {
   try {

@@ -5,7 +5,7 @@ const message = type => ({
 });
 
 // @access  Public
-// @route   GET api/v1/sample
+// @route   GET server/v1/sample
 // @desc    API test response endpoint.
 const getSample = async (req, res) => {
   try {
@@ -16,7 +16,7 @@ const getSample = async (req, res) => {
 };
 
 // @access  Public
-// @route   GET api/v1/sample/limitTest
+// @route   GET server/v1/sample/limitTest
 // @desc    API test endpoint for rate limiter.
 const getLimitTest = async (req, res) => {
   try {
@@ -27,7 +27,7 @@ const getLimitTest = async (req, res) => {
 };
 
 // @access  Public
-// @route   POST api/v1/sample
+// @route   POST server/v1/sample
 // @desc    API test response endpoint.
 const postSample = async (req, res) => {
   try {
@@ -38,7 +38,7 @@ const postSample = async (req, res) => {
 };
 
 // @access  Public
-// @route   PUT api/v1/sample/:id
+// @route   PUT server/v1/sample/:id
 // @desc    API test response endpoint.
 const putSample = async (req, res) => {
   try {
@@ -50,7 +50,7 @@ const putSample = async (req, res) => {
 };
 
 // @access  Public
-// @route   DELETE api/v1/sample/:id
+// @route   DELETE server/v1/sample/:id
 // @desc    API test response endpoint.
 const deleteSample = async (req, res) => {
   try {

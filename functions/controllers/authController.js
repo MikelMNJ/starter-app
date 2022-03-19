@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const { REACT_APP_JWT_SECRET: jwtSecret } = process.env;
 
-// @route   GET api/v1/auth
+// @route   GET server/v1/auth
 // @desc    Authenticate provided user credentials
 // @access  Public
 const checkCredentials = async (req, res) => {
@@ -19,7 +19,7 @@ const checkCredentials = async (req, res) => {
   }
 };
 
-// @route   POST api/v1/auth
+// @route   POST server/v1/auth
 // @desc    Authenticate user and get token
 // @access  Public
 const twoHours = 7200;
