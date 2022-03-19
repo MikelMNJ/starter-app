@@ -19,7 +19,7 @@ const NotFound = props => {
     if (!noIcon) {
       return (
         <div className="icon">
-          <i className={`${icon ? iconValid(icon) : "fa-duotone fa-bug"}`} />
+          <i className={`${icon ? iconValid(icon) : "fa-solid fa-bug"}`} />
         </div>
       );
     }
