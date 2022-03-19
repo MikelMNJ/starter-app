@@ -1,6 +1,6 @@
 # About
 
-**View app**: https://my-app-template.netlify.app
+**View app**: https://starterapp.netlify.app
 
 This project is created with create-react-app and heavily modified with
 features that enable you to quickly get up and running with a highly scalable, production-ready, web app.
@@ -169,7 +169,7 @@ Default styles for common elements, such as forms, links, headers etc. can be fo
 *theme/common.scss* also contains class names for quick styling, such as *center*, *inline*, or common colors used in feedback and notifications, like *red*, *green*,
 *yellow* or *blue*. Additional colors can be added and exported in *theme/colors.scss*.
 
-## Accessing SCSS variables in .js files
+## Accessing SASS variables in .js files
 This is acheived with `yarn install sass` in *package.json* and **sass-loader: 7.2.0** or higher in *yarn.lock* (*package-lock.json* for npm).
 From there, *.scss* files can be used freely throughout the project.  With that set, please take a look at *theme/colors.scss*.
 A set of sass variables are defined in this style-sheet and exported using `:export {}`.  *colors.scss* is then called in *index.scss*
@@ -183,7 +183,7 @@ In this example, colors are being used, but any style-sheet with any sass variab
 # State Management
 
 State is handled with React's `useContext()` and `useReducer()` hooks.  A custom `useStore()` hook is used to read from *Context* as well.
-This has been set up in an identical way to *Redux*, since Redux, under the hood, uses these as well.
+This has been set up in an similar way to *Redux*.
 
 ## About the Reducer
 The Reducer takes an initial state object and action.  You can find the `actionCreator()` function, along with
