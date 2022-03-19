@@ -4,7 +4,7 @@ const serverless = require('serverless-http');
 const cors = require('cors');
 const app = express();
 
-const { REACT_APP_API_BASE_PATH: basePath } = process.env;
+const { REACT_APP_API_V1: v1 } = process.env;
 
 app.set('trust proxy', 1);
 
@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // Define routes
-app.use(`${basePath}/sample`, require('./routes/sampleRoutes'));
-app.use(`${basePath}/auth`, require('./routes/authRoutes'));
+app.use(`${v1}sample`, require('./routes/sampleRoutes'));
+app.use(`${v1}auth`, require('./routes/authRoutes'));
 
 module.exports.handler = serverless(app);

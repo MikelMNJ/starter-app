@@ -40,11 +40,14 @@ Feel free to clone, modify and start your own projects with this template.
 1. Clone the repo.
 2. Add *.env* to the project root with the following variables:
     ```
-    REACT_APP_API_BASE_PATH="/.netlify/functions/server"
+    REACT_APP_API_V1="/.netlify/functions/server/v1/"
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
     ```
+
+    **Important**: Make sure you have the slash included at the end of the path in *REACT_APP_API_V1*!
+
 3. In terminal, run `cd /path/to/project` then `yarn set version berry` (if not on a modern version of yarn already), followed by `yarn`.
 For NPM users, run `npm i` in the project directory.
 4. Finally, run `yarn start` and `yarn start:server` or `npm run start` and `npm run start:server`.
@@ -53,7 +56,7 @@ See deployment section for additional steps to take before deployment to Netlify
 
 
 **Note about deployment services**: This has not been tested with other deployment services, like Heroku etc.  Any changes are likely to be in the
-use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. `REACT_APP_API_BASE_PATH="/.netlify/functions/server"`
+use of a *[service].toml* file, modification of the *start:server*, *build:server* and *deploy* scripts in *package.json*. `REACT_APP_API_V1="/.netlify/functions/server/v1/"`
 will need to be updated in *.env*.  Finally, you will likely need to make modifications to how the *functions*
 folder is handled by your service.
 
@@ -62,15 +65,15 @@ folder is handled by your service.
 # Organization
 
 The structure of this template is as follows:
-* Anything back-end > *functions*.
-* Reusable components > *components*.
-* Errors and debugging > *errors*.
-* Utility related functions > *helpers*.
-* Anything state related > *modules*.
-* Main route components > *scenes*.
-* Anything theme related > *theme*.
-* Front-end middleware/afterware > *wares*.
-* Custom SVG, fonts or image files > *static*.
+* **functions**: Anything back-end.
+* **components**: Reusable components.
+* **errors**: Errors and debugging.
+* **helpers**: Utility related functions.
+* **modules**: Anything state related.
+* **scenes**: Main route components.
+* **theme**: Anything theme related.
+* **wares**: Front-end middleware/afterware.
+* **static**: Custom SVG, fonts or image files.
 
 **Note**: Absolute pathing for JavaScript module imports has been added in *jsconfig.json*.
 
@@ -483,6 +486,186 @@ export const AppProvider = ({ children }) => {
 
 
 
+# Back-end
+
+The back-end is completely contained within the *functions* folder.  This is the folder Netlify uses to compile it's lambda functions on deployment.
+
+The structure of this folder is as follows:
+* **connectDB**: Houses main module for MongoDB initialization.
+* **controllers**: All logic for API operations.
+* **middleware**: Custom middleware functions.
+* **models**: Mongoose schema's for DB collection items.
+* **routes**: All route modules that call route controllers.
+
+> **Note**: The main *server.js* file is responsible for initiating the MongoDB connection, establishing broader middleware and defining main API routes.
+> *connect.DB/db.js* is where your *REACT_APP_MONGO_URI* is used.
+
+If you need to add a new main route, add a new route in the "Define routes" section, following the same format as the existing base routes.
+The following is in *server.js*.
+```javascript
+const connectDB = require('./connectDB/db');
+const express = require('express');
+const serverless = require('serverless-http');
+const cors = require('cors');
+const app = express();
+
+const { REACT_APP_API_V1: v1 } = process.env;
+
+app.set('trust proxy', 1);
+
+// Connect database
+connectDB();
+
+// Init middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+
+// Define routes
+app.use(`${v1}sample`, require('./routes/sampleRoutes'));
+app.use(`${v1}auth`, require('./routes/authRoutes'));
+
+module.exports.handler = serverless(app);
+```
+
+## About API Versioning
+Since the version number is attached to the base path *REACT_APP_API_V1* variable, you have modular control over API versioning, so you don't
+break existing API versions still in production.  For new versions, add a new env variable with the new API version in the name and value:
+```javascript
+REACT_APP_API_V1="/.netlify/functions/server/v1/"
+REACT_APP_API_V2="/.netlify/functions/server/v2/"
+```
+
+Then import it for use in *server.js*.
+```javascript
+const {
+  REACT_APP_API_V2: v2,
+  REACT_APP_API_V1: v1,
+} = process.env;
+
+// v2 routes
+app.use(`${v2}sample`, require('./routes-v2/sampleRoutes'));
+app.use(`${v2}auth`, require('./routes-v2/authRoutes'));
+
+// v1 routes
+app.use(`${v1}sample`, require('./routes/sampleRoutes'));
+app.use(`${v1}auth`, require('./routes/authRoutes'));
+```
+
+## About Routes
+> Routes are imported and used on the base endpoints established in *server.js*
+
+Although the main endpoint is defined in *server.js*, each subsequent route path for that endpoint is defined in the routes folder.
+If you need more routes, copy the *routes/sampleRoutes.js* file and work from there.  Remember to import this new route module in *server.js*.
+
+The following can be found in *sampleRoutes.js*:
+```javascript
+const express = require('express');
+const router = express.Router();
+const limiter = require('../middleware/limitMiddleware');
+
+const {
+  getSample,
+  postSample,
+  putSample,
+  deleteSample
+} = require('../controllers/sampleController');
+
+// Caching
+const apicache = require('apicache');
+let cache = apicache.middleware;
+const defaultCache = '2 minutes';
+
+// Starter routes
+router.route('/')
+  .get(limiter(), cache(defaultCache), getSample)
+  .post(limiter(), cache(defaultCache), postSample);
+
+
+  router.route('/:id')
+  .put(limiter(), cache(defaultCache), putSample)
+  .delete(limiter(), cache(defaultCache), deleteSample);
+
+module.exports = router;
+```
+
+Express' `router.route()` method is a clean way to consolidate identical route paths for an endpoint. It saves a few lines of code and minimize any chance
+of errors from typing the same route string over and over. As noted in their documentation, middlewares for each route type defined like this should be
+placed before the controller function is called. as shown above.
+
+## About Middleware
+> All custom back-end middleware functions should be kept in the *functions/middleware* folder.
+
+Consider the following in *routes/sampleRoutes.js*:
+```javascript
+// Starter routes
+router.route('/')
+  .get(limiter(), cache(defaultCache), getSample)
+  .post(limiter(), cache(defaultCache), postSample);
+```
+
+Instead of defining the middleware for the entire server, as is the case with `app.use(cors())` and others (in *server.js*), we can inject them on a
+per route basis for modular control. In the above example, `limiter()` and `cache()` are examples of per-route middleware.  Doing it this way allows for much
+finer control over whether you want a route to be exempt from rate limiting, caching or other middleware you may have.  Furthermore, it allows you to customize
+the same middlware function, differently for each individual route &mdash; so rate limits, for example, can be different from one route to another.
+
+## About Controllers
+> All controllers should be kept in the *controllers* folder and are imported for use in your *routes* file.
+
+Controllers extract all logic from your *routes* file to keep the *routes* file exclusively about routing.
+
+Consider the following controller in *controllers/sampleController.js*:
+```javascript
+// @access  Public
+// @route   GET server/v1/sample
+// @desc    API test response endpoint.
+const getSample = async (req, res) => {
+  try {
+    res.status(200).json({ message: message("GET") });
+  } catch(error) {
+    res.status(500).json({ error });
+  }
+};
+```
+
+A simple function that handles what happens when the *server/v1/sample* endpoint is hit.  It's a good idea to include information about each
+controller as shown above.
+
+## About Models
+Mongoose is the primary library used for creating back-end models, as well as interacting with your DB.
+
+The following can be found in *models/userModel.js*:
+```javascript
+const mongoose = require('mongoose');
+const moment = require('moment');
+
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+
+    password: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true
+  }
+);
+
+module.exports = User = mongoose.model('user', UserSchema);
+```
+
+This example shows a new user schema that includes a unique `email` entry in the database and a `password` entry that will be used to store
+hashed password data. `created_at` and `updated_at` are automatically added with the `{ timestamps: true }` object.  You can see how this is called
+and used in *controllers/authController.js*
+
+
+
 # Deployment
 
 > **NPM users**: Make sure you've updated your *package.json* scripts to use `npm run ...` instead of `yarn ...`.  Also
@@ -498,7 +681,7 @@ if changes to main have been pushed etc.
 
 **Reminder**: Don't forget to change the publish directory in Netlify's deployment settings to match the *netlify.toml* file ("build").
 Also, add your environment variables in Netlify's *Site settings > Build  and deploy > Environment* section:
-* REACT_APP_API_BASE_PATH="/.netlify/functions/server"
+* REACT_APP_API_V1="/.netlify/functions/server/v1/"
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
