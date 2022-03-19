@@ -44,6 +44,7 @@ Feel free to clone, modify and start your own projects with this template.
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
+    REACT_APP_EMAIL_KEY=""
     ```
 
     **Important**: Make sure you have the slash included at the end of the path in *REACT_APP_API_V1*!
@@ -242,6 +243,8 @@ const reducer = (initialState = initial, action = {}) => {
     case constants.REMOVE_NOTIFICATION:
       const index = action.payload;
       return state.remove(constants.STATE_KEY_NOTIFICATIONS, index);
+    case constants.SEND_EMAIL:
+      return state.update(constants.STATE_KEY_EMAIL_RESPONSE);
     case constants.SAMPLE_API_CALL:
       return state.update(constants.STATE_KEY_SAMPLE_API_RESPONSE);
 
@@ -256,48 +259,6 @@ export default reducer;
 **Note**: It's recommended to create a new folder in *modules* for other sections of your site. These other reducers, actions, selectors etc. will keep things scalable and manageable.
 Don't forget to add any new reducers in *store.js* &mdash; they should be added to `const reducers = {}`.
 
-## About Middleware and Afterware
-A middleware function is used to execute something prior to the reducer's state update.  Afterware is much the same, but runs after the state update has occured.
-Middleware and afterware can be added to the arrays of the same name in *store.js*, example: `const middlewares = [ apiMiddleware ];`
-
-An example of middleware that this app uses can be found when any API action is called. Please see *wares/apiMiddleware.js* for the full example, including the `apiRelay()` function:
-```jsx
-const apiMiddleware = (dispatch, action) => {
-  const isAPIRequest = action.path || action.method;
-
-  if (isAPIRequest) {
-    apiRelay({ ...action, dispatch });
-    return;
-  }
-
-  dispatch(action);
-};
-```
-
-A modified version of `useReducer()` is being used to handle the injection of these wares and can be found in *helpers/stateHelpers.js*:
-```jsx
-export const useReducerWithWares = args => {
-  const { rootReducer, initialState, middlewares, afterwares } = args;
-  const [ state, dispatch ] = useReducer(rootReducer, initialState);
-  const actionRef = useRef();
-
-  const dispatchWithMiddleware = action => {
-    middlewares?.forEach(middleware => middleware(dispatch, action, state));
-    actionRef.current = action;
-  };
-
-  useEffect(() => {
-    if (!actionRef.current) return;
-    afterwares?.forEach(afterware => afterware(dispatch, actionRef.current, state));
-    actionRef.current = null;
-  }, [afterwares, state]);
-
-  return [ state, dispatchWithMiddleware ];
-};
-```
-
-Please see the **About store.js** section to see this implemented.
-
 
 
 ## About Actions and Selectors
@@ -308,10 +269,12 @@ const constants = {
   SAMPLE_ACTION: "modules/app/SAMPLE_ACTION",
   ADD_NOTIFICATION: "modules/app/ADD_NOTIFICATION",
   REMOVE_NOTIFICATION: "modules/app/REMOVE_NOTIFICATION",
+  SEND_EMAIL: "modules/app/SEND_EMAIL",
   SAMPLE_API_CALL: "modules/app/SAMPLE_API_CALL",
 
   STATE_KEY_SAMPLE_SELECTOR: "sampleSelector",
   STATE_KEY_NOTIFICATIONS: "notifications",
+  STATE_KEY_EMAIL_RESPONSE: "emailResponse",
   STATE_KEY_SAMPLE_API_RESPONSE: "sampleAPIResponse"
 };
 
@@ -321,6 +284,10 @@ const appActions = {
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
   removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
+  sendEmail: (payload, callback) => {
+    const args = { type: constants.SEND_EMAIL, payload,  callback };
+    return api.sendEmail(args);
+  },
 
   // API actions go through middleware, then passes the server res.json() back to the reducer, as payload.
   sampleAPICall: (payload, callback) => {
@@ -335,6 +302,7 @@ const appSelectors = {
   // This will need to be changed according to the reducer you are working with/targeting.
   sampleSelector: state => state.app[constants.STATE_KEY_SAMPLE_SELECTOR],
   notifications: state => state.app[constants.STATE_KEY_NOTIFICATIONS],
+  emailResponse: state => state.app[constants.STATE_KEY_EMAIL_RESPONSE],
   sampleAPIResponse: state => state.app[constants.STATE_KEY_SAMPLE_API_RESPONSE],
 }
 ```
@@ -435,6 +403,50 @@ export const sampleAPICall = args => {
 ```
 
 
+
+## About Middleware and Afterware
+A middleware function is used to execute something prior to the reducer's state update.  Afterware is much the same, but runs after the state update has occured.
+Middleware and afterware can be added to the arrays of the same name in *store.js*, example: `const middlewares = [ apiMiddleware ];`
+
+An example of middleware that this app uses can be found when any API action is called. Please see *wares/apiMiddleware.js* for the full example, including the `apiRelay()` function:
+```jsx
+const apiMiddleware = (dispatch, action) => {
+  const isAPIRequest = action.path || action.method;
+
+  if (isAPIRequest) {
+    apiRelay({ ...action, dispatch });
+    return;
+  }
+
+  dispatch(action);
+};
+```
+
+A modified version of `useReducer()` is being used to handle the injection of these wares and can be found in *helpers/stateHelpers.js*:
+```jsx
+export const useReducerWithWares = args => {
+  const { rootReducer, initialState, middlewares, afterwares } = args;
+  const [ state, dispatch ] = useReducer(rootReducer, initialState);
+  const actionRef = useRef();
+
+  const dispatchWithMiddleware = action => {
+    middlewares?.forEach(middleware => middleware(dispatch, action, state));
+    actionRef.current = action;
+  };
+
+  useEffect(() => {
+    if (!actionRef.current) return;
+    afterwares?.forEach(afterware => afterware(dispatch, actionRef.current, state));
+    actionRef.current = null;
+  }, [afterwares, state]);
+
+  return [ state, dispatchWithMiddleware ];
+};
+```
+
+Please see the **About store.js** section to see this implemented.
+
+
 ## About store.js
 Now that the reducer has been explored with constants/actions/selectors defined and used in components, let's take a look at the heart of it all &mdash; the store.
 
@@ -531,6 +543,7 @@ app.use(cors());
 
 // Define routes
 app.use(`${v1}sample`, require('./routes/sampleRoutes'));
+app.use(`${v1}email`, require('./routes/emailRoutes'));
 app.use(`${v1}auth`, require('./routes/authRoutes'));
 
 module.exports.handler = serverless(app);
@@ -759,3 +772,4 @@ Also, add your environment variables in Netlify's *Site settings > Build  and de
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
+* REACT_APP_EMAIL_KEY
