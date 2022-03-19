@@ -8,6 +8,8 @@ const limiter = (max, windowMs, message) => rateLimit({
     res.status(429).json({
       error: message || "Too many requests.",
     });
+
+    next();
   }
 });
 

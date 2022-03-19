@@ -488,7 +488,7 @@ export const AppProvider = ({ children }) => {
 
 # Back-end
 
-The back-end is completely contained within the *functions* folder.  This is the folder Netlify uses to compile it's lambda functions on deployment.
+The back-end is completely contained within the *functions* folder.  This is the folder Netlify uses to compile it's lambda functions for deployment.
 
 The structure of this folder is as follows:
 * **connectDB**: Houses main module for MongoDB initialization.
@@ -497,10 +497,10 @@ The structure of this folder is as follows:
 * **models**: Mongoose schema's for DB collection items.
 * **routes**: All route modules that call route controllers.
 
-> **Note**: The main *server.js* file is responsible for initiating the MongoDB connection, establishing broader middleware and defining main API routes.
+> **Note**: The main *server.js* file is responsible for initiating the MongoDB connection, establishing global back-end middleware and defining main API routes.
 > *connect.DB/db.js* is where your *REACT_APP_MONGO_URI* is used.
 
-If you need to add a new main route, add a new route in the "Define routes" section, following the same format as the existing base routes.
+If you need to add a new main route, add a new route in the `// Define routes` section, following the same format as the existing base routes.
 The following is in *server.js*.
 ```javascript
 const connectDB = require('./connectDB/db');
@@ -589,9 +589,9 @@ router.route('/')
 module.exports = router;
 ```
 
-Express' `router.route()` method is a clean way to consolidate identical route paths for an endpoint. It saves a few lines of code and minimize any chance
+Express' `router.route()` method is a clean way to consolidate identical route paths for an endpoint. It saves a few lines of code and minimizes any chance
 of errors from typing the same route string over and over. As noted in their documentation, middlewares for each route type defined like this should be
-placed before the controller function is called. as shown above.
+placed before the controller function is called. as shown above, **not** where the route is defined.
 
 ## About Middleware
 > All custom back-end middleware functions should be kept in the *functions/middleware* folder.
@@ -608,6 +608,70 @@ Instead of defining the middleware for the entire server, as is the case with `a
 per route basis for modular control. In the above example, `limiter()` and `cache()` are examples of per-route middleware.  Doing it this way allows for much
 finer control over whether you want a route to be exempt from rate limiting, caching or other middleware you may have.  Furthermore, it allows you to customize
 the same middlware function, differently for each individual route &mdash; so rate limits, for example, can be different from one route to another.
+
+### About the limiter() middleware
+The default `express-rate-limit` middleware has been expanded in this implementation to be fully customizable.  `limiter()` takes three arguments:
+`limiter(maxNumOfReqs, timeInMilliseconds, "Your custom message")`.  Your custom message will interface with the front-end notification system when a 429 is returned.  If using an object, the front-end notification system will need either a single string (shown previously) or an object with the following keys:
+```javascript
+const message = {
+  message: "My custom message string.",
+  icon: "fa-solid fa-check" // Font Awesome icon
+  type, // "success", "warning" or "error" Override for notification type on the front end
+}
+```
+
+There is also a middleware handler within the `limiter()` responsible for returning the 429 status, your message (if provided) and this handler can also
+be used for more advanced functionality such as charing users prior to shutting them off etc.
+
+The following can be found in *middleware/limitMiddleware.js*:
+```javascript
+const { rateLimit } = require('express-rate-limit');
+
+const limiter = (max, windowMs, message) => rateLimit({
+  max: max || 2,
+  windowMs: windowMs || 5000,
+  keyGenerator: (req, res) => req.ip,
+  handler: (req, res, next) => {
+    res.status(429).json({
+      error: message || "Too many requests.",
+    });
+
+    next();
+  }
+});
+
+module.exports = limiter;
+```
+
+### About the auth() middleware
+The `auth()` middleware is responsible for validating token data in the request header.  If the token is valid, it runs `next()`, otherwise it stops
+access to the private route.  You will need to provide the `x-auth-token` header with the value set to the user's token when accessing a private route.
+
+The following can be found in *middleware/authMiddleware.js*:
+```javascript
+const jwt = require('jsonwebtoken');
+
+require('dotenv').config();
+const { REACT_APP_JWT_SECRET: jwtSecret } = process.env;
+
+module.exports = function(req, res, next) {
+  const token = req.header('x-auth-token');
+
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized: No token found.' });
+  };
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    req.user = decoded.user;
+    next();
+  } catch(err) {
+    res.status(401).json({ error: 'Invalid token.' });
+  };
+};
+```
+
+
 
 ## About Controllers
 > All controllers should be kept in the *controllers* folder and are imported for use in your *routes* file.
