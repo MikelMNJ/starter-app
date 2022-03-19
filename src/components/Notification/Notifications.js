@@ -45,7 +45,7 @@ const Notifications = props => {
           message={msg}
           noIcons={noIcons}
           onClose={() => removeMessage(i)}
-          args={{ targets: [ targets.current[i] ], onClose: () => dismiss(args) }}
+          args={args}
           {...rest}
         />
       );
