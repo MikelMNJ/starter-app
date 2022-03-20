@@ -649,7 +649,7 @@ The following can be found in *middleware/limitMiddleware.js*:
 const { rateLimit } = require('express-rate-limit');
 
 const limiter = (max, windowMs, message, keyName) => rateLimit({
-  max: max || 2,
+  max: max || 5,
   windowMs: windowMs || 5000,
   keyGenerator: (req, res) => req.ip,
   handler: (req, res, next) => {
