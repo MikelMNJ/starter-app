@@ -33,7 +33,6 @@ const sendEmail = async (req, res) => {
       });
     }
 
-    // Dispatch email.
     const msg = {
       to: email,
       from: sendAddress,

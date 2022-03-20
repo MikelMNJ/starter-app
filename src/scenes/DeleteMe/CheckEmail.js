@@ -5,7 +5,7 @@ import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
 
-const { REACT_APP_EMAIL_KEY: apiKey } = process.env;
+const { REACT_APP_SENDGRID_KEY: apiKey } = process.env;
 
 const CheckEmail = props => {
   const [ status, setStatus ] = useState({});
