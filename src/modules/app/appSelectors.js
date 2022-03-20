@@ -11,6 +11,7 @@ import constants from './appConstants';
 const appSelectors = {
   sampleSelector: state => state.app[constants.STATE_KEY_SAMPLE_SELECTOR],
   notifications: state => state.app[constants.STATE_KEY_NOTIFICATIONS],
+  emailResponse: state => state.app[constants.STATE_KEY_EMAIL_RESPONSE],
   sampleAPIResponse: state => state.app[constants.STATE_KEY_SAMPLE_API_RESPONSE],
 };
 

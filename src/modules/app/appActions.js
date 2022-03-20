@@ -17,6 +17,10 @@ const appActions = {
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
   removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
+  sendEmail: (payload, callback) => {
+    const args = { type: constants.SEND_EMAIL, payload,  callback };
+    return api.sendEmail(args);
+  },
   sampleAPICall: (payload, callback) => {
     const args = { type: constants.SAMPLE_API_CALL, payload,  callback };
     return api.sampleAPICall(args);

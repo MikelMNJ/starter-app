@@ -8,7 +8,7 @@ const NextSteps = props => {
     <div className="nextSteps">
       <h2>Next Steps...</h2>
       <p>
-        See yellow or red? Iron things out before proceeding.<br />
+        See yellow or red? Iron things out before proceeding.
         Green or grey? You're ready to start building your app!
       </p>
 

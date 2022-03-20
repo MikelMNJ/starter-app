@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import { iconValid } from 'helpers/validators';
-import { slideIn } from 'helpers/animationHelpers';
+import { dismiss, slideIn } from 'helpers/animationHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { isObject, isArray, lowerCase } from 'lodash';
 import './Notification.scss';
@@ -56,7 +56,7 @@ const Message = forwardRef((props, ref) => {
         {buildMessage()}
       </div>
 
-      <div className="close" onClick={onClose}>
+      <div className="close" onClick={() => dismiss(args)}>
         <i className="fa-solid fa-times" />
       </div>
     </div>

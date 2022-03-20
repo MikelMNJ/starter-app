@@ -16,6 +16,8 @@ const reducer = (initialState = initial, action = {}) => {
     case constants.REMOVE_NOTIFICATION:
       const index = action.payload;
       return state.remove(constants.STATE_KEY_NOTIFICATIONS, index);
+    case constants.SEND_EMAIL:
+      return state.update(constants.STATE_KEY_EMAIL_RESPONSE);
     case constants.SAMPLE_API_CALL:
       return state.update(constants.STATE_KEY_SAMPLE_API_RESPONSE);
 

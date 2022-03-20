@@ -18,6 +18,7 @@ app.use(cors());
 
 // Define routes
 app.use(`${v1}sample`, require('./routes/sampleRoutes'));
+app.use(`${v1}email`, require('./routes/emailRoutes'));
 app.use(`${v1}auth`, require('./routes/authRoutes'));
 
 module.exports.handler = serverless(app);

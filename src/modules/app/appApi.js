@@ -22,3 +22,21 @@ export const testRateLimit = args => {
     onFail: res => callback(res),
   };
 };
+
+
+export const sendEmail = args => {
+  const { type, payload, callback } = args;
+
+ return {
+    type,
+    path: "/email",
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    onSuccess: res => callback(res),
+    onFail: res => callback(res),
+  };
+};
