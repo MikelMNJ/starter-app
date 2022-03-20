@@ -24,7 +24,7 @@ const Heartbeat = props => {
           if (!offline) setOffline(true);
         }
       }
-    }, time || 10000);
+    }, time || 60000);
 
     return () => clearInterval(heartbeat);
   }, [offline, disabled, time]);
