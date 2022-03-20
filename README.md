@@ -37,6 +37,7 @@ Feel free to clone, modify and start your own projects with this template.
 > to:<br />
 > `"deploy": "npm run build && npm run build:server && netlify deploy --prod",`
 
+
 1. Clone the repo.
 2. Add *.env* to the project root with the following variables:
     ```
@@ -53,6 +54,8 @@ Feel free to clone, modify and start your own projects with this template.
 3. In terminal, run `cd /path/to/project` then `yarn set version berry` (if not on a modern version of yarn already), followed by `yarn`.
 For NPM users, run `npm i` in the project directory.
 4. Finally, run `yarn start` and `yarn start:server` or `npm run start` and `npm run start:server`.
+
+> You will need a valid SendGrid API Key and your SendGrid sender address must be verified with them.
 
 See deployment section for additional steps to take before deployment to Netlify.
 
@@ -751,6 +754,43 @@ module.exports = User = mongoose.model('user', UserSchema);
 This example shows a new user schema that includes a unique `email` entry in the database and a `password` entry that will be used to store
 hashed password data. `created_at` and `updated_at` are automatically added with the `{ timestamps: true }` object.  You can see how this is called
 and used in *controllers/authController.js*
+
+
+
+## Email Sending
+SendGrid is the service being used to dispatch emails.  You can find the `/email` route and controller in *routes/emailRoutes* and *controllers/emailController.js*.
+The incoming payload from the front-end is validated with express-validator, shown here:
+```javascript
+const checkEmailPayload = [
+  check('email')
+    .notEmpty().withMessage('Email is required.')
+    .isEmail().withMessage('Invalid email.'),
+];
+```
+
+> Be sure to provide a valid SendGrid API key for *REACT_APP_SENDGRID_KEY* in *.env*.
+> Your **from** key will be the value of *REACT_APP_VERIFIED_SENDER_EMAIL* in *.env*.
+> Please make sure your SendGrid send address is verified in the SendGrid dashboard or a 504: Forbidden will be returned.
+
+The main composition and sending continues in the *sendEmail* function.
+Here is a cut down version in *controllers/emailController.js* &mdash; see file for full implementation:
+```javascript
+const msg = {
+  to: email,
+  from: sendAddress,
+  subject: "Test email dispatched.",
+  text: 'A test email has successfully been dispatched from the Starter App project.',
+  html:
+    `<strong>
+      A test email has successfully been dispatched from the Starter App project.
+    </strong>`,
+};
+
+await sgMail.send(msg);
+```
+
+The `await sgMail.send(msg);` call has been disabled for the live app example.  Be sure to uncomment it when you want actual delivery of the email,
+or see SendGrid's documentation for configuring a sandbox environment if that suits your needs.
 
 
 
