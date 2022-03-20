@@ -550,6 +550,9 @@ app.use(`${v1}sample`, require('./routes/sampleRoutes'));
 app.use(`${v1}email`, require('./routes/emailRoutes'));
 app.use(`${v1}auth`, require('./routes/authRoutes'));
 
+app.keepAliveTimeout = 121 * 1000;
+app.headersTimeout = 125 * 1000;
+
 module.exports.handler = serverless(app);
 ```
 
@@ -557,8 +560,8 @@ module.exports.handler = serverless(app);
 Since the version number is attached to the base path *REACT_APP_API_V1* variable, you have modular control over API versioning, so you don't
 break existing API versions still in production.  For new versions, add a new env variable with the new API version in the name and value:
 ```javascript
-REACT_APP_API_V1="/.netlify/functions/server/v1/"
 REACT_APP_API_V2="/.netlify/functions/server/v2/"
+REACT_APP_API_V1="/.netlify/functions/server/v1/"
 ```
 
 Then import it for use in *server.js*.
