@@ -11,20 +11,15 @@ const {
   deleteSample
 } = require('../controllers/sampleController');
 
-// Caching
-const apicache = require('apicache');
-let cache = apicache.middleware;
-const defaultCache = '2 minutes';
-
 // Starter routes
 router.route('/')
-  .get(limiter(), cache(defaultCache), getSample)
-  .post(limiter(), cache(defaultCache), postSample);
+  .get(limiter(), getSample)
+  .post(limiter(), postSample);
 
 
   router.route('/:id')
-  .put(limiter(), cache(defaultCache), putSample)
-  .delete(limiter(), cache(defaultCache), deleteSample);
+  .put(limiter(), putSample)
+  .delete(limiter(), deleteSample);
 
 // Test routes
 router.route('/limitTest')
