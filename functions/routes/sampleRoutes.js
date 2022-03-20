@@ -11,18 +11,23 @@ const {
   deleteSample
 } = require('../controllers/sampleController');
 
+// Caching
+const apicache = require('apicache');
+let cache = apicache.middleware;
+const defaultCache = '2 minutes';
+
 // Starter routes
 router.route('/')
-  .get(limiter(), getSample)
-  .post(limiter(), postSample);
+  .get(limiter(), cache(defaultCache), getSample)
+  .post(limiter(), cache(defaultCache), postSample);
 
 
   router.route('/:id')
-  .put(limiter(), putSample)
-  .delete(limiter(), deleteSample);
+  .put(limiter(), cache(defaultCache), putSample)
+  .delete(limiter(), cache(defaultCache), deleteSample);
 
 // Test routes
 router.route('/limitTest')
-  .get(limiter(2, 1000, customMessage("Rate limit tested!"), "result"), getLimitTest);
+  .get(limiter(1, 5000, customMessage("Rate limit tested!"), "result"), getLimitTest);
 
 module.exports = router;

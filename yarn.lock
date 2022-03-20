@@ -3612,6 +3612,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"apicache@npm:^1.6.3":
+  version: 1.6.3
+  resolution: "apicache@npm:1.6.3"
+  checksum: 225aeb3e646ff9c8d316fd1901782ded055a1f1b47b26c6fd1a86fbc63e5401c7262270bb408b643c127bdd4c95fa9a0117170d09c695f1afcf6ac51b40d9666
+  languageName: node
+  linkType: hard
+
 "aproba@npm:^1.0.3 || ^2.0.0":
   version: 2.0.0
   resolution: "aproba@npm:2.0.0"
@@ -13497,6 +13504,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.4
     "@testing-library/user-event": ^13.5.0
+    apicache: ^1.6.3
     bcryptjs: ^2.4.3
     cors: ^2.8.5
     dotenv: ^16.0.0

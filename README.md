@@ -23,6 +23,7 @@ The app contains the following features to get you started:
 * Sample routes for getting started and testing.
 * Auth. middleware for accessing private routes.
 * Cors middleware.
+* API caching middleware.
 * API rate limiting middleware. Defaults to IP address but can be configured for user ID (or both) with the custom keyGenerator() in the limiter.
 
 Feel free to clone, modify and start your own projects with this template.
@@ -595,15 +596,20 @@ const {
   deleteSample
 } = require('../controllers/sampleController');
 
+// Caching
+const apicache = require('apicache');
+let cache = apicache.middleware;
+const defaultCache = '2 minutes';
+
 // Starter routes
 router.route('/')
-  .get(limiter(), getSample)
-  .post(limiter(), postSample);
+  .get(limiter(), cache(defaultCache), getSample)
+  .post(limiter(), cache(defaultCache), postSample);
 
 
   router.route('/:id')
-  .put(limiter(), putSample)
-  .delete(limiter(), deleteSample);
+  .put(limiter(), cache(defaultCache), putSample)
+  .delete(limiter(), cache(defaultCache), deleteSample);
 
 module.exports = router;
 ```
@@ -619,13 +625,13 @@ Consider the following in *routes/sampleRoutes.js*:
 ```javascript
 // Starter routes
 router.route('/')
-  .get(limiter(), getSample)
-  .post(limiter(), postSample);
+  .get(limiter(), cache(defaultCache), getSample)
+  .post(limiter(), cache(defaultCache), postSample);
 ```
 
 Instead of defining the middleware for the entire server, as is the case with `app.use(cors())` and others (in *server.js*), we can inject them on a
-per route basis for modular control. In the above example, `limiter()` is an example of per-route middleware.  Doing it this way allows for much
-finer control over whether you want a route to be exempt from rate limiting or other middleware you may have.  Furthermore, it allows you to customize
+per route basis for modular control. In the above example, `limiter()` and `cache()` are examples of per-route middleware.  Doing it this way allows for much
+finer control over whether you want a route to be exempt from rate limiting, caching or other middleware you may have.  Furthermore, it allows you to customize
 the same middlware function, differently, for each individual route &mdash; so rate limits, for example, can be different from one route to another.
 
 ### About the limiter() middleware
@@ -649,7 +655,7 @@ The following can be found in *middleware/limitMiddleware.js*:
 const { rateLimit } = require('express-rate-limit');
 
 const limiter = (max, windowMs, message, keyName) => rateLimit({
-  max: max || 5,
+  max: max || 2,
   windowMs: windowMs || 5000,
   keyGenerator: (req, res) => req.ip,
   handler: (req, res, next) => {
@@ -762,7 +768,7 @@ const checkEmailPayload = [
 ];
 ```
 
-> Be sure to provide a valid SendGrid API key for *REACT_APP_EMAIL_API_KEY* in *.env*.
+> Be sure to provide a valid SendGrid API key for *REACT_APP_SENDGRID_KEY* in *.env*.
 > Your **from** key will be the value of *REACT_APP_VERIFIED_SENDER_EMAIL* in *.env*.
 > Please make sure your SendGrid send address is verified in the SendGrid dashboard or a 403: Forbidden will be returned.
 

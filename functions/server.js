@@ -21,4 +21,7 @@ app.use(`${v1}sample`, require('./routes/sampleRoutes'));
 app.use(`${v1}email`, require('./routes/emailRoutes'));
 app.use(`${v1}auth`, require('./routes/authRoutes'));
 
+app.keepAliveTimeout = 121 * 1000;
+app.headersTimeout = 125 * 1000;
+
 module.exports.handler = serverless(app);
