@@ -9,6 +9,6 @@ const {
 
 // Email
 router.route('/')
-  .post(limiter(1, 5000), checkEmailPayload, sendEmail);
+  .post(limiter(1, 1000), checkEmailPayload, sendEmail);
 
 module.exports = router;
