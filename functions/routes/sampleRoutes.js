@@ -28,6 +28,6 @@ router.route('/')
 
 // Test routes
 router.route('/limitTest')
-  .get(limiter(1, 5000, customMessage("Rate limit tested!"), "result"), getLimitTest);
+  .get(limiter(null, null, customMessage("Rate limit tested!"), "result"), getLimitTest);
 
 module.exports = router;
