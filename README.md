@@ -770,7 +770,7 @@ const checkEmailPayload = [
 
 > Be sure to provide a valid SendGrid API key for *REACT_APP_SENDGRID_KEY* in *.env*.
 > Your **from** key will be the value of *REACT_APP_VERIFIED_SENDER_EMAIL* in *.env*.
-> Please make sure your SendGrid send address is verified in the SendGrid dashboard or a 504: Forbidden will be returned.
+> Please make sure your SendGrid send address is verified in the SendGrid dashboard or a 403: Forbidden will be returned.
 
 The main composition and sending continues in the *sendEmail* function.
 Here is a cut down version in *controllers/emailController.js* &mdash; see file for full implementation:
