@@ -44,7 +44,8 @@ Feel free to clone, modify and start your own projects with this template.
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
-    REACT_APP_EMAIL_KEY=""
+    REACT_APP_SENDGRID_KEY=""
+    REACT_APP_VERIFIED_SENDER_EMAIL=""
     ```
 
     **Important**: Make sure you have the slash included at the end of the path in *REACT_APP_API_V1*!
@@ -772,4 +773,5 @@ Also, add your environment variables in Netlify's *Site settings > Build  and de
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
-* REACT_APP_EMAIL_KEY
+* REACT_APP_SENDGRID_KEY
+* REACT_APP_VERIFIED_SENDER_EMAIL

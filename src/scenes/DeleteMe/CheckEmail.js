@@ -20,13 +20,13 @@ const CheckEmail = props => {
 
   const makeColor = () => {
     if (!apiKey) return colors.grey;
-    if (status?.code === 200) return colors.green;
+    if (status?.code < 300) return colors.green;
 
     return colors.yellow;
   };
 
   const makeStatus = () => {
-    if (apiKey && status?.code === 200) return "enabled";
+    if (apiKey && status?.code < 300) return "enabled";
     return "disabled";
   };
 
@@ -39,7 +39,7 @@ const CheckEmail = props => {
     );
 
     if (!apiKey) return "No API key provided."
-    if (status?.code === 200) return "Sandbox email sent.";
+    if (status?.code < 300) return "Sandbox email sent.";
     if (status?.code >= 400) return warning;
 
     return "Request not sent."

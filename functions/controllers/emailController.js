@@ -1,7 +1,11 @@
 const { check, validationResult } = require('express-validator');
+const {
+  REACT_APP_SENDGRID_KEY: apiKey,
+  REACT_APP_VERIFIED_SENDER_EMAIL: sendAddress,
+} = process.env;
+const sgMail = require('@sendgrid/mail');
 
-require('dotenv').config();
-const { REACT_APP_EMAIL_KEY: apiKey } = process.env;
+sgMail.setApiKey(apiKey);
 
 // @access  Public
 // @route   POST server/v1/email
@@ -30,6 +34,18 @@ const sendEmail = async (req, res) => {
     }
 
     // Dispatch email.
+    const msg = {
+      to: email,
+      from: sendAddress,
+      subject: "Test email dispatched.",
+      text: 'A test email has successfully been dispatched from the Starter App project.',
+      html:
+       `<strong>
+          A test email has successfully been dispatched from the Starter App project.
+        </strong>`,
+    };
+
+    // await sgMail.send(msg);
 
     res.json({ result: "Email successfully sent." });
   } catch(error) {
