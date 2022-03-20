@@ -18,7 +18,7 @@ const defaultCache = '2 minutes';
 
 // Starter routes
 router.route('/')
-  .get(limiter(), cache(defaultCache), getSample)
+  .get(limiter(), getSample)
   .post(limiter(), cache(defaultCache), postSample);
 
 

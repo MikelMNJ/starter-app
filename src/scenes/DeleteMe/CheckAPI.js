@@ -81,8 +81,8 @@ export const CheckAPI = props => {
             API cache {status?.cache ? "returned" : "absent"}
           </strong>
 
-          {status?.cache && ":"}<br />
-          {status?.cache && `"${status?.cache}".`}
+          {status?.cache !== "no-cache" && ":"}<br />
+          {status?.cache !== "no-cache" && `"${status?.cache}".`}
         </p>
       } />
     </Fragment>
