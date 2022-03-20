@@ -45,7 +45,7 @@ Feel free to clone, modify and start your own projects with this template.
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
-    REACT_APP_SENDGRID_KEY=""
+    REACT_APP_EMAIL_API_KEY=""
     REACT_APP_VERIFIED_SENDER_EMAIL=""
     ```
 
@@ -768,7 +768,7 @@ const checkEmailPayload = [
 ];
 ```
 
-> Be sure to provide a valid SendGrid API key for *REACT_APP_SENDGRID_KEY* in *.env*.
+> Be sure to provide a valid SendGrid API key for *REACT_APP_EMAIL_API_KEY* in *.env*.
 > Your **from** key will be the value of *REACT_APP_VERIFIED_SENDER_EMAIL* in *.env*.
 > Please make sure your SendGrid send address is verified in the SendGrid dashboard or a 403: Forbidden will be returned.
 
@@ -825,5 +825,5 @@ Also, add your environment variables in Netlify's *Site settings > Build  and de
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
-* REACT_APP_SENDGRID_KEY
+* REACT_APP_EMAIL_API_KEY
 * REACT_APP_VERIFIED_SENDER_EMAIL
