@@ -1,6 +1,6 @@
 const { check, validationResult } = require('express-validator');
 const {
-  REACT_APP_SENDGRID_KEY: apiKey,
+  REACT_APP_EMAIL_API_KEY: apiKey,
   REACT_APP_VERIFIED_SENDER_EMAIL: sendAddress,
 } = process.env;
 const sgMail = require('@sendgrid/mail');

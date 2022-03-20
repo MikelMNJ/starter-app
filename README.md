@@ -23,7 +23,6 @@ The app contains the following features to get you started:
 * Sample routes for getting started and testing.
 * Auth. middleware for accessing private routes.
 * Cors middleware.
-* API caching middleware.
 * API rate limiting middleware. Defaults to IP address but can be configured for user ID (or both) with the custom keyGenerator() in the limiter.
 
 Feel free to clone, modify and start your own projects with this template.
@@ -45,7 +44,7 @@ Feel free to clone, modify and start your own projects with this template.
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
     REACT_APP_SENTRY_DSN=""
-    REACT_APP_SENDGRID_KEY=""
+    REACT_APP_EMAIL_API_KEY=""
     REACT_APP_VERIFIED_SENDER_EMAIL=""
     ```
 
@@ -596,20 +595,15 @@ const {
   deleteSample
 } = require('../controllers/sampleController');
 
-// Caching
-const apicache = require('apicache');
-let cache = apicache.middleware;
-const defaultCache = '2 minutes';
-
 // Starter routes
 router.route('/')
-  .get(limiter(), cache(defaultCache), getSample)
-  .post(limiter(), cache(defaultCache), postSample);
+  .get(limiter(), getSample)
+  .post(limiter(), postSample);
 
 
   router.route('/:id')
-  .put(limiter(), cache(defaultCache), putSample)
-  .delete(limiter(), cache(defaultCache), deleteSample);
+  .put(limiter(), putSample)
+  .delete(limiter(), deleteSample);
 
 module.exports = router;
 ```
@@ -625,13 +619,13 @@ Consider the following in *routes/sampleRoutes.js*:
 ```javascript
 // Starter routes
 router.route('/')
-  .get(limiter(), cache(defaultCache), getSample)
-  .post(limiter(), cache(defaultCache), postSample);
+  .get(limiter(), getSample)
+  .post(limiter(), postSample);
 ```
 
 Instead of defining the middleware for the entire server, as is the case with `app.use(cors())` and others (in *server.js*), we can inject them on a
-per route basis for modular control. In the above example, `limiter()` and `cache()` are examples of per-route middleware.  Doing it this way allows for much
-finer control over whether you want a route to be exempt from rate limiting, caching or other middleware you may have.  Furthermore, it allows you to customize
+per route basis for modular control. In the above example, `limiter()` is an example of per-route middleware.  Doing it this way allows for much
+finer control over whether you want a route to be exempt from rate limiting or other middleware you may have.  Furthermore, it allows you to customize
 the same middlware function, differently, for each individual route &mdash; so rate limits, for example, can be different from one route to another.
 
 ### About the limiter() middleware
@@ -768,7 +762,7 @@ const checkEmailPayload = [
 ];
 ```
 
-> Be sure to provide a valid SendGrid API key for *REACT_APP_SENDGRID_KEY* in *.env*.
+> Be sure to provide a valid SendGrid API key for *REACT_APP_EMAIL_API_KEY* in *.env*.
 > Your **from** key will be the value of *REACT_APP_VERIFIED_SENDER_EMAIL* in *.env*.
 > Please make sure your SendGrid send address is verified in the SendGrid dashboard or a 403: Forbidden will be returned.
 
@@ -825,5 +819,5 @@ Also, add your environment variables in Netlify's *Site settings > Build  and de
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
 * REACT_APP_JWT_SECRET
-* REACT_APP_SENDGRID_KEY
+* REACT_APP_EMAIL_API_KEY
 * REACT_APP_VERIFIED_SENDER_EMAIL

@@ -53,7 +53,6 @@ export const CheckAPI = props => {
         setStatus({
           code: res.status,
           text: res.statusText,
-          cache: res.headers.get("cache-control"),
         });
       };
 
@@ -72,17 +71,6 @@ export const CheckAPI = props => {
           </strong>:<br />
 
           {desc}
-        </p>
-      } />
-
-      <Status color={status?.cache ? colors.green : colors.grey} text={
-        <p>
-          <strong>
-            API cache {status?.cache ? "returned" : "absent"}
-          </strong>
-
-          {status?.cache && ":"}<br />
-          {status?.cache && `"${status?.cache}".`}
         </p>
       } />
     </Fragment>

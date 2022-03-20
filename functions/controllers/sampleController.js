@@ -22,7 +22,7 @@ const getLimitTest = async (req, res) => {
   try {
     res.status(200).json({ result: "Rate call complete." });
   } catch(error) {
-    res.status(500).send("Server error.");
+    res.status(500).json({ error });
   }
 };
 
