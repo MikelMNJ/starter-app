@@ -5,6 +5,8 @@ import appActions from 'modules/app/appActions';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
 
+let callCount = 0;
+
 export const CheckAPI = props => {
   const [ status, setStatus ] = useState({});
   const [ desc, setDesc ] = useState(null);
@@ -35,7 +37,11 @@ export const CheckAPI = props => {
         });
       };
 
-      testRateLimit(null, onRes);
+      // Manual safeguard in case rateLimit breaks.
+      if (callCount < 3) {
+        testRateLimit(null, onRes);
+        callCount += 1;
+      }
     }
 
     /* eslint-disable-next-line */

@@ -28,7 +28,7 @@ export const cleanSampleRoutes = `const customMessage = message => ({ message, t
 // Remove "getLimitTest" from require module.
 
 router.route('/limitTest')
-  .get(limiter(null, null, customMessage("Rate limit tested!")), getLimitTest);`;
+  .get(limiter(1, 5000, customMessage("Rate limit tested!")), getLimitTest);`;
 
 export const cleanSampleController = `// @access  Public
 // @route   GET server/v1/sample/limitTest
