@@ -214,19 +214,20 @@ If you would rather use a library such as *immutableJS* you can swap the state m
 such as a string or number, or more complex, like an Array or Object.  Meaning you **won't** have to call methods such as Immutable's `state.getIn()`, `state.setIn()` etc. to update something like an array.
 
 ### Modifying state: basic or complex key values in state
-`state.add(STATE_KEY_TO_ADD, payload)`: Adds a completely new key to state with payload.
-`state.update(STATE_KEY_TO_UPDATE, payload)`: Replaces existing state key with payload.
-`state.remove(STATE_KEY_TO_REMOVE)`: Removes state key, completely.
+`state.get(STATE_KEY_TO_GET)`: Very basic method that returns the value from the target key in state.
+`state.add(STATE_KEY_TO_ADD, payload)`: Adds a completely new key to state with payload.<br />
+`state.update(STATE_KEY_TO_UPDATE, payload)`: Replaces existing state key with payload.<br />
+`state.remove(STATE_KEY_TO_REMOVE)`: Removes state key, completely.<br />
 
 ### Modifying state: arrays
-`state.add(STATE_KEY_TO_ADD, payload, index)`: Adds new item to state key array with payload.
-`state.update(STATE_KEY_TO_UPDATE, payload, index)`: Updates specific index of state key array with payload.
-`state.remove(STATE_KEY_TO_REMOVE, index)`: Removes specific index from state key array.
+`state.add(STATE_KEY_TO_ADD, payload, index)`: Adds new item to state key array with payload.<br />
+`state.update(STATE_KEY_TO_UPDATE, payload, index)`: Updates specific index of state key array with payload.<br />
+`state.remove(STATE_KEY_TO_REMOVE, index)`: Removes specific index from state key array.<br />
 
 ### Modifying state: objects
-`state.add(STATE_KEY_TO_ADD, payload, "keyName")`: Addes new key to state key object with payload as value.
-`state.update(STATE_KEY_TO_UPDATE, payload, "keyName")`: Updates specific key of state key object with payload as value.
-`state.remove(STATE_KEY_TO_REMOVE, "keyName")`: Removes specific key from state key object.
+`state.add(STATE_KEY_TO_ADD, payload, "keyName")`: Addes new key to state key object with payload as value.<br />
+`state.update(STATE_KEY_TO_UPDATE, payload, "keyName")`: Updates specific key of state key object with payload as value.<br />
+`state.remove(STATE_KEY_TO_REMOVE, "keyName")`: Removes specific key from state key object.<br />
 
 
 The following can be found in *modules/appReducer.js*:
@@ -516,6 +517,63 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider value={store}>
       {children}
     </AppContext.Provider>
+  );
+};
+```
+
+
+
+# Adding a Site-Wide Banner Message
+
+A banner alert system is included by default in *scenes/App.js*.  There is nothing you need to do in this file, but here is the relevant setup, for reference:
+
+```jsx
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import appSelectors from 'modules/app/appSelectors';
+import Banner from 'components/Banner/Banner';
+
+const App = props => {
+  const [ showBanner, setShowBanner ] = useState(true);
+  const dispatch = useDispatch();
+
+  // Actions and Selectors
+  const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+
+  return (
+    <div id="app">
+      {globalBannerContent && showBanner && (
+        <Banner center text={globalBannerContent} callback={() => setShowBanner(false)} />
+      )}
+    </div>
+  );
+};
+```
+
+To have the banner show, you will need to invoke the action from state in your component as follows:
+```jsx
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
+
+const YourComponent = props => {
+  const dispatch = useDispatch();
+
+  // Actions/Selectors
+  const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+  const setGlobalBannerContent = payload => dispatch(appActions.setGlobalBannerContent(payload));
+
+  useEffect(() => {
+    if (!globalBannerContent) {
+      setGlobalBannerContent("New site-wide banner alert message!");
+    }
+  }, [globalBannerContent]);
+
+  return (
+    <div>
+      Other component content...
+    </div>
   );
 };
 ```
