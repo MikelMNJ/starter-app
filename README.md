@@ -207,25 +207,27 @@ other state helpers and custom hooks (like `useDispatch()` or `useSelector()`) i
 The action creator passes an object with `{ type, payload }` to the reducer, where the reducer's *switch* statement
 reads the `action.type` and updates state accordingly.
 
-**About StateManager()**<br />
+### About StateManager()
 I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js* &mdash;
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
-`StateManager()`, however, may be more friendly and should provide everything you need. It is aware of the payload and sets it automatically &mdash; no need to
-specifically set `action.payload` with each case.  It is also intelligent enough to know if the state key being modified is a basic type,
+`StateManager()`, however, may be more friendly. It is intelligent enough to know if the state key being modified is a basic type,
 such as a string or number, or more complex, like an Array or Object.  Meaning you **won't** have to call methods such as Immutable's `state.getIn()`, `state.setIn()` etc. to update something like an array.
 
-**Updating basic or complex key values in state**<br />
-Use `state.update(STATE_KEY_TO_UPDATE)`.  It will replace the entire state key value with the payload.
+### Modifying state: basic or complex key values in state
+`state.add(STATE_KEY_TO_ADD, payload)`: Adds a completely new key to state with payload.
+`state.update(STATE_KEY_TO_UPDATE, payload)`: Replaces existing state key with payload.
+`state.remove(STATE_KEY_TO_REMOVE)`: Removes state key, completely.
 
-**Updating arrays**<br />
-Use `state.update(STATE_KEY_TO_UPDATE, index)`.  Passing an index, as a number, will replace that array item with the payload.
+### Modifying state: arrays
+`state.add(STATE_KEY_TO_ADD, payload, index)`: Adds new item to state key array with payload.
+`state.update(STATE_KEY_TO_UPDATE, payload, index)`: Updates specific index of state key array with payload.
+`state.remove(STATE_KEY_TO_REMOVE, index)`: Removes specific index from state key array.
 
-**Updating objects**<br />
-Use `state.update(STATE_KEY_TO_UPDATE, "keyName")`.  Passing an object key name, as a string, will replace that object's key value with the payload.
+### Modifying state: objects
+`state.add(STATE_KEY_TO_ADD, payload, "keyName")`: Addes new key to state key object with payload as value.
+`state.update(STATE_KEY_TO_UPDATE, payload, "keyName")`: Updates specific key of state key object with payload as value.
+`state.remove(STATE_KEY_TO_REMOVE, "keyName")`: Removes specific key from state key object.
 
-**Additional Methods**<br />
-Similar to the `state.update()` method, there is also `state.remove()`, `state.get()` and `state.add()`.  All of these methods work the
-exact same way as `state.update()` when it comes to targeting specific array items, object keys or adding/removing the entire state key altogether.
 
 The following can be found in *modules/appReducer.js*:
 ```jsx
@@ -237,20 +239,24 @@ const initial = {
 };
 
 const reducer = (initialState = initial, action = {}) => {
-  const state = new StateManager(initialState, action);
+  /* eslint-disable-next-line */
+  const { meta, payload } = action;
+  const state = new StateManager(initialState);
 
   switch(action.type) {
     case constants.SAMPLE_ACTION:
-      return state.update(constants.STATE_KEY_SAMPLE_SELECTOR);
+      return state.update(constants.STATE_KEY_SAMPLE_SELECTOR, payload);
     case constants.ADD_NOTIFICATION:
-      return state.add(constants.STATE_KEY_NOTIFICATIONS);
+      return state.add(constants.STATE_KEY_NOTIFICATIONS, payload);
     case constants.REMOVE_NOTIFICATION:
-      const index = action.payload;
+      const index = payload;
       return state.remove(constants.STATE_KEY_NOTIFICATIONS, index);
+    case constants.SET_GLOBAL_BANNER_CONTENT:
+      return state.add(constants.STATE_KEY_GLOBAL_BANNER_CONTENT, payload);
     case constants.SEND_EMAIL:
-      return state.update(constants.STATE_KEY_EMAIL_RESPONSE);
+      return state.update(constants.STATE_KEY_EMAIL_RESPONSE, payload);
     case constants.SAMPLE_API_CALL:
-      return state.update(constants.STATE_KEY_SAMPLE_API_RESPONSE);
+      return state.update(constants.STATE_KEY_SAMPLE_API_RESPONSE, payload);
 
     default:
       return initialState;
@@ -270,16 +276,20 @@ Actions and Selectors are defined in objects for their specific module &mdash; t
 ```jsx
 // appConstants.js
 const constants = {
+    // Actions
   SAMPLE_ACTION: "modules/app/SAMPLE_ACTION",
   ADD_NOTIFICATION: "modules/app/ADD_NOTIFICATION",
   REMOVE_NOTIFICATION: "modules/app/REMOVE_NOTIFICATION",
+  SET_GLOBAL_BANNER: "modules/app/SET_GLOBAL_BANNER",
   SEND_EMAIL: "modules/app/SEND_EMAIL",
   SAMPLE_API_CALL: "modules/app/SAMPLE_API_CALL",
 
+  // Selectors
   STATE_KEY_SAMPLE_SELECTOR: "sampleSelector",
   STATE_KEY_NOTIFICATIONS: "notifications",
+  STATE_KEY_GLOBAL_BANNER_CONTENT: "globalBannerContent",
   STATE_KEY_EMAIL_RESPONSE: "emailResponse",
-  STATE_KEY_SAMPLE_API_RESPONSE: "sampleAPIResponse"
+  STATE_KEY_SAMPLE_API_RESPONSE: "sampleAPIResponse",
 };
 
 // appActions.js
@@ -288,12 +298,13 @@ const appActions = {
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
   removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
+  setGlobalBannerContent: payload => actionCreator(constants.SET_GLOBAL_BANNER_CONTENT, payload),
+
+  // API actions go through middleware, then passes the server res.json() back to the reducer, as payload.
   sendEmail: (payload, callback) => {
     const args = { type: constants.SEND_EMAIL, payload,  callback };
     return api.sendEmail(args);
   },
-
-  // API actions go through middleware, then passes the server res.json() back to the reducer, as payload.
   sampleAPICall: (payload, callback) => {
     const args = { type: constants.SAMPLE_API_CALL, payload,  callback };
     return api.sampleAPICall(args);
@@ -308,6 +319,7 @@ const appSelectors = {
   notifications: state => state.app[constants.STATE_KEY_NOTIFICATIONS],
   emailResponse: state => state.app[constants.STATE_KEY_EMAIL_RESPONSE],
   sampleAPIResponse: state => state.app[constants.STATE_KEY_SAMPLE_API_RESPONSE],
+  globalBannerContent: state => state.app[constants.STATE_KEY_GLOBAL_BANNER_CONTENT],
 }
 ```
 

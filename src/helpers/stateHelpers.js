@@ -73,9 +73,8 @@ class StateManager {
     return target;
   };
 
-  addArr(stateKey) {
+  addArr(stateKey, payload) {
     const target = this.initialState[stateKey];
-    const payload = this.action.payload;
     const updatedArr = [ ...target, payload ];
 
     return {
@@ -84,9 +83,8 @@ class StateManager {
     };
   };
 
-  addObj(stateKey) {
+  addObj(stateKey, payload) {
     const target = this.initialState[stateKey];
-    const payload = this.action.payload;
 
     if (isObject(payload) && !isArray(payload)) {
       if (isEmpty(payload)) {
@@ -107,17 +105,16 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  add(stateKey) {
+  add(stateKey, payload) {
     const workingState = { ...this.initialState };
     let target = workingState[stateKey];
     const isArr = isArray(target);
     const isObj = isObject(target);
-    const payload = this.action.payload;
     const payloadValid = payload || payload === "" || payload === null;
 
     if (stateKey && payloadValid) {
-      if (isArr) return this.addArr(stateKey);
-      if (isObj) return this.addObj(stateKey);
+      if (isArr) return this.addArr(stateKey, payload);
+      if (isObj) return this.addObj(stateKey, payload);
 
       return {
         ...this.initialState,
@@ -128,12 +125,11 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  updateArr(stateKey, stringOrIndex) {
+  updateArr(stateKey, payload, stringOrIndex) {
     const target = this.initialState[stateKey];
     const isArr = isArray(target);
     const index = stringOrIndex;
     const indexValid = stringOrIndex >= 0 && stringOrIndex <= target?.length;
-    const payload = this.action.payload;
 
     if (indexValid) {
       const updatedArr = target.map((item, i) => {
@@ -158,10 +154,9 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  updateObj(stateKey, stringOrIndex) {
+  updateObj(stateKey, payload, stringOrIndex) {
     const target = this.initialState[stateKey];
     const isArr = isArray(target);
-    const payload = this.action.payload;
     const key = stringOrIndex;
     const validKey = typeof key === "string" && target[key];
 
@@ -186,18 +181,18 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  update(stateKey, stringOrIndex) {
+  update(stateKey, payload, stringOrIndex) {
     const workingState = { ...this.initialState };
     let target = workingState[stateKey];
     const isArr = isArray(target);
     const isObj = isObject(target);
-    const payload = this.action.payload;
     const payloadValid = payload || payload === "" || payload === null;
 
     if (stateKey && payloadValid) {
-      if (!target) return this.add(stateKey);
-      if (isArr) return this.updateArr(stateKey, stringOrIndex);
-      if (isObj) return this.updateObj(stateKey, stringOrIndex);
+      if (!target) return this.add(stateKey, payload);
+      if (isArr) return this.updateArr(stateKey, payload, stringOrIndex);
+      if (isObj) return this.updateObj(stateKey, payload, stringOrIndex);
+
 
       return {
         ...this.initialState,
