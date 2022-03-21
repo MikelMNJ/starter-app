@@ -1,6 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import Banner from 'components/Banner/Banner';
 import AuthRoute from 'components/AuthRoute/AuthRoute';
 import NotFound from 'components/NotFound/NotFound';
 import DeleteMe from 'scenes/DeleteMe/DeleteMe';
@@ -10,11 +11,13 @@ import appActions from 'modules/app/appActions';
 import './App.scss';
 
 const App = props => {
+  const [ showBanner, setShowBanner ] = useState(true);
   const dispatch = useDispatch();
 
   // Actions and Selectors
   const removeNotification = useCallback(payload => dispatch(appActions?.removeNotification(payload)), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
+  const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
 
   const renderApp = () => {
     const tokenFromState = true;
@@ -41,6 +44,10 @@ const App = props => {
 
   return (
     <div id="app">
+      {globalBannerContent && showBanner && (
+        <Banner center text={globalBannerContent} callback={() => setShowBanner(false)} />
+      )}
+
       {renderApp()}
 
       <Notifications

@@ -17,6 +17,7 @@ const appActions = {
   sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
   removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
+  setGlobalBannerContent: payload => actionCreator(constants.SET_GLOBAL_BANNER_CONTENT, payload),
   sendEmail: (payload, callback) => {
     const args = { type: constants.SEND_EMAIL, payload,  callback };
     return api.sendEmail(args);

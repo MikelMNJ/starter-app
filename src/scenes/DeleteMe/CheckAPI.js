@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import { globalMessage } from './codeStrings';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
@@ -15,6 +16,8 @@ export const CheckAPI = props => {
   const sampleAPICall = useCallback((payload, callback) => (
     dispatch(appActions.sampleAPICall(payload, callback))
   ), [dispatch]);
+  const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+  const setGlobalBannerContent = payload => dispatch(appActions.setGlobalBannerContent(payload));
 
   const makeColor = () => {
     if (sampleAPIResponse && status?.code === 200) return colors.green;
@@ -44,6 +47,11 @@ export const CheckAPI = props => {
 
   useEffect(() => {
     if (status) setDesc(makeDesc());
+
+    if (!globalBannerContent && status.code === 502) {
+      setGlobalBannerContent(globalMessage);
+    }
+
     /* eslint-disable-next-line */
   }, [status, sampleAPIResponse]);
 

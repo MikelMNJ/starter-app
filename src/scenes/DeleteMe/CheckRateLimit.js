@@ -1,7 +1,9 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { isEmpty } from 'lodash';
-import { useDispatch } from 'helpers/stateHelpers';
+import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import { globalMessage } from './codeStrings';
 import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
 
@@ -15,7 +17,9 @@ export const CheckAPI = props => {
   // Actions/Selectors
   const testRateLimit = useCallback((payload, callback) => (
     dispatch(appActions.testRateLimit(payload, callback))
-  ), [dispatch]);
+    ), [dispatch]);
+    const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+    const setGlobalBannerContent = payload => dispatch(appActions.setGlobalBannerContent(payload));
 
   const makeDesc = () => {
     if (status.code >= 500) return "API offline.";
@@ -25,6 +29,11 @@ export const CheckAPI = props => {
 
   useEffect(() => {
     if (status) setDesc(makeDesc());
+
+    if (!globalBannerContent && status.code === 502) {
+      setGlobalBannerContent(globalMessage);
+    }
+
     /* eslint-disable-next-line */
   }, [status]);
 

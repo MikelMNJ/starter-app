@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import { globalMessage } from './codeStrings';
 import appActions from 'modules/app/appActions';
 import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
@@ -17,6 +18,8 @@ const CheckEmail = props => {
   const sendEmail = useCallback((payload, callback) => (
     dispatch(appActions.sendEmail(payload, callback))
   ), [dispatch]);
+  const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+  const setGlobalBannerContent = payload => dispatch(appActions.setGlobalBannerContent(payload));
 
   const makeColor = () => {
     if (!apiKey) return colors.grey;
@@ -47,6 +50,11 @@ const CheckEmail = props => {
 
   useEffect(() => {
     if (status) setDesc(makeDesc());
+
+    if (!globalBannerContent && status.code === 502) {
+      setGlobalBannerContent(globalMessage);
+    }
+
     /* eslint-disable-next-line */
   }, [status, emailResponse]);
 

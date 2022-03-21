@@ -1,0 +1,51 @@
+@import 'theme/colors';
+
+.banner {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr auto;
+
+  width: 100%;
+  min-height: 2rem;
+  color: $offWhite;
+  background-color: $slate;
+  padding: 1rem;
+
+  &.noClose {
+    grid-template-columns: 1fr;
+  }
+
+  &.sharp {
+    border-radius: 0;
+  }
+
+  .message {
+    display: flex;
+    align-items: center;
+
+    &.center {
+      justify-content: center;
+    }
+  }
+
+  i {
+    color: $offWhite;
+  }
+
+  .close {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    i {
+      cursor: pointer;
+      font-size: 1.25rem;
+      color: $white;
+    }
+  }
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 1440px) {
+
+}
