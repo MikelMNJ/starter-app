@@ -214,7 +214,7 @@ If you would rather use a library such as *immutableJS* you can swap the state m
 such as a string or number, or more complex, like an Array or Object.  Meaning you **won't** have to call methods such as Immutable's `state.getIn()`, `state.setIn()` etc. to update something like an array.
 
 ### Modifying state: basic or complex key values in state
-`state.get(STATE_KEY_TO_GET)`: Very basic method that returns the value from the target key in state.
+`state.get(STATE_KEY_TO_GET)`: Very basic method that returns the value from the target key in state.<br />
 `state.add(STATE_KEY_TO_ADD, payload)`: Adds a completely new key to state with payload.<br />
 `state.update(STATE_KEY_TO_UPDATE, payload)`: Replaces existing state key with payload.<br />
 `state.remove(STATE_KEY_TO_REMOVE)`: Removes state key, completely.<br />
