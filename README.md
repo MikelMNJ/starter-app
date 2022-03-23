@@ -214,20 +214,33 @@ If you would rather use a library such as *immutableJS* you can swap the state m
 such as a string or number, or more complex, like an Array or Object.  Meaning you **won't** have to call methods such as Immutable's `state.getIn()`, `state.setIn()` etc. to update something like an array.
 
 ### Modifying state: basic or complex key values in state
-`state.get(STATE_KEY_TO_GET)`: Very basic method that returns the value from the target key in state.<br />
+`state.get(STATE_KEY_TO_GET)`: Returns the value from the target key in state.<br />
 `state.add(STATE_KEY_TO_ADD, payload)`: Adds a completely new key to state with payload.<br />
 `state.update(STATE_KEY_TO_UPDATE, payload)`: Replaces existing state key with payload.<br />
 `state.remove(STATE_KEY_TO_REMOVE)`: Removes state key, completely.<br />
 
 ### Modifying state: arrays
+`state.get(STATE_KEY_TO_GET, index)`: Returns the value of the index from the targeted state key array.<br />
 `state.add(STATE_KEY_TO_ADD, payload, index)`: Adds new item to state key array with payload.<br />
 `state.update(STATE_KEY_TO_UPDATE, payload, index)`: Updates specific index of state key array with payload.<br />
 `state.remove(STATE_KEY_TO_REMOVE, index)`: Removes specific index from state key array.<br />
 
 ### Modifying state: objects
-`state.add(STATE_KEY_TO_ADD, payload, "keyName")`: Addes new key to state key object with payload as value.<br />
+`state.get(STATE_KEY_TO_GET, "keyName")`: Returns the value of the key from the targeted state key object.<br />
+`state.add(STATE_KEY_TO_ADD, payload, "keyName")`: Adds new key to state key object with payload as value.<br />
 `state.update(STATE_KEY_TO_UPDATE, payload, "keyName")`: Updates specific key of state key object with payload as value.<br />
 `state.remove(STATE_KEY_TO_REMOVE, "keyName")`: Removes specific key from state key object.<br />
+
+### Modifying multiple state values
+There are times where you may need to alter multiple state values at once, this can be done with `state.merge()`, using an array as the only argument that contains any of the above methods.
+
+```jsx
+state.merge([
+  state.update(STATE_KEY_TO_UPDATE, payload),
+  state.remove(STATE_KEY_TO_REMOVE),
+  state.add(STATE_KEY_TO_ADD),
+];
+```
 
 
 The following can be found in *modules/appReducer.js*:
@@ -277,7 +290,7 @@ Actions and Selectors are defined in objects for their specific module &mdash; t
 ```jsx
 // appConstants.js
 const constants = {
-    // Actions
+  // Actions
   SAMPLE_ACTION: "modules/app/SAMPLE_ACTION",
   ADD_NOTIFICATION: "modules/app/ADD_NOTIFICATION",
   REMOVE_NOTIFICATION: "modules/app/REMOVE_NOTIFICATION",
@@ -680,7 +693,7 @@ router.route('/')
   .post(limiter(), cache(defaultCache), postSample);
 
 
-  router.route('/:id')
+router.route('/:id')
   .put(limiter(), cache(defaultCache), putSample)
   .delete(limiter(), cache(defaultCache), deleteSample);
 
