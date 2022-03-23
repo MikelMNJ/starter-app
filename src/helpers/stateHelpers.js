@@ -68,8 +68,27 @@ class StateManager {
     this.action = action;
   };
 
-  get(stateKey) {
+  get(stateKey, stringOrIndex) {
     const target = this.initialState[stateKey];
+    const isArr = isArray(target);
+    const isObj = isObject(target);
+    const targetValid = target || target === "" || target === null;
+
+    if (!targetValid) {
+      console.warn("Could not get value from state, provided state key name does not exist.");
+    }
+
+    if (targetValid && (isArr || isObj)) {
+      const validStringIndex = target[stringOrIndex];
+
+      if (stringOrIndex && !validStringIndex) {
+        isArr ? objectKeyError(true, stringOrIndex, target) : targetError("get");
+        return target[stringOrIndex];
+      }
+
+      if (validStringIndex) return target[stringOrIndex];
+    }
+
     return target;
   };
 

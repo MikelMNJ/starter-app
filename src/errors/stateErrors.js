@@ -7,7 +7,7 @@ export const objectTypeError = (payload, target) => (
 
 export const objectKeyError = (isArr, key, target) => {
   if (isArr) {
-    return console.warn(`Index ${key} not found, state unchanged.`);
+    return console.warn(`Index ${key} not found.`);
   }
 
   return console.error(
@@ -18,7 +18,7 @@ export const objectKeyError = (isArr, key, target) => {
 export const targetError = mode => (
   console.warn(`Unable to find target to ${mode}.${mode === 'update'
       ? " It has been added to state as a new key."
-      : "Please check key name in state."
+      : " Please check key name in state."
     }`
   )
 );
