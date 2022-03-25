@@ -123,7 +123,7 @@ class StateManager {
       });
 
       // Iterate through changed keys, recursively, and combine all changes.
-      Object.keys(workingState).reduce((prevState, key) => {
+      return Object.keys(workingState).reduce((prevState, key) => {
         const prevVal = prevState[key];
         let nextVal;
 
