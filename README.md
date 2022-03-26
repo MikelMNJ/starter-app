@@ -373,7 +373,7 @@ API actions are called in the same way as above, but can be passed a callback fu
 will be executed after the server responds.
 
 Below is an example of how an API action is called, note the use of the secondary *callback* argument.
-A more complete exmple of this can be found in *scenes/DeleteMe/CheckAPI.js*:
+A more complete example of this can be found in *scenes/DeleteMe/CheckAPI.js*:
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
