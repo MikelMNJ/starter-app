@@ -208,7 +208,7 @@ The action creator passes an object with `{ type, payload }` to the reducer, whe
 reads the `action.type` and updates state accordingly.
 
 ### About StateManager()
-I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateHelpers.js* &mdash;
+I have made a custom class that handles state updates in an immutable manner, see `StateManager()` in *helpers/stateManager/stateManager.js* &mdash;
 If you would rather use a library such as *immutableJS* you can swap the state manager out for that. The custom
 `StateManager()`, however, may be more friendly. It is intelligent enough to know if the state key being modified is a basic type,
 such as a string or number, or more complex, like an Array or Object.  Meaning you **won't** have to call methods such as Immutable's `state.getIn()`, `state.setIn()` etc. to update something like an array.
@@ -245,7 +245,7 @@ state.merge([
 
 The following can be found in *modules/appReducer.js*:
 ```jsx
-import StateManager from 'helpers/stateHelpers';
+import StateManager from 'helpers/stateManager/stateManager';
 import constants from './appConstants';
 
 const initial = {
