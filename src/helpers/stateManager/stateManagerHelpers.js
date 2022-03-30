@@ -29,7 +29,7 @@ export const removedKeys = (removed, added, workingState, modifiedState) => {
   });
 };
 
-export const mergeArray = (original, nextVal, newVal) => {
+export const mergeArray = (nextVal, original, newVal) => {
   const sameLength = nextVal?.length === newVal.length;
   const shorter = nextVal?.length < newVal.length;
 
@@ -37,7 +37,7 @@ export const mergeArray = (original, nextVal, newVal) => {
 
   // Same length? Replace with updated array.
   if (sameLength && !isEqual(original, newVal)) {
-    return nextVal = newVal;
+    return newVal;
   }
 
   // Less indices than newVal? Find newly added index values.
@@ -47,7 +47,7 @@ export const mergeArray = (original, nextVal, newVal) => {
       return null;
     }).filter(item => item);
 
-    return nextVal = [ ...nextVal || [], ...additions ];
+    return [ ...nextVal || [], ...additions ];
   }
 
   // More indices than newVal? Find removed indices.
@@ -67,5 +67,5 @@ export const mergeArray = (original, nextVal, newVal) => {
   }
 
   // Initial nextVal undefined.
-  return nextVal = [ ...nextVal || [], ...newVal ];
+  return [ ...nextVal || [], ...newVal ];
 };

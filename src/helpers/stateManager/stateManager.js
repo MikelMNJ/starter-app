@@ -1,4 +1,4 @@
-import { isArray, isEmpty, isObject, isEqual } from 'lodash';
+import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
 import { changedKeys, addedKeys, removedKeys, mergeArray } from './stateManagerHelpers';
 
@@ -24,10 +24,12 @@ class StateManager {
         removedKeys(removed, added, workingState, modifiedState);
       });
 
+      // Handle additions...
       added.forEach(addition => {
         workingState = { ...workingState, ...addition };
       });
 
+      // Handle removals...
       removed.forEach(key => {
         const { [key]: value, ...withoutKey } = workingState;
         workingState = { ...withoutKey };
@@ -45,45 +47,9 @@ class StateManager {
           const isObj = isObject(newVal);
 
           if (isArr) {
-            const sameLength = nextVal?.length === newVal.length;
-            const shorter = nextVal?.length < newVal.length;
-
-            // console.log(nextVal || original, newVal);
-
-            // Same length? Replace with updated array.
-            if (sameLength && !isEqual(original, newVal)) {
-              return nextVal = newVal;
-            }
-
-            // Less indices than newVal? Find newly added index values.
-            if (shorter) {
-              const additions = newVal.map((item, index) => {
-                if (index > nextVal?.length - 1) return item;
-                return null;
-              }).filter(item => item);
-
-              return nextVal = [ ...nextVal || [], ...additions ];
-            }
-
-            // More indices than newVal? Find removed indices.
-            if (nextVal && !shorter) {
-              const removed = original.map((item, index) => {
-                const location = newVal.indexOf(item);
-                if (location === -1) return item;
-                return null;
-              }).filter(item => item);
-
-              const withRemovedVals = nextVal.filter?.(item => {
-                if (!removed.includes(item)) return item;
-                return null;
-              }).filter(item => item);
-
-              return nextVal = withRemovedVals;
-            }
-
-            // Initial nextVal undefined.
-            return nextVal = [ ...nextVal || [], ...newVal ];
-          };
+            nextVal = mergeArray(nextVal, original, newVal);
+            return nextVal;
+          }
 
 
           if (isObj) {
@@ -95,7 +61,7 @@ class StateManager {
           return nextVal = newVal || prevVal;
         });
 
-        console.log({ ...prevState, [key]: nextVal });
+        // console.log({ ...prevState, [key]: nextVal });
 
         if (nextVal) return { ...prevState, [key]: nextVal };
         return { ...prevState };
