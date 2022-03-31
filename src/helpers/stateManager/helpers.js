@@ -42,7 +42,7 @@ const changedIndices = (added, changed, removed, modifiedArray, original) => {
     const justAdded = added.includes(item);
     const justRemoved = removed.includes(item);
     const unchanged = modifiedArray.find(i => isEqual(i, item));
-    const sameLength = original.length === modifiedArray.length;
+    const sameLength = isEqual(original.length, modifiedArray.length);
 
 
     if (!unchanged && sameLength && !justAdded && !justRemoved) {
@@ -58,7 +58,7 @@ const changedIndices = (added, changed, removed, modifiedArray, original) => {
 
 const removedIndices = (added, removed, workingArray, modifiedArray, original) => {
   original.map(item => {
-    const inNewArray = modifiedArray.findIndex(i => item === i);
+    const inNewArray = modifiedArray.findIndex(i => isEqual(item, i));
     const exists = inNewArray !== -1;
     const shorter = modifiedArray.length < workingArray.length;
     const justAdded = added.includes(item);
@@ -79,7 +79,7 @@ export const mergeArray = (nextVal, original, newVal) => {
 
   if (!isEmpty(changed)) {
     const withChanges = workingArray.map((item, index) => {
-      const updated = changed.find(changed => changed.oldVal === item);
+      const updated = changed.find(changed => isEqual(changed.oldVal, item));
       if (updated) return updated.newVal;
       return item;
     });
