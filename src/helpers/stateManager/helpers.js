@@ -30,7 +30,7 @@ export const removedKeys = (removed, added, workingState, modifiedState) => {
 };
 
 const addedIndices = (added, modifiedArray, original) => {
-  modifiedArray.map((item, index) => {
+  modifiedArray.map(item => {
     const exists = original.find(i => isEqual(i, item));
     if (!exists) return added.push(item);
     return null;
@@ -78,7 +78,7 @@ export const mergeArray = (nextVal, original, newVal) => {
   removedIndices(added, removed, workingArray, newVal, original);
 
   if (!isEmpty(changed)) {
-    const withChanges = workingArray.map((item, index) => {
+    const withChanges = workingArray.map(item => {
       const updated = changed.find(changed => isEqual(changed.oldVal, item));
       if (updated) return updated.newVal;
       return item;
@@ -92,7 +92,6 @@ export const mergeArray = (nextVal, original, newVal) => {
     return withAdditions;
   }
 
-  // // Note: Because removed was sent first, it is throwing off the index to update in changed.
   if (!isEmpty(removed)) {
     const withRemoved = workingArray.filter(item => {
       const absent = removed.includes(item);
