@@ -1,6 +1,6 @@
 import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
-import { changedKeys, addedKeys, removedKeys, mergeArray } from './stateManagerHelpers';
+import { changedKeys, addedKeys, removedKeys, mergeArray } from './helpers';
 
 class StateManager {
   constructor(initialState, action) {
@@ -53,7 +53,6 @@ class StateManager {
 
 
           if (isObj) {
-            // console.log(original, newVal);
             return nextVal = { ...nextVal || {}, ...newVal };
           }
 
@@ -61,7 +60,7 @@ class StateManager {
           return nextVal = newVal || prevVal;
         });
 
-        // console.log({ ...prevState, [key]: nextVal });
+        console.log({ ...prevState, [key]: nextVal });
 
         if (nextVal) return { ...prevState, [key]: nextVal };
         return { ...prevState };
