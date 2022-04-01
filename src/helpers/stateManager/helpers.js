@@ -30,40 +30,32 @@ export const removedKeys = (removed, added, workingObj, modifiedObj) => {
 };
 
 const addedIndices = (added, modifiedArray, original) => {
-  modifiedArray.map(item => {
+  modifiedArray.forEach(item => {
     const exists = original.find(i => isEqual(i, item));
     if (!exists) return added.push(item);
-    return null;
   });
 };
 
-const changedIndices = (added, changed, removed, modifiedArray, original) => {
-  original.map((item, index) => {
-    const justAdded = added.includes(item);
-    const justRemoved = removed.includes(item);
+const changedIndices = (changed, modifiedArray, original) => {
+  original.forEach((item, index) => {
     const unchanged = modifiedArray.find(i => isEqual(i, item));
     const sameLength = isEqual(original.length, modifiedArray.length);
 
-
-    if (!unchanged && sameLength && !justAdded && !justRemoved) {
+    if (!unchanged && sameLength) {
       return changed.push({
         newVal: modifiedArray[index],
         oldVal: original[index],
       });
     }
-
-    return null;
   });
 };
 
-const removedIndices = (added, removed, workingArray, modifiedArray, original) => {
-  original.map(item => {
+const removedIndices = (removed, workingArray, modifiedArray, original) => {
+  original.forEach(item => {
     const inNewArray = modifiedArray.findIndex(i => isEqual(item, i));
     const exists = inNewArray !== -1;
     const shorter = modifiedArray.length < workingArray.length;
-    const justAdded = added.includes(item);
-    if (!exists && shorter && !justAdded) return removed.push(item);
-    return null;
+    if (!exists && shorter) return removed.push(item);
   });
 };
 
@@ -73,9 +65,9 @@ const mergeArray = (nextVal, original, newVal) => {
   const added = [];
   const removed = [];
 
-  changedIndices(added, changed, removed, newVal, original);
+  changedIndices(changed, newVal, original);
   addedIndices(added, newVal, original);
-  removedIndices(added, removed, workingArray, newVal, original);
+  removedIndices(removed, workingArray, newVal, original);
 
   if (!isEmpty(changed)) {
     const withChanges = workingArray.map(item => {
@@ -101,8 +93,32 @@ const mergeArray = (nextVal, original, newVal) => {
 
     return withRemoved;
   }
-
   return workingArray;
+};
+
+const addedTemp = (added, modifiedObj, original) => {
+  Object.keys(modifiedObj).forEach(key => {
+    const oldVal = original[key];
+    const newVal = modifiedObj[key];
+    if (!oldVal) added.push({ [key]: newVal });
+  });
+};
+
+const changedTemp = (changed, modifiedObj, original) => {
+  Object.keys(original).forEach(key => {
+    const originalVal = original[key];
+    const newVal = modifiedObj[key];
+    const exists = newVal;
+    const hasChange = !isEqual(newVal, originalVal);
+    if (exists && hasChange) changed.push({ [key]: newVal });
+  });
+};
+
+const removedTemp = (removed, newVal, original) => {
+  Object.keys(original).forEach(key => {
+    const inNewObject = newVal[key];
+    if (!inNewObject) removed.push(key);
+  });
 };
 
 const mergeObj = (nextVal, original, newVal) => {
@@ -111,23 +127,19 @@ const mergeObj = (nextVal, original, newVal) => {
   const changed = [];
   const removed = [];
 
-  addedKeys(added, original, newVal);
-  changedKeys(changed, workingObj, newVal);
-  removedKeys(removed, added, workingObj, newVal);
-
-  // console.log(workingObj, newVal,  added, changed, removed);
+  addedTemp(added, newVal, original);
+  changedTemp(changed, newVal, original);
+  removedTemp(removed, newVal, original);
 
   if (!isEmpty(changed)) {
     let withChanges = { ...workingObj  };
     changed.forEach(changed => withChanges = { ...withChanges, ...changed });
-    console.log(workingObj, withChanges)
     return withChanges;
   }
 
   if (!isEmpty(added)) {
     let withAdditions = { ...workingObj };
     added.forEach(addition => withAdditions = { ...withAdditions, ...addition });
-    console.log(workingObj, withAdditions)
     return withAdditions;
   }
 
@@ -137,12 +149,12 @@ const mergeObj = (nextVal, original, newVal) => {
       const { [key]: value, ...withoutKey } = withRemoved;
       withRemoved = withoutKey;
     });
-    console.log(workingObj, withRemoved)
+
     return withRemoved;
   }
 
   return workingObj;
-}
+};
 
 export const mergeChanges = (changed, key, workingState, prevVal, workingVal) => {
   const nextVal = workingVal || prevVal;
