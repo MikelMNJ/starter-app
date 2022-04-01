@@ -1,34 +1,5 @@
 import { isEmpty, isEqual, isArray, isObject } from 'lodash';
 
-export const addedKeys = (added, workingObj, modifiedObj) => {
-  Object.keys(modifiedObj).map(key => {
-    const prev = workingObj[key];
-    const current = modifiedObj[key];
-    if (!prev && current) added.push({ [key]: current });
-    return null;
-  });
-};
-
-export const changedKeys = (changed, workingObj, modifiedObj) => {
-  return Object.keys(workingObj).map(key => {
-    const prev = workingObj[key];
-    const current = modifiedObj[key];
-    const bothPresent = prev && current;
-    const hasChange = !isEqual(prev, current);
-
-    if (bothPresent && hasChange) changed.push({ [key]: current });
-    return null;
-  });
-};
-
-export const removedKeys = (removed, added, workingObj, modifiedObj) => {
-  Object.keys(workingObj).map(key => {
-    const justAdded = added.includes(key);
-    if (!justAdded && !modifiedObj[key]) removed.push(key);
-    return null;
-  });
-};
-
 const addedIndices = (added, modifiedArray, original) => {
   modifiedArray.forEach(item => {
     const exists = original.find(i => isEqual(i, item));
@@ -93,10 +64,11 @@ const mergeArray = (nextVal, original, newVal) => {
 
     return withRemoved;
   }
+
   return workingArray;
 };
 
-const addedTemp = (added, modifiedObj, original) => {
+export const addedKeys = (added, modifiedObj, original) => {
   Object.keys(modifiedObj).forEach(key => {
     const oldVal = original[key];
     const newVal = modifiedObj[key];
@@ -104,7 +76,7 @@ const addedTemp = (added, modifiedObj, original) => {
   });
 };
 
-const changedTemp = (changed, modifiedObj, original) => {
+export const changedKeys = (changed, modifiedObj, original) => {
   Object.keys(original).forEach(key => {
     const originalVal = original[key];
     const newVal = modifiedObj[key];
@@ -114,9 +86,9 @@ const changedTemp = (changed, modifiedObj, original) => {
   });
 };
 
-const removedTemp = (removed, newVal, original) => {
+export const removedKeys = (removed, modifiedObj, original) => {
   Object.keys(original).forEach(key => {
-    const inNewObject = newVal[key];
+    const inNewObject = modifiedObj[key];
     if (!inNewObject) removed.push(key);
   });
 };
@@ -127,9 +99,9 @@ const mergeObj = (nextVal, original, newVal) => {
   const changed = [];
   const removed = [];
 
-  addedTemp(added, newVal, original);
-  changedTemp(changed, newVal, original);
-  removedTemp(removed, newVal, original);
+  addedKeys(added, newVal, original);
+  changedKeys(changed, newVal, original);
+  removedKeys(removed, newVal, original);
 
   if (!isEmpty(changed)) {
     let withChanges = { ...workingObj  };
@@ -157,7 +129,7 @@ const mergeObj = (nextVal, original, newVal) => {
 };
 
 export const mergeChanges = (changed, key, workingState, prevVal, workingVal) => {
-  const nextVal = workingVal || prevVal;
+  const nextVal = workingVal;
   const original = workingState[key];
   const newVal = changed[key];
   const isArr = isArray(newVal);

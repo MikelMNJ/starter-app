@@ -19,9 +19,9 @@ class StateManager {
     if (!isEmpty(array)) {
       // Record changes for all main keys.
       array.forEach(modifiedState => {
-        changedKeys(changed, workingState, modifiedState);
-        addedKeys(added, workingState, modifiedState);
-        removedKeys(removed, added, workingState, modifiedState);
+        addedKeys(added, modifiedState, workingState);
+        changedKeys(changed, modifiedState, workingState);
+        removedKeys(removed, modifiedState, workingState);
       });
 
       // Handle additions...
