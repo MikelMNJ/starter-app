@@ -1,18 +1,18 @@
-import { isEmpty, isEqual } from 'lodash';
+import { isEmpty, isEqual, isArray, isObject } from 'lodash';
 
-export const addedKeys = (added, workingState, modifiedState) => {
-  Object.keys(modifiedState).map(key => {
-    const prev = workingState[key];
-    const current = modifiedState[key];
+export const addedKeys = (added, workingObj, modifiedObj) => {
+  Object.keys(modifiedObj).map(key => {
+    const prev = workingObj[key];
+    const current = modifiedObj[key];
     if (!prev && current) added.push({ [key]: current });
     return null;
   });
 };
 
-export const changedKeys = (changed, workingState, modifiedState) => {
-  return Object.keys(workingState).map(key => {
-    const prev = workingState[key];
-    const current = modifiedState[key];
+export const changedKeys = (changed, workingObj, modifiedObj) => {
+  return Object.keys(workingObj).map(key => {
+    const prev = workingObj[key];
+    const current = modifiedObj[key];
     const bothPresent = prev && current;
     const hasChange = !isEqual(prev, current);
 
@@ -21,10 +21,10 @@ export const changedKeys = (changed, workingState, modifiedState) => {
   });
 };
 
-export const removedKeys = (removed, added, workingState, modifiedState) => {
-  Object.keys(workingState).map(key => {
+export const removedKeys = (removed, added, workingObj, modifiedObj) => {
+  Object.keys(workingObj).map(key => {
     const justAdded = added.includes(key);
-    if (!justAdded && !modifiedState[key]) removed.push(key);
+    if (!justAdded && !modifiedObj[key]) removed.push(key);
     return null;
   });
 };
@@ -105,6 +105,44 @@ const mergeArray = (nextVal, original, newVal) => {
   return workingArray;
 };
 
+const mergeObj = (nextVal, original, newVal) => {
+  const workingObj = { ...nextVal || original };
+  const added = [];
+  const changed = [];
+  const removed = [];
+
+  addedKeys(added, original, newVal);
+  changedKeys(changed, workingObj, newVal);
+  removedKeys(removed, added, workingObj, newVal);
+
+  // console.log(workingObj, newVal,  added, changed, removed);
+
+  if (!isEmpty(changed)) {
+    let withChanges = { ...workingObj  };
+    changed.forEach(changed => withChanges = { ...withChanges, ...changed });
+    console.log(workingObj, withChanges)
+    return withChanges;
+  }
+
+  if (!isEmpty(added)) {
+    let withAdditions = { ...workingObj };
+    added.forEach(addition => withAdditions = { ...withAdditions, ...addition });
+    console.log(workingObj, withAdditions)
+    return withAdditions;
+  }
+
+  if (!isEmpty(removed)) {
+    let withRemoved = { ...workingObj };
+    removed.forEach(key => {
+      const { [key]: value, ...withoutKey } = withRemoved;
+      withRemoved = withoutKey;
+    });
+    console.log(workingObj, withRemoved)
+    return withRemoved;
+  }
+
+  return workingObj;
+}
 
 export const mergeChanges = (changed, key, workingState, prevVal, workingVal) => {
   const nextVal = workingVal || prevVal;
