@@ -1,4 +1,4 @@
-import StateManager from 'helpers/stateHelpers';
+import StateManager from 'helpers/stateManager/stateManager';
 import constants from './appConstants';
 
 const initial = {
