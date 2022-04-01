@@ -67,7 +67,7 @@ const removedIndices = (added, removed, workingArray, modifiedArray, original) =
   });
 };
 
-export const mergeArray = (nextVal, original, newVal) => {
+const mergeArray = (nextVal, original, newVal) => {
   const workingArray = [ ...nextVal || original ];
   const changed = [];
   const added = [];
@@ -103,4 +103,17 @@ export const mergeArray = (nextVal, original, newVal) => {
   }
 
   return workingArray;
+};
+
+
+export const mergeChanges = (changed, key, workingState, prevVal, workingVal) => {
+  const nextVal = workingVal || prevVal;
+  const original = workingState[key];
+  const newVal = changed[key];
+  const isArr = isArray(newVal);
+  const isObj = isObject(newVal);
+
+  if (isArr) return mergeArray(nextVal, original, newVal);
+  if (isObj) return mergeObj(nextVal, original, newVal);
+  return newVal || prevVal;
 };

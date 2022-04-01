@@ -1,6 +1,6 @@
 import { isArray, isEmpty, isObject } from 'lodash';
 import { objectTypeError, objectKeyError, targetError } from 'errors/stateErrors';
-import { changedKeys, addedKeys, removedKeys, mergeArray } from './helpers';
+import { changedKeys, addedKeys, removedKeys, mergeChanges } from './helpers';
 
 class StateManager {
   constructor(initialState, action) {
@@ -41,26 +41,11 @@ class StateManager {
         let nextVal;
 
         changed.forEach(changed => {
-          const original = workingState[key];
-          const newVal = changed[key];
-          const isArr = isArray(newVal);
-          const isObj = isObject(newVal);
-
-          if (isArr) {
-            nextVal = mergeArray(nextVal, original, newVal);
-            return nextVal;
-          }
-
-
-          if (isObj) {
-            return nextVal = { ...nextVal || {}, ...newVal };
-          }
-
-          // Initial newVal undefined.
-          return nextVal = newVal || prevVal;
+          nextVal = mergeChanges(changed, key, workingState, prevVal, nextVal);
+          return nextVal;
         });
 
-        console.log({ ...prevState, [key]: nextVal });
+        // console.log({ ...prevState, [key]: nextVal });
 
         if (nextVal) return { ...prevState, [key]: nextVal };
         return { ...prevState };
