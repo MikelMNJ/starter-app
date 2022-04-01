@@ -17,37 +17,41 @@ class StateManager {
     if (!array) console.warn("No merge array provided, state unchanged.");
 
     if (!isEmpty(array)) {
-      // Record changes for all main keys.
+      // Record changes for all top-level state keys.
       array.forEach(modifiedState => {
         addedKeys(added, modifiedState, workingState);
         changedKeys(changed, modifiedState, workingState);
         removedKeys(removed, modifiedState, workingState);
       });
 
-      // Handle additions...
+      // Handle top-level additions...
       added.forEach(addition => {
         workingState = { ...workingState, ...addition };
       });
 
-      // Handle removals...
+      // Handle top-level removals...
       removed.forEach(key => {
         const { [key]: value, ...withoutKey } = workingState;
         workingState = { ...withoutKey };
       });
 
-      // Iterate through changed keys, recursively, and combine all changes.
+      // Iterate through top-level state keys and recursively combine all changes and child changes.
       return Object.keys(workingState).reduce((prevState, key) => {
         const prevVal = prevState[key];
         let nextVal;
 
         changed.forEach(changed => {
-          nextVal = mergeChanges(changed, key, workingState, prevVal, nextVal);
-          return nextVal;
+          const hasChange = changed[key];
+          if (hasChange) {
+            nextVal = mergeChanges(changed, key, workingState, prevVal, nextVal);
+            return nextVal;
+          }
         });
 
-        // console.log({ ...prevState, [key]: nextVal });
+        // For debugging
+        // console.log({ ...prevState, [key]: nextVal || prevVal });
 
-        if (nextVal) return { ...prevState, [key]: nextVal };
+        if (nextVal) return { ...prevState, [key]: nextVal || prevVal };
         return { ...prevState };
       }, workingState);
     }
