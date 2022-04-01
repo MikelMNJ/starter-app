@@ -239,7 +239,7 @@ state.merge([
   state.update(STATE_KEY_TO_UPDATE, payload),
   state.remove(STATE_KEY_TO_REMOVE),
   state.add(STATE_KEY_TO_ADD, payload),
-];
+]);
 ```
 
 
