@@ -238,7 +238,7 @@ There are times where you may need to alter multiple state values at once, this 
 state.merge([
   state.update(STATE_KEY_TO_UPDATE, payload),
   state.remove(STATE_KEY_TO_REMOVE),
-  state.add(STATE_KEY_TO_ADD),
+  state.add(STATE_KEY_TO_ADD, payload),
 ];
 ```
 
