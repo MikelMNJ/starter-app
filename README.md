@@ -97,15 +97,14 @@ in *package.json*.  It uses *Jest* and only requires the name *[componentName].t
 # Routing
 
 Routing is handled with *react-router-dom*.  The *App* is wrapped in `<BrowserRouter />` tags in *index.js* and
-*App.js* makes use of the `<Routes />` tag to receive all rendered route components from the `buildRoutes()` function in the routes controller.
+*App.js* makes use of the `<Routes />` tag to receive all rendered route components from the `makeRoutes()` function in the routes controller.
 
 
 ### Adding or editing a route
 *controllers/routesController.js* defines all routes to be rendered along with
 the appropriate component, and whether that route requires authentication.
 
-Routes are public by default.  If a route requires authentication for access, add **authenticate** to the route object: `{ path, element, authenticate: true }`.
-
+Routes are public by default.  If a route requires authentication for access, add **authenticate** to the route object:
 ```jsx
 // controllers/routesController.js
 const routes = [
@@ -118,8 +117,8 @@ const routes = [
 ];
 ```
 
-When you pass **authenticate**, the `buildRoutes()` function will require the JSON Web Token as the first argument or access to the route will be denied.
-In the event that denial &mdash; due to a missing authToken, or invalid authToken &mdash; occurs, the user will be redirect to "/login" by default.  If your authentication page is not "/login" a second path string can be passed to override the default redirect path: `buildRoutes(authToken, "/your-login-route")`.
+When you pass **authenticate**, the `makeRoutes()` function will require the JSON Web Token as the first argument or access to the route will be denied.
+In the event that denial &mdash; due to a missing authToken, or invalid authToken &mdash; occurs, the user will be redirect to "/login" by default.  If your authentication page is not "/login" a second path string can be passed to override the default redirect path: `makeRoutes(authToken, "/your-login-route")`.
 
 See the the full route controller and build function in *controllers/routesController.js*.
 
