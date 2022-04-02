@@ -31,13 +31,13 @@ const routes = [
   },
 ];
 
-const makeRoutes = authToken => {
+const makeRoutes = (authToken, authPage) => {
   return routes.map((route, index) => {
     const { path, element, authenticate } = route;
 
     if (authenticate) {
       return (
-        <Route key={index} element={<AuthRoute auth={authToken} />}>
+        <Route key={index} element={<AuthRoute redirect={authPage} auth={authToken} />}>
           <Route path={path} element={element} />
         </Route>
       );
