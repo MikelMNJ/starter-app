@@ -5,7 +5,7 @@ export const globalMessage = "502 Details: There is an issue with Node 16 and AW
 export const cleanApp = `import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 <Route path="/ready" element={<DeleteMe />} />`;
 
-export const cleanConstants = `TEST_RATE_LIMIT: "modules/app/TEST_RATE_LIMIT",`;
+export const cleanConstants = `TEST_RATE_LIMIT: "slices/app/TEST_RATE_LIMIT",`;
 
 export const cleanActions = `testRateLimit: (payload, callback) => {
   const args = { type: constants.TEST_RATE_LIMIT, payload,  callback };

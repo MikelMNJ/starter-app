@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import { globalMessage } from './codeStrings';
-import appActions from 'modules/app/appActions';
-import appSelectors from 'modules/app/appSelectors';
+import appActions from 'slices/app/appActions';
+import appSelectors from 'slices/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
 
