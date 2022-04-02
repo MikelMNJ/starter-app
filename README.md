@@ -72,6 +72,7 @@ folder is handled by your service.
 The structure of this template is as follows:
 * **functions**: Anything back-end.
 * **components**: Reusable components.
+* **controllers**: Front-end controllers, i.e. front-end routing.
 * **errors**: Errors and debugging.
 * **helpers**: Utility related functions.
 * **modules**: Anything state related.
@@ -93,32 +94,57 @@ in *package.json*.  It uses *Jest* and only requires the name *[componentName].t
 
 # Routing
 
-Routing is handled with *react-router-dom*.  The *App* is wrapped in `<BrowserRouter />` tags in *index.js*, and
-*App.js* makes use of the `<Routes />` and `<Route />` tags for rendering the appropriate component
-for the specified path.  *public/_redirects* forces the server to always return 200, OK so that
-*react-router-dom* can handle catching any 404 routes.
+Routing is handled with *react-router-dom*.  The *App* is wrapped in `<BrowserRouter />` tags in *index.js* and
+*App.js* makes use of the `<Routes />` tag to receive all rendered route components from the `buildRoutes()` function in the routes controller.
 
-Routes that should only be accessible when authenticated are wrapped in an additional `<Route />` tag, using a custom component.
-The custom component checks an *auth* prop and redirects the user to "/login", if *auth* is false.  If *auth* is true, it renders the child `<Route />` and component.
 
-The following can be found in *scenes/App/App.js*:
+### Adding or editing a route
+*controllers/routesController.js* defines all routes to be rendered along with
+the appropriate component, and whether that route requires authentication.
+
+Routes are public by default.  If a route requires authentication for access, add **authenticate** to the route object: `{ path, element, authenticate: true }`.
+
 ```jsx
- <Routes>
-  <Route path="*" element={<NotFound />} />
-  <Route path="/login" element={<p>Log in</p>} />
-  <Route path="/ready" element={<DeleteMe />} />
+// controllers/routesController.js
+const routes = [
+  {
+    // Private route example
+    path: "/authenticated-route",
+    element: <p>Authenticated Content</p>,
+    authenticate: true,
+  },
+];
+```
 
-  {/* Authenticated route example */}
-  <Route element={<AuthRoute auth={tokenFromState} />}>
-    <Route
-      path="/authenticated-route"
-      element={<p>Authenticated Content</p>}
-    />
-  </Route>
+When you pass **authenticate**, the `buildRoutes()` function will require the JSON Web Token as the first argument or access to the route will be denied.
+In the event that denial &mdash; due to a missing authToken, or invalid authToken &mdash; occurs, the user will be redirect to "/login" by default.  If your authentication page is not "/login" a second path string can be passed to override the default redirect path: `buildRoutes(authToken, "/your-login-route")`.
 
-  {/* Redirect example */}
-  <Route path="/" element={<Navigate to="/ready" />} />
-</Routes>
+See the the full route controller and build function in *controllers/routesController.js*.
+
+> *public/_redirects* forces the server to always return 200, OK so that *react-router-dom* can handle catching any 404 routes.
+
+The relevant routing code has been included in this example and full implementation can be found in *scenes/App/App.js*:
+```jsx
+// scenes/App/App.js
+import makeRoutes from 'controllers/routesController';
+
+const App = props => {
+  const renderApp = () => {
+    const authToken = null; // Your JWT from state...
+
+    return (
+      <Routes>
+        {makeRoutes(authToken)}
+      </Routes>
+    );
+  };
+
+  return (
+    <div id="app">
+      {renderApp()}
+    </div>
+  );
+};
 ```
 
 
