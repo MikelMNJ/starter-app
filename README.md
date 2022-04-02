@@ -19,6 +19,7 @@ The app contains the following features to get you started:
 **Back-end Features**:<br />
 * MongoDB connect.
 * Express server with payload validation.
+* Email dispatching.
 * DB interaction with Mongoose.
 * Sample userModel schema.
 * Sample routes for getting started and testing.
