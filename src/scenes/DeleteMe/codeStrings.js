@@ -42,16 +42,23 @@ const getLimitTest = async (req, res) => {
   }
 };`;
 
-export const authAndRedirects = `{/* Authenticated route example */}
-<Route element={<AuthRoute auth={tokenFromState} />}>
-  <Route
-    path="/authenticated-route"
-    element={<p>Authenticated Content</p>}
-  />
-</Route>
-
-{/* Redirect example */}
-<Route path="/" element={<Navigate to="/ready" />} />`;
+export const authAndRedirects = `const routes = [
+  {
+    path: "/ready",
+    element: <DeleteMe />,
+  },
+  {
+    // Private route example
+    path: "/authenticated-route",
+    element: <p>Authenticated Content</p>,
+    authenticate: true,
+  },
+  {
+    // Redirect example
+    path: "/",
+    element: <Navigate to="/ready" />,
+  },
+];`;
 
 export const updatePublic = `index.html (title and other relevant changes).
 logo192.png

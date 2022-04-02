@@ -21,11 +21,11 @@ const content = [
         {terminationWarning("Modifying redirect from /ready", "stop rendering")}
 
         <p>
-          <strong>Step 1: Update authenticated routes or redirects.</strong>
+          <strong>Step 1: Remove /ready and update authenticated routes or redirects.</strong>
         </p>
 
         <strong className="code">
-          In src/App/App.js
+          In src/controllers/routesController.js
         </strong>:<br />
         <p className="code">{authAndRedirects}</p>
 
