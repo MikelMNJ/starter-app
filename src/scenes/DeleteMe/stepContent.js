@@ -82,17 +82,17 @@ const content = [
         </p>
 
         <strong className="code">
-          In modules/app/appConstants.js
+          In slices/app/appConstants.js
         </strong>:<br />
         <p className="code">{cleanConstants}</p>
 
         <strong className="code">
-          In modules/app/appActions.js
+          In slices/app/appActions.js
         </strong>:<br />
         <p className="code">{cleanActions}</p>
 
         <strong className="code">
-          In modules/app/appApi.js
+          In slices/app/appApi.js
         </strong>:<br />
         <p className="code">{cleanAppAPI}</p>
 

@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import makeRoutes from 'controllers/routesController';
 import Banner from 'components/Banner/Banner';
 import Notifications from 'components/Notification/Notifications';
-import appSelectors from 'modules/app/appSelectors';
-import appActions from 'modules/app/appActions';
+import appSelectors from 'slices/app/appSelectors';
+import appActions from 'slices/app/appActions';
 import './App.scss';
 
 const App = props => {

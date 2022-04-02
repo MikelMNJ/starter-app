@@ -1,5 +1,5 @@
 import { startsWith, isArray } from 'lodash';
-import appActions from 'modules/app/appActions';
+import appActions from 'slices/app/appActions';
 
 export const prepPath = path => {
   if (startsWith(path, '/')) return path.substring(1);
