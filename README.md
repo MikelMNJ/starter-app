@@ -149,6 +149,49 @@ const App = props => {
 
 
 
+# Feature Flags
+A basic feature flag object has been added in *flags.js*.  You can expand this object or integrate it into your build pipeline,
+however you see fit, to control features for different environments or deployments.
+
+The following can be found in *flags/js*:
+```jsx
+const flags = {
+  features: {
+    maintenance: false,
+  }
+};
+
+export default flags;
+```
+
+You can use the feature flags in the front-end by importing, declaring and conditionally rendering:
+```jsx
+import React from 'react';
+import flags from 'featureFlags';
+
+const Component = props => {
+  const { features: { maintenance } } = flags;
+
+  const buildContent = () => {
+    if (maintenance) {
+      return <p>Maintenance content</p>
+    }
+
+    return <p>Normal content</p>;
+  };
+
+  return (
+    <div>
+      {buildContent}
+    </div>
+  );
+};
+
+export default Component;
+```
+
+
+
 # Monitoring
 
 Monitoring is handled with *Sentry* and is set up in *index.js*.  You will need your DSN, provided by Sentry.
