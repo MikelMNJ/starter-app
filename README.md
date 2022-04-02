@@ -150,11 +150,11 @@ const App = props => {
 
 
 # Feature Flags
-A basic feature flag object has been added in *flags.js*.  You expand this object or integrate it into your build pipeline
-however you need to control features for different environments or deployments.
+A basic feature flag object has been added in *flags.js*.  You can expand this object or integrate it into your build pipeline,
+however you see fit, to control features for different environments or deployments.
 
+The following can be found in *flags/js*:
 ```jsx
-// flags.js
 const flags = {
   features: {
     maintenance: false,
