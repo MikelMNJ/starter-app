@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Navigate } from 'react-router-dom';
+import Login from 'scenes/Login/Login';
 import AuthRoute from 'components/AuthRoute/AuthRoute';
 import NotFound from 'components/NotFound/NotFound';
 import DeleteMe from 'scenes/DeleteMe/DeleteMe';
@@ -12,7 +13,15 @@ const routes = [
   },
   {
     path: "/login",
-    element: <p>Log in</p>,
+    element: <Login />,
+  },
+  {
+    path: "/create-account",
+    element: <p>Create account</p>,
+  },
+  {
+    path: "/reset-password",
+    element: <p>Reset password</p>,
   },
   {
     path: "/ready",
