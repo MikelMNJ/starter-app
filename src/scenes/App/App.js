@@ -1,11 +1,14 @@
-import React, { useState, useCallback } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect, useCallback } from 'react';
 import { Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
-import makeRoutes from 'controllers/routesController';
+import makeRoutes from 'helpers/routeHelpers';
 import Banner from 'components/Banner/Banner';
 import Notifications from 'components/Notification/Notifications';
-import appSelectors from 'slices/app/appSelectors';
 import appActions from 'slices/app/appActions';
+import appSelectors from 'slices/app/appSelectors';
+import authActions from 'slices/auth/authActions';
+import authSelectors from 'slices/auth/authSelectors';
 import './App.scss';
 
 const App = props => {
@@ -14,26 +17,28 @@ const App = props => {
 
   // Actions and Selectors
   const removeNotification = useCallback(payload => dispatch(appActions?.removeNotification(payload)), [dispatch]);
+  const checkToken = useCallback(payload => dispatch(authActions?.checkToken(payload)), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
   const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+  const userInfo = useSelector(state => authSelectors.userInfo(state));
+  const tokenName = useSelector(state => authSelectors.tokenName(state));
+  const token = userInfo?.token;
 
-  const renderApp = () => {
-    const authToken = true;
-
-    return (
-      <Routes>
-        {makeRoutes(authToken)}
-      </Routes>
-    );
-  };
+  useEffect(() => {
+    const existingToken = localStorage.getItem(tokenName);
+    const payload = { token: existingToken };
+    if (existingToken) checkToken(payload);
+  }, []);
 
   return (
     <div id="app">
+      <Routes>
+        {makeRoutes(token)}
+      </Routes>
+
       {globalBannerContent && showBanner && (
         <Banner center text={globalBannerContent} callback={() => setShowBanner(false)} />
       )}
-
-      {renderApp()}
 
       <Notifications
         notifications={notifications}

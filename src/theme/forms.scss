@@ -23,13 +23,15 @@ input,
 select,
 textarea {
   padding: 0.5rem 0.75rem;
-  border: 0.0625rem solid $grey;
+  border: 0.0625rem solid $lighterGrey;
   border-radius: 0.35rem;
   color: inherit;
   font-family: inherit;
   font-size: inherit;
   margin-bottom: 1rem;
   min-width: 7rem;
+  height: 3rem;
+  width: 100%;
   transition: border 0.2s ease;
 }
 

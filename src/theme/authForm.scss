@@ -1,0 +1,39 @@
+@import 'theme/colors.scss';
+
+.authContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  margin: 1.5rem 0;
+  max-width: 27rem;
+  padding: 1rem;
+
+  .trust {
+    display: flex;
+    align-items: center;
+    margin: 1rem auto;
+    min-height: 1.5rem;
+  }
+
+  .loginOptions {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 414px) {
+  #authContainer {
+    width: 100%;
+  }
+}

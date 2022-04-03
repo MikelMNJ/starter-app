@@ -22,7 +22,7 @@ const checkCredentials = async (req, res) => {
 // @route   POST server/v1/auth
 // @desc    Authenticate user and get token
 // @access  Public
-const twoHours = 7200;
+const anHour = 3600;
 const aMonth = 2592000;
 const checkLoginPayload = [
   check('email')
@@ -65,14 +65,12 @@ const login = async (req, res) => {
     };
 
     // 2592000 = 30 Days, 3600 = 1 Hour.
-    jwt.sign(payload, jwtSecret, { expiresIn: trustedDevice ? aMonth : twoHours }, (err, token) => {
+    jwt.sign(payload, jwtSecret, { expiresIn: trustedDevice ? aMonth : anHour }, (err, token) => {
       if (err) throw err;
       const decoded = jwt.verify(token, jwtSecret);
 
       res.json({
         token,
-        dateCreated: user.dateCreated,
-        lastSession: user.lastSession,
         sessionEnd: decoded.exp,
         user: email,
       });
