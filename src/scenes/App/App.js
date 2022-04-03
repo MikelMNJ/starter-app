@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
-import makeRoutes from 'controllers/routesController';
+import makeRoutes from 'helpers/routeHelpers';
 import Banner from 'components/Banner/Banner';
 import Notifications from 'components/Notification/Notifications';
 import appSelectors from 'slices/app/appSelectors';
