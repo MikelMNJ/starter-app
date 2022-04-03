@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import makeRoutes from 'helpers/routeHelpers';
@@ -14,26 +14,29 @@ const App = props => {
 
   // Actions and Selectors
   const removeNotification = useCallback(payload => dispatch(appActions?.removeNotification(payload)), [dispatch]);
+  const checkToken = useCallback(payload => dispatch(appActions?.checkToken(payload)), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
   const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
+  const userInfo = useSelector(state => appSelectors.userInfo(state));
+  const tokenName = useSelector(state => appSelectors.tokenName(state));
+  const token = userInfo?.token;
 
-  const renderApp = () => {
-    const authToken = true;
-
-    return (
-      <Routes>
-        {makeRoutes(authToken)}
-      </Routes>
-    );
-  };
+  useEffect(() => {
+    const existingToken = localStorage.getItem(tokenName);
+    const payload = { token: existingToken };
+    if (existingToken) checkToken(payload);
+    /* eslint-disable-next-line */
+  }, []);
 
   return (
     <div id="app">
+      <Routes>
+        {makeRoutes(token)}
+      </Routes>
+
       {globalBannerContent && showBanner && (
         <Banner center text={globalBannerContent} callback={() => setShowBanner(false)} />
       )}
-
-      {renderApp()}
 
       <Notifications
         notifications={notifications}

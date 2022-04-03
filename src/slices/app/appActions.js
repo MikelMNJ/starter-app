@@ -26,6 +26,10 @@ const appActions = {
     const args = { type: constants.LOG_IN, payload, callback };
     return api.login(args);
   },
+  checkToken: (payload, callback) => {
+    const args = { type: constants.CHECK_TOKEN, payload, callback };
+    return api.checkToken(args);
+  },
   sampleAPICall: (payload, callback) => {
     const args = { type: constants.SAMPLE_API_CALL, payload, callback };
     return api.sampleAPICall(args);

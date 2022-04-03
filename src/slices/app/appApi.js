@@ -39,6 +39,21 @@ export const login = args => {
   };
 };
 
+export const checkToken = args => {
+  const { type, payload } = args;
+
+ return {
+    type,
+    path: "/user/me",
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+  };
+};
+
 export const sendEmail = args => {
   const { type, payload, callback } = args;
 
