@@ -10,15 +10,25 @@
   }
 
   input {
-    padding-right: 3rem;
+    padding-right: 3.75rem;
   }
 
   button {
-    position: relative;
-    top: 0.1rem;
     margin-left: -3rem;
-    width: 2.9rem !important;
-    height: 2.8rem;
+    width: 3rem !important;
+    min-height: auto;
+    color: $grey;
+
+    i {
+      font-size: 1rem;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        color: $blue;
+        background-color: unset;
+      }
+    }
   }
 }
 

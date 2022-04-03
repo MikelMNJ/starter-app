@@ -69,7 +69,7 @@ const FieldWithAction = props => {
 
         <Button
           type="button"
-          btnType="solid"
+          btnType="transparent"
           icon={form.values[name] !== ''
             ? iconValid(activeIcon)
             : iconValid(inactiveIcon)
