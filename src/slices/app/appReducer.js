@@ -22,6 +22,8 @@ const reducer = (initialState = initial, action = {}) => {
       return state.add(constants.STATE_KEY_GLOBAL_BANNER_CONTENT, payload);
     case constants.SEND_EMAIL:
       return state.update(constants.STATE_KEY_EMAIL_RESPONSE, payload);
+    case constants.LOG_IN:
+      return state.update(constants.STATE_KEY_USER_TOKEN, payload);
     case constants.SAMPLE_API_CALL:
       return state.update(constants.STATE_KEY_SAMPLE_API_RESPONSE, payload);
 

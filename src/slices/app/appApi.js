@@ -23,6 +23,21 @@ export const testRateLimit = args => {
   };
 };
 
+export const login = args => {
+  const { type, payload, callback } = args;
+
+ return {
+    type,
+    path: "/auth",
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    onComplete: res => callback(res),
+  };
+};
 
 export const sendEmail = args => {
   const { type, payload, callback } = args;

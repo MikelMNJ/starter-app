@@ -8,6 +8,7 @@ const constants = {
   SEND_EMAIL: "slices/app/SEND_EMAIL",
   SAMPLE_API_CALL: "slices/app/SAMPLE_API_CALL",
   TEST_RATE_LIMIT: "slices/app/TEST_RATE_LIMIT",
+  LOG_IN: "slices/app/LOG_IN",
 
   // Selectors
   STATE_KEY_SAMPLE_SELECTOR: "sampleSelector",
@@ -15,6 +16,7 @@ const constants = {
   STATE_KEY_GLOBAL_BANNER_CONTENT: "globalBannerContent",
   STATE_KEY_EMAIL_RESPONSE: "emailResponse",
   STATE_KEY_SAMPLE_API_RESPONSE: "sampleAPIResponse",
+  STATE_KEY_USER_TOKEN: "userToken",
 };
 
 export default constants;

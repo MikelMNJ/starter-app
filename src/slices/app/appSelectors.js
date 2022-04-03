@@ -12,6 +12,7 @@ const appSelectors = {
   sampleSelector: state => state.app[constants.STATE_KEY_SAMPLE_SELECTOR],
   notifications: state => state.app[constants.STATE_KEY_NOTIFICATIONS],
   emailResponse: state => state.app[constants.STATE_KEY_EMAIL_RESPONSE],
+  userToken: state => state.app[constants.STATE_KEY_USER_TOKEN],
   sampleAPIResponse: state => state.app[constants.STATE_KEY_SAMPLE_API_RESPONSE],
   globalBannerContent: state => state.app[constants.STATE_KEY_GLOBAL_BANNER_CONTENT],
 };
