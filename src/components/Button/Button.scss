@@ -1,0 +1,85 @@
+@import 'theme/colors.scss';
+
+button {
+  &.solid,
+  &.ghost,
+  &.transparent {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.125rem solid;
+    border-radius: 0.35rem;
+    width: 7rem;
+    height: 3rem;
+    transition: all 0.2s ease;
+  }
+
+  &.solid {
+    border: transparent;
+    background-color: $blue;
+    color: white;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: $darkBlue;
+      }
+    }
+
+    &:disabled {
+      background-color: $lighterGrey;
+      color: $grey;
+    }
+  }
+
+  &.ghost {
+    border-color: $blue;
+    color: $blue;
+    background-color: transparent;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: $blue;
+        color: white;
+      }
+    }
+
+    &:disabled {
+      background-color: transparent;
+      border-color: $lighterGrey;
+      color: $grey;
+    }
+  }
+
+  &.transparent {
+    border: none;
+    background-color: transparent;
+    color: $blue;
+
+    @media (hover: hover) {
+      &:hover {
+        background-color: rgba(133, 133, 133, 0.1);
+      }
+    }
+
+    &:disabled {
+      background-color: transparent;
+      color: $grey;
+      opacity: 0.75;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+/* ========== Media Queries ========== */
+@media only screen and (max-width: 414) {
+
+}
