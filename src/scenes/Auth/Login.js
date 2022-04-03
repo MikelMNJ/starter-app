@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from 'helpers/stateHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { isEmpty } from 'lodash';
 import { Formik, Form, Field } from 'formik';
-import appActions from 'slices/app/appActions';
-import appSelectors from 'slices/app/appSelectors';
+import authActions from 'slices/auth/authActions';
+import authSelectors from 'slices/auth/authSelectors';
 import Checkbox from 'components/Checkbox/Checkbox';
 import FieldError from 'components/FieldError/FieldError';
 import FieldWithAction from 'components/FieldWithAction/FieldWithAction';
@@ -38,8 +38,8 @@ const Login = props => {
   ];
 
   // Actions and Selectors
-  const login = useCallback((payload, callback) => dispatch(appActions.login(payload, callback)), [dispatch]);
-  const userInfo = useSelector(state => appSelectors.userInfo(state));
+  const login = useCallback((payload, callback) => dispatch(authActions.login(payload, callback)), [dispatch]);
+  const userInfo = useSelector(state => authSelectors.userInfo(state));
   const token = userInfo?.token;
   const validToken = !isEmpty(token);
 

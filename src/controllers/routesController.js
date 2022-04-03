@@ -1,12 +1,11 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import Login from 'scenes/Login/Login';
+import Login from 'scenes/Auth/Login';
 import NotFound from 'components/NotFound/NotFound';
 import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 
 const routes = [
   {
-    // 404 Example
     path: "*",
     element: <NotFound />,
   },
@@ -22,20 +21,20 @@ const routes = [
     path: "/reset-password",
     element: <p>Reset password</p>,
   },
+
+  // Remove: examples only...
+  {
+    path: "/",
+    element: <Navigate to="/ready" />,
+  },
   {
     path: "/ready",
     element: <DeleteMe />,
   },
   {
-    // Private route example
     path: "/authenticated-route",
     element: <p>Authenticated Content</p>,
     authenticate: true,
-  },
-  {
-    // Redirect example
-    path: "/",
-    element: <Navigate to="/ready" />,
   },
 ];
 

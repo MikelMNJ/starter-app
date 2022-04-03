@@ -14,7 +14,6 @@ import constants from './appConstants';
 */
 
 const appActions = {
-  sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
   removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
   setGlobalBannerContent: payload => actionCreator(constants.SET_GLOBAL_BANNER_CONTENT, payload),
@@ -22,14 +21,9 @@ const appActions = {
     const args = { type: constants.SEND_EMAIL, payload, callback };
     return api.sendEmail(args);
   },
-  login: (payload, callback) => {
-    const args = { type: constants.LOG_IN, payload, callback };
-    return api.login(args);
-  },
-  checkToken: (payload, callback) => {
-    const args = { type: constants.CHECK_TOKEN, payload, callback };
-    return api.checkToken(args);
-  },
+
+  // Remove: example only...
+  sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   sampleAPICall: (payload, callback) => {
     const args = { type: constants.SAMPLE_API_CALL, payload, callback };
     return api.sampleAPICall(args);

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
 import app from 'slices/app/appReducer';
+import auth from 'slices/auth/authReducer';
 import apiMiddleware from 'wares/apiMiddleware';
 
 export const AppContext = createContext();
@@ -10,6 +11,7 @@ export const useStore = () => useContext(AppContext);
 
 const reducers = {
   app,
+  auth,
 };
 
 const initialState = makeInitialState(reducers);
