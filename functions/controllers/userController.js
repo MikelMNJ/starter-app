@@ -119,9 +119,37 @@ const createUser = async (req, res) => {
   };
 };
 
+// @route   DELETE api/v1/users
+// @desc    Remove existing user
+// @access  Private
+const checkDeleteUserPayload = [
+  check('confirmation')
+    .notEmpty().withMessage('Delete confirmation is required.')
+    .matches('DELETE').withMessage('Please type "DELETE" to confirm.')
+];
+
+const deleteUser = async (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+
+  try {
+    await userModel.findOneAndRemove({ _id: req.user.id });
+
+    // Remove any additional collections associated with thie user ID:
+    // await [Collection].findOneAndRemove({ user: req.user.id });
+
+    res.json({ msg: 'Account deleted.' });
+  } catch {
+    res.status(500).send('Server error.');
+  };
+};
+
 module.exports = {
   checkTokenPayload,
   checkToken,
   checkCreateUserPayload,
   createUser,
+  checkDeleteUserPayload,
+  deleteUser,
 };
