@@ -88,7 +88,7 @@ const createUser = async (req, res) => {
     if (user) {
       return res.status(400).json({
         // Showing generic message if user already exists.
-        errors: [{ msg: 'Unable to create user.' }]
+        errors: [{ message: 'Unable to create user.' }]
       });
     };
 
