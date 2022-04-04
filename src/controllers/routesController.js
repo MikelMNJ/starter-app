@@ -31,7 +31,6 @@ const routes = [
   {
     path: "/ready",
     element: <DeleteMe />,
-    authenticate: true,
   },
   {
     path: "/authenticated-route",
