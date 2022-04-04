@@ -8,6 +8,18 @@ const authActions = {
     const args = { type: constants.CHECK_TOKEN, payload, callback };
     return api.checkToken(args);
   },
+  createUser: (payload, callback) => {
+    const args = { type: constants.CREATE_USER, payload, callback };
+    return api.createUser(args);
+  },
+  updateUser: (payload, callback) => {
+    const args = { type: constants.UPDATE_USER, payload, callback };
+    return api.updateUser(args);
+  },
+  deleteUser: (payload, callback) => {
+    const args = { type: constants.DELETE_USER, payload, callback };
+    return api.deleteUser(args);
+  },
   login: (payload, callback) => {
     const args = { type: constants.LOG_IN, payload, callback };
     return api.login(args);

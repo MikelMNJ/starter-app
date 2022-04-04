@@ -16,7 +16,7 @@ export const sendEmail = args => {
 
  return {
     type,
-    path: "/email",
+    path: "/emails",
     method: "POST",
     body: JSON.stringify(payload),
     headers: {

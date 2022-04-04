@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { isEmpty } from 'lodash';
+import { storeToken } from 'helpers/authHelpers';
 import StateManager from 'helpers/stateManager/stateManager';
 import constants from './authConstants';
 
@@ -16,12 +16,16 @@ const reducer = (initialState = initial, action = {}) => {
   switch(action.type) {
     case constants.CHECK_TOKEN:
       return state.update(constants.STATE_KEY_USER_INFO, payload);
+    case constants.CREATE_USER:
+      storeToken(state, constants, payload);
+      return state.update(constants.STATE_KEY_USER_INFO, payload);
+    case constants.UPDATE_USER:
+      storeToken(state, constants, payload);
+      return state.update(constants.STATE_KEY_USER_INFO, payload);
+    case constants.DELETE_USER:
+      return state.remove(constants.STATE_KEY_USER_INFO);
     case constants.LOG_IN:
-      if (!isEmpty(payload)) {
-        const tokenName = state.get(constants.STATE_KEY_TOKEN_NAME);
-        localStorage.setItem(tokenName, payload.token);
-      }
-
+      storeToken(state, constants, payload);
       return state.update(constants.STATE_KEY_USER_INFO, payload);
 
     default:

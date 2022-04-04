@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Login from 'scenes/Auth/Login';
+import CreateAccount from 'scenes/Auth/CreateAccount';
 import NotFound from 'components/NotFound/NotFound';
 import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 
@@ -15,7 +16,7 @@ const routes = [
   },
   {
     path: "/create-account",
-    element: <p>Create account</p>,
+    element: <CreateAccount />,
   },
   {
     path: "/reset-password",

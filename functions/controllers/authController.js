@@ -7,10 +7,13 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const { REACT_APP_JWT_SECRET: jwtSecret } = process.env;
 
+const anHour = 3600;
+const aMonth = 2592000;
+
 // @route   GET server/v1/auth
 // @desc    Authenticate provided user credentials
-// @access  Public
-const checkCredentials = async (req, res) => {
+// @access  Private
+const getUserData = async (req, res) => {
   try {
     const user = await userModel.findById(req.user.id).select('-password');
     res.json(user);
@@ -22,8 +25,6 @@ const checkCredentials = async (req, res) => {
 // @route   POST server/v1/auth
 // @desc    Authenticate user and get token
 // @access  Public
-const anHour = 3600;
-const aMonth = 2592000;
 const checkLoginPayload = [
   check('email')
     .notEmpty().withMessage('Email is required.')
@@ -57,7 +58,7 @@ const login = async (req, res) => {
       });
     };
 
-    user.lastSession = moment.utc();
+    user.updatedAt = moment.utc();
     errors.isEmpty() && await user.save();
 
     const payload = {
@@ -71,17 +72,17 @@ const login = async (req, res) => {
 
       res.json({
         token,
+        user: email.toLowerCase(),
         sessionEnd: decoded.exp,
-        user: email,
       });
     });
   } catch(error) {
-    res.status(500).json({ error });
+    res.status(500).send(error);
   };
 };
 
 module.exports = {
-  checkCredentials,
+  getUserData,
   checkLoginPayload,
   login,
 };

@@ -898,6 +898,11 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    agreedTo: {
+      type: Array,
+      required: true,
+    }
   },
   {
     timestamps: true
