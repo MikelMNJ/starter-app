@@ -136,10 +136,10 @@ const deleteUser = async (req, res) => {
   try {
     await userModel.findOneAndRemove({ _id: req.user.id });
 
-    // Remove any additional collections associated with thie user ID:
+    // Remove any additional collections associated with this user ID:
     // await [Collection].findOneAndRemove({ user: req.user.id });
 
-    res.json({ msg: 'Account deleted.' });
+    res.json({ message: 'Account deleted.' });
   } catch {
     res.status(500).send('Server error.');
   };

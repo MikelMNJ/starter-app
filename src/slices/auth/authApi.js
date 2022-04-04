@@ -42,6 +42,23 @@ export const createUser = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onComplete: res => callback(res),
+    onSuccess: res => callback(res),
+  };
+};
+
+export const deleteUser = args => {
+  const { type, payload, callback } = args;
+
+ return {
+    type,
+    path: "/users",
+    method: "DELETE",
+    body: JSON.stringify(payload),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+      "x-auth-token": `${payload.token}`,
+    },
+    onSuccess: res => callback(res),
   };
 };
