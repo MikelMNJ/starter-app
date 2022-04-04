@@ -100,6 +100,12 @@ const CreateAccount = props => {
               highlightField={true}
               callback={() => setPasswordVisible(!passwordVisible)} />
 
+            <Button
+              type="submit"
+              text="Submit"
+              btnType="solid"
+              disabled={form.isSubmitting} />
+
             <FieldReqs
               value={form.values["password"]}
               upper
@@ -108,12 +114,6 @@ const CreateAccount = props => {
               min
               special
             />
-
-            <Button
-              type="submit"
-              text="Submit"
-              btnType="solid"
-              disabled={form.isSubmitting} />
 
             <Checkbox
               name="trustedDevice"
