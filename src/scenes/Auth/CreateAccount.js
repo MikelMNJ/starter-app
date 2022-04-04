@@ -7,6 +7,7 @@ import { Formik, Form, Field } from 'formik';
 import authActions from 'slices/auth/authActions';
 import authSelectors from 'slices/auth/authSelectors';
 import Checkbox from 'components/Checkbox/Checkbox';
+import FieldReqs from 'components/FieldReqs/FieldReqs';
 import FieldError from 'components/FieldError/FieldError';
 import FieldWithAction from 'components/FieldWithAction/FieldWithAction';
 import Button from 'components/Button/Button';
@@ -16,15 +17,18 @@ import 'theme/authForm.scss';
 const defaults = {
   email: "",
   password: "",
+  confirmPassword: "",
   trustedDevice: false,
 };
 
 const schema = yup.object().shape({
   email: yup.string().email('Invalid email.').required('Email is required.').trim(),
   password: yup.string().required('Password is required.').trim(),
+  confirmPassword: yup.string().required('Confirm password is required.').trim()
+    .oneOf([yup.ref('password'), null], 'Passwords must match.'),
 });
 
-const Login = props => {
+const CreateAccount = props => {
   const { className, ...rest } = props;
 
   const [ passwordVisible, setPasswordVisible ] = useState(false);
@@ -38,7 +42,7 @@ const Login = props => {
   ];
 
   // Actions and Selectors
-  const login = useCallback((payload, callback) => dispatch(authActions.login(payload, callback)), [dispatch]);
+  const createUser = useCallback((payload, callback) => dispatch(authActions.createUser(payload, callback)), [dispatch]);
   const userInfo = useSelector(state => authSelectors.userInfo(state));
   const token = userInfo?.token;
   const validToken = !isEmpty(token);
@@ -49,17 +53,18 @@ const Login = props => {
   }, [token, validToken, navigate, state]);
 
   const handleSubmit = (values, setSubmitting) => {
-    const { email, password, trustedDevice } = values;
+    const { email, password, confirmPassword, trustedDevice } = values;
 
     const callback = () => setSubmitting(false);
 
     const payload = {
-      email: email.toLowerCase(),
+      email,
       password,
+      confirmPassword,
       trustedDevice,
     };
 
-    login(payload, callback);
+    createUser(payload, callback);
   };
 
   return (
@@ -85,9 +90,28 @@ const Login = props => {
               highlightField={true}
               callback={() => setPasswordVisible(!passwordVisible)} />
 
+            <FieldWithAction
+              form={form}
+              name="confirmPassword"
+              type={passwordVisible ? 'text' : 'password'}
+              placeholder="Confirm password*"
+              activeIcon={passwordVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+              inactiveIcon="fa-solid fa-eye-slash"
+              highlightField={true}
+              callback={() => setPasswordVisible(!passwordVisible)} />
+
+            <FieldReqs
+              value={form.values["password"]}
+              upper
+              lower
+              number
+              min
+              special
+            />
+
             <Button
               type="submit"
-              text="Log in"
+              text="Submit"
               btnType="solid"
               disabled={form.isSubmitting} />
 
@@ -97,7 +121,7 @@ const Login = props => {
               label="Trust this device for 30 days." />
 
             <p className="authOptions">
-              <Link to={'/create-account'}>Create an account</Link>
+              <Link to={'/login'}>Log in</Link>
               &nbsp;or <Link to={'/reset-password'}>Reset your password</Link>.
             </p>
           </Form>
@@ -107,4 +131,4 @@ const Login = props => {
   );
 };
 
-export default Login;
+export default CreateAccount;

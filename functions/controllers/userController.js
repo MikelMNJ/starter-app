@@ -109,7 +109,7 @@ const createUser = async (req, res) => {
         token,
         user: email.toLowerCase(),
         sessionEnd: decoded.exp,
-        messsage: "Account created. Welcome!"
+        message: "Account created. Welcome!"
       });
     });
   } catch(error) {

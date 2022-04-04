@@ -42,7 +42,7 @@ export const createUser = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onSuccess: res => callback(res),
+    onComplete: res => callback(res),
   };
 };
 
@@ -59,7 +59,7 @@ export const updateUser = args => {
       "content-type": "application/json",
       "x-auth-token": `${payload.token}`,
     },
-    onSuccess: res => callback(res),
+    onComplete: res => callback(res),
   };
 };
 
@@ -76,6 +76,6 @@ export const deleteUser = args => {
       "content-type": "application/json",
       "x-auth-token": `${payload.token}`,
     },
-    onSuccess: res => callback(res),
+    onComplete: res => callback(res),
   };
 };
