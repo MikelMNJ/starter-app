@@ -106,6 +106,8 @@ const sendResetReq = async (req, res) => {
         text: `We've received a request to reset your password.
         If this was you, please follow the link to continue the reset process:
 
+        ${resetURL}
+
         If you didn't make this request, please disregard this email.`,
         html:
          `<p>
