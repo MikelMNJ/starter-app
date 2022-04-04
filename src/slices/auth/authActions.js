@@ -8,6 +8,10 @@ const authActions = {
     const args = { type: constants.CHECK_TOKEN, payload, callback };
     return api.checkToken(args);
   },
+  createUser: (payload, callback) => {
+    const args = { type: constants.CREATE_USER, payload, callback };
+    return api.createUser(args);
+  },
   login: (payload, callback) => {
     const args = { type: constants.LOG_IN, payload, callback };
     return api.login(args);

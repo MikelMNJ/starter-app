@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const limiter = require('../middleware/limitMiddleware');
 const auth = require('../middleware/authMiddleware');
 
 const {
   checkTokenPayload,
   checkToken,
+  checkCreateUserPayload,
+  createUser,
 } = require('../controllers/userController');
 
-
 router.route('/me')
-  .post(checkTokenPayload, checkToken);
+  .post(limiter(), checkTokenPayload, checkToken);
+
+router.route('/')
+  .post(limiter(), checkCreateUserPayload, createUser);
 
 module.exports = router;

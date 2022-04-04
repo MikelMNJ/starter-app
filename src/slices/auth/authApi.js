@@ -4,7 +4,7 @@ export const checkToken = args => {
 
   return {
     type,
-    path: "/user/me",
+    path: "/users/me",
     method: "POST",
     body: JSON.stringify(payload),
     headers: {
@@ -20,6 +20,22 @@ export const login = args => {
  return {
     type,
     path: "/auth",
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+    onComplete: res => callback(res),
+  };
+};
+
+export const createUser = args => {
+  const { type, payload, callback } = args;
+
+ return {
+    type,
+    path: "/users",
     method: "POST",
     body: JSON.stringify(payload),
     headers: {

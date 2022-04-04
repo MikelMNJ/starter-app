@@ -17,10 +17,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
 // Define routes
-app.use(`${v1}user`, require('./routes/userRoutes'));
-app.use(`${v1}sample`, require('./routes/sampleRoutes'));
-app.use(`${v1}email`, require('./routes/emailRoutes'));
 app.use(`${v1}auth`, require('./routes/authRoutes'));
+app.use(`${v1}users`, require('./routes/userRoutes'));
+app.use(`${v1}emails`, require('./routes/emailRoutes'));
+app.use(`${v1}sample`, require('./routes/sampleRoutes'));
 
 app.keepAliveTimeout = 121 * 1000;
 app.headersTimeout = 125 * 1000;
