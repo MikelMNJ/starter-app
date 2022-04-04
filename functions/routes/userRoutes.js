@@ -8,6 +8,8 @@ const {
   checkToken,
   checkCreateUserPayload,
   createUser,
+  checkUpdateUserPayload,
+  updateUser,
   checkDeleteUserPayload,
   deleteUser,
 } = require('../controllers/userController');
@@ -17,6 +19,7 @@ router.route('/me')
 
 router.route('/')
   .post(limiter(), checkCreateUserPayload, createUser)
+  .put(limiter(), auth, checkUpdateUserPayload, updateUser)
   .delete(limiter(), auth, checkDeleteUserPayload, deleteUser);
 
 module.exports = router;

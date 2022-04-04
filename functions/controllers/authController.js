@@ -7,6 +7,9 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 const { REACT_APP_JWT_SECRET: jwtSecret } = process.env;
 
+const anHour = 3600;
+const aMonth = 2592000;
+
 // @route   GET server/v1/auth
 // @desc    Authenticate provided user credentials
 // @access  Private
@@ -22,8 +25,6 @@ const getUserData = async (req, res) => {
 // @route   POST server/v1/auth
 // @desc    Authenticate user and get token
 // @access  Public
-const anHour = 3600;
-const aMonth = 2592000;
 const checkLoginPayload = [
   check('email')
     .notEmpty().withMessage('Email is required.')
