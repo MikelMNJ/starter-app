@@ -2,6 +2,8 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Login from 'scenes/Auth/Login';
 import CreateAccount from 'scenes/Auth/CreateAccount';
+import ResetPassword from 'scenes/Auth/ResetPassword';
+import SetPassword from 'scenes/Auth/SetPassword';
 import NotFound from 'components/NotFound/NotFound';
 import DeleteMe from 'scenes/DeleteMe/DeleteMe';
 
@@ -20,7 +22,11 @@ const routes = [
   },
   {
     path: "/reset-password",
-    element: <p>Reset password</p>,
+    element: <ResetPassword />,
+  },
+  {
+    path: "/set-password",
+    element: <SetPassword />,
   },
 
   // Remove: examples only...

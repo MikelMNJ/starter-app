@@ -27,6 +27,18 @@
     width: 100%;
     text-align: center;
   }
+
+  .expiredMsg {
+    text-align: center;
+
+    p {
+      margin-top: 0.5rem;
+    }
+
+    h3 {
+      margin: 0;
+    }
+  }
 }
 
 

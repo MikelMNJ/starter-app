@@ -1,40 +1,40 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'helpers/stateHelpers';
+import { useDispatch } from 'helpers/stateHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
-import { isEmpty } from 'lodash';
-import { Formik, Form, Field } from 'formik';
+import { paramsToObject } from 'helpers/paramHelpers';
+import { Formik, Form } from 'formik';
 import authActions from 'slices/auth/authActions';
-import authSelectors from 'slices/auth/authSelectors';
 import Checkbox from 'components/Checkbox/Checkbox';
 import FieldReqs from 'components/FieldReqs/FieldReqs';
-import FieldError from 'components/FieldError/FieldError';
 import FieldWithAction from 'components/FieldWithAction/FieldWithAction';
 import Button from 'components/Button/Button';
+import jwt_decode from "jwt-decode";
+import moment from 'moment';
 import * as yup from "yup";
 import 'theme/authForm.scss';
 
 const defaults = {
-  email: "",
   password: "",
   confirmPassword: "",
   trustedDevice: false,
 };
 
 const schema = yup.object().shape({
-  email: yup.string().email('Invalid email.').required('Email is required.').trim(),
   password: yup.string().required('Password is required.').trim(),
   confirmPassword: yup.string().required('Confirm password is required.').trim()
     .oneOf([yup.ref('password'), null], 'Passwords must match.'),
 });
 
-const CreateAccount = props => {
+const ResetPassword = props => {
   const { className, ...rest } = props;
 
   const [ passwordVisible, setPasswordVisible ] = useState(false);
+  const { search } = useLocation();
+  const resetToken = paramsToObject(search).token;
+  const expires = resetToken && moment(jwt_decode(resetToken).exp * 1000);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
   const classes = [
     { condition: className, name: className },
@@ -42,30 +42,27 @@ const CreateAccount = props => {
   ];
 
   // Actions and Selectors
-  const createUser = useCallback((payload, callback) =>
-    dispatch(authActions.createUser(payload, callback)), [dispatch]);
-  const userInfo = useSelector(state => authSelectors.userInfo(state));
-  const token = userInfo?.token;
-  const validToken = !isEmpty(token);
-
-  useEffect(() => {
-    const route = !isEmpty(state) ? state.from.pathname + state.from.search : "/";
-    if (validToken) navigate(route);
-  }, [token, validToken, navigate, state]);
+  const updateUser = useCallback((payload, callback) =>
+    dispatch(authActions.updateUser(payload, callback)), [dispatch]);
 
   const handleSubmit = (values, setSubmitting) => {
-    const { email, password, confirmPassword, trustedDevice } = values;
-
-    const callback = () => setSubmitting(false);
+    const { password, confirmPassword, trustedDevice } = values;
+    const validAtSubmit = expires >= moment();
+    const callback = () => navigate('/');
 
     const payload = {
-      email,
       password,
       confirmPassword,
       trustedDevice,
+      token: resetToken,
     };
 
-    createUser(payload, callback);
+    if (resetToken && !validAtSubmit) {
+      return navigate(`/reset-password${search}`);
+    }
+
+    updateUser(payload, callback);
+    setSubmitting(false);
   };
 
   return (
@@ -75,37 +72,43 @@ const CreateAccount = props => {
         validationSchema={schema}
         onSubmit={(values, { setSubmitting }) => handleSubmit(values, setSubmitting)}
         {...rest}
-      >
+        >
         {form => (
           <Form className="authForm">
-            <Field type="email" name="email" placeholder="Email*" />
-            <FieldError name="email" />
+            {!resetToken && (
+              <div className="expiredMsg">
+                <h3>No token present.</h3>
+                <p>Please click the link sent in the email.</p>
+              </div>
+            )}
 
             <FieldWithAction
               form={form}
               name="password"
               type={passwordVisible ? 'text' : 'password'}
-              placeholder="Password*"
+              placeholder="New password*"
               activeIcon={passwordVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
               inactiveIcon="fa-solid fa-eye-slash"
               highlightField={true}
+              disabled={!resetToken}
               callback={() => setPasswordVisible(!passwordVisible)} />
 
             <FieldWithAction
               form={form}
               name="confirmPassword"
               type={passwordVisible ? 'text' : 'password'}
-              placeholder="Confirm password*"
+              placeholder="Confirm new password*"
               activeIcon={passwordVisible ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
               inactiveIcon="fa-solid fa-eye-slash"
               highlightField={true}
+              disabled={!resetToken}
               callback={() => setPasswordVisible(!passwordVisible)} />
 
             <Button
               type="submit"
               text="Submit"
               btnType="solid"
-              disabled={form.isSubmitting} />
+              disabled={form.isSubmitting || !resetToken} />
 
             <FieldReqs
               value={form.values["password"]}
@@ -119,11 +122,12 @@ const CreateAccount = props => {
             <Checkbox
               name="trustedDevice"
               className="trust"
+              disabled={!resetToken}
               label="Trust this device for 30 days." />
 
             <p className="authOptions">
               <Link to={'/login'}>Log in</Link>
-              &nbsp;or <Link to={'/reset-password'}>Reset password</Link>.
+              &nbsp;or <Link to={'/create-account'}>Create account</Link>.
             </p>
           </Form>
         )}
@@ -132,4 +136,4 @@ const CreateAccount = props => {
   );
 };
 
-export default CreateAccount;
+export default ResetPassword;

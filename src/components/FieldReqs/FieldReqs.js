@@ -20,7 +20,7 @@ const FieldReqs = props => {
 
   const length = Number.isInteger(min) ? min : 8;
   const specialChars = typeof special === "string" ? special : "@#$%^&+=!";
-  const test = testVal => new RegExp(`^(?=.*[${testVal}]).*$`).test(value);
+  const test = testVal => new RegExp(`^(?=.*[${testVal}]).*$`).test(value ?? "");
 
   const loadIcon = (type, localVal) => {
     const local = localVal?.toLowerCase();
@@ -32,7 +32,7 @@ const FieldReqs = props => {
 
     if (
       (type === 'number' && test("0-9")) ||
-      (type === 'min' && value.length >= length) ||
+      (type === 'min' && value?.length >= length) ||
       (type === 'uppercase' && test("A-Z")) ||
       (type === 'lowercase' && test("a-z")) ||
       (type === 'special' && test(specialChars)) ||

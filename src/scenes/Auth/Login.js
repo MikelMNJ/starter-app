@@ -38,7 +38,8 @@ const Login = props => {
   ];
 
   // Actions and Selectors
-  const login = useCallback((payload, callback) => dispatch(authActions.login(payload, callback)), [dispatch]);
+  const login = useCallback((payload, callback) =>
+    dispatch(authActions.login(payload, callback)), [dispatch]);
   const userInfo = useSelector(state => authSelectors.userInfo(state));
   const token = userInfo?.token;
   const validToken = !isEmpty(token);
@@ -97,8 +98,8 @@ const Login = props => {
               label="Trust this device for 30 days." />
 
             <p className="authOptions">
-              <Link to={'/create-account'}>Create an account</Link>
-              &nbsp;or <Link to={'/reset-password'}>Reset your password</Link>.
+              <Link to={'/create-account'}>Create account</Link>
+              &nbsp;or <Link to={'/reset-password'}>Reset password</Link>.
             </p>
           </Form>
         )}
