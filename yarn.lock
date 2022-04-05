@@ -9287,7 +9287,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jwt-decode@npm:^3.0.0":
+"jwt-decode@npm:^3.0.0, jwt-decode@npm:^3.1.2":
   version: 3.1.2
   resolution: "jwt-decode@npm:3.1.2"
   checksum: 20a4b072d44ce3479f42d0d2c8d3dabeb353081ba4982e40b83a779f2459a70be26441be6c160bfc8c3c6eadf9f6380a036fbb06ac5406b5674e35d8c4205eeb
@@ -13514,6 +13514,7 @@ __metadata:
     formik: ^2.2.9
     http-proxy-middleware: ^2.0.4
     jsonwebtoken: ^8.5.1
+    jwt-decode: ^3.1.2
     lodash: ^4.17.21
     moment: ^2.29.1
     mongoose: ^6.2.5
