@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { storeToken } from 'helpers/authHelpers';
+import { storeToken, removeToken } from 'helpers/authHelpers';
 import StateManager from 'helpers/stateManager/stateManager';
+import { rootReducer, initialState as rootInitialState } from 'store';
 import constants from './authConstants';
 
 const { REACT_APP_NAME: appName } = process.env;
@@ -29,6 +30,10 @@ const reducer = (initialState = initial, action = {}) => {
     case constants.LOG_IN:
       storeToken(state, constants, payload);
       return state.update(constants.STATE_KEY_USER_INFO, payload);
+    case constants.LOG_OUT:
+      const tokenName = state.get(constants.STATE_KEY_TOKEN_NAME);
+      removeToken(tokenName);
+      return rootReducer(rootInitialState, {});
 
     default:
       return initialState;

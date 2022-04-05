@@ -28,6 +28,7 @@ const authActions = {
     const args = { type: constants.LOG_IN, payload, callback };
     return api.login(args);
   },
+  logout: () => actionCreator(constants.LOG_OUT),
 };
 
 export default authActions;

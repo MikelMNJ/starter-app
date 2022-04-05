@@ -11,24 +11,22 @@ export const storeToken = (state, constants, payload) => {
   }
 };
 
-export const logout = tokenName => {
+export const removeToken = tokenName => {
   const existingToken = localStorage.getItem(tokenName);
-
   if (existingToken) {
-    // TODO: Rest all reducers...
     localStorage.removeItem(tokenName);
-    console.log("Logging out...");
   }
-
-  clearInterval(sessionCheck);
 };
 
-export const autoLogout = (token, tokenName) => {
+export const autoLogout = (token, callback) => {
   if (token && !sessionCheck) {
     sessionCheck = setInterval(() => {
       const expires = moment(jwt_decode(token).exp * 1000);
       const expired = moment() > expires;
-      if (expired) logout(tokenName);
-    }, 60000)
+      if (expired) {
+        clearInterval(sessionCheck);
+        callback();
+      }
+    }, 1000)
   }
 };

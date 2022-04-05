@@ -19,6 +19,7 @@ const App = props => {
   // Actions and Selectors
   const removeNotification = useCallback(payload => dispatch(appActions?.removeNotification(payload)), [dispatch]);
   const checkToken = useCallback(payload => dispatch(authActions?.checkToken(payload)), [dispatch]);
+  const logout = useCallback(() => dispatch(authActions?.logout()), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
   const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
   const userInfo = useSelector(state => authSelectors.userInfo(state));
@@ -29,13 +30,12 @@ const App = props => {
     const existingToken = localStorage.getItem(tokenName);
     const payload = { token: existingToken };
     if (existingToken) checkToken(payload);
-
   }, []);
 
   useEffect(() => {
-    autoLogout(token, tokenName);
+    autoLogout(token, () => logout());
     return () => clearInterval(sessionCheck);
-  }, [token, sessionCheck]);
+  }, [token]);
 
   return (
     <div id="app">

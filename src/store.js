@@ -9,13 +9,13 @@ AppContext.displayName = "AppContext";
 
 export const useStore = () => useContext(AppContext);
 
-const reducers = {
+export const reducers = {
   app,
   auth,
 };
 
-const initialState = makeInitialState(reducers);
-const rootReducer = combineReducers(reducers);
+export const initialState = makeInitialState(reducers);
+export const rootReducer = combineReducers(reducers);
 const middlewares = [ apiMiddleware ];
 const afterwares = [];
 
