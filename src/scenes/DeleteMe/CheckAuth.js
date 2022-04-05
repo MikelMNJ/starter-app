@@ -2,6 +2,7 @@
 
 import React, { Fragment, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'helpers/stateHelpers';
+import { isEmpty } from 'lodash';
 import authActions from 'slices/auth/authActions';
 import authSelectors from 'slices/auth/authSelectors';
 import Status from 'components/Status/Status';
@@ -22,9 +23,9 @@ export const CheckAuth = props => {
 
   const existingToken = localStorage.getItem(tokenName);
   const token = existingToken || userInfo?.token;
-  const expires = token && moment(jwt_decode(token).exp * 1000);
-  const isValid = expires >= moment();
-  const expired = token && !isValid;
+  const expires = !isEmpty(token) && moment(jwt_decode(token).exp * 1000);
+  const isValid = expires > moment();
+  const expired = !isEmpty(token) && !isValid;
 
   useEffect(() => {
     const { email, password } = demo ? JSON.parse(demo) : { email: "", password: "" };

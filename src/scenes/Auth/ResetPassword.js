@@ -24,7 +24,7 @@ const ResetPassword = props => {
   const dispatch = useDispatch();
   const resetToken = searchParams.get("token");
   const expires = resetToken && moment(jwt_decode(resetToken).exp * 1000);
-  const isValid = expires >= moment();
+  const isValid = expires > moment();
   const expired = resetToken && !isValid;
   const classes = [
     { condition: className, name: className },

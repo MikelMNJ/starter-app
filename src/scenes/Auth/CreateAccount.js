@@ -11,6 +11,8 @@ import FieldReqs from 'components/FieldReqs/FieldReqs';
 import FieldError from 'components/FieldError/FieldError';
 import FieldWithAction from 'components/FieldWithAction/FieldWithAction';
 import Button from 'components/Button/Button';
+import moment from 'moment';
+import jwt_decode from 'jwt-decode';
 import * as yup from "yup";
 import 'theme/authForm.scss';
 
@@ -46,12 +48,13 @@ const CreateAccount = props => {
     dispatch(authActions.createUser(payload, callback)), [dispatch]);
   const userInfo = useSelector(state => authSelectors.userInfo(state));
   const token = userInfo?.token;
-  const validToken = !isEmpty(token);
+  const expires = !isEmpty(token) && moment(jwt_decode(token).exp * 1000);
+  const isValid = expires > moment();
 
   useEffect(() => {
     const route = !isEmpty(state) ? state.from.pathname + state.from.search : "/";
-    if (validToken) navigate(route);
-  }, [token, validToken, navigate, state]);
+    if (isValid) navigate(route);
+  }, [token, isValid, navigate, state]);
 
   const handleSubmit = (values, setSubmitting) => {
     const { email, password, confirmPassword, trustedDevice } = values;
