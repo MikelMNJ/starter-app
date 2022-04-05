@@ -29,6 +29,6 @@ export const autoLogout = (token, tokenName) => {
       const expires = moment(jwt_decode(token).exp * 1000);
       const expired = moment() > expires;
       if (expired) logout(tokenName);
-    }, 1000)
+    }, 60000)
   }
 };
