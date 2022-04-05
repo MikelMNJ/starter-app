@@ -2,25 +2,26 @@ import React, { Fragment } from 'react';
 
 export const globalMessage = "502 Details: There is an issue with Node 16 and AWS Lambda. Fix coming soon, try refreshing the page.";
 
-export const cleanApp = `import DeleteMe from 'scenes/DeleteMe/DeleteMe';
-<Route path="/ready" element={<DeleteMe />} />`;
+export const cleanConstants = `const appConstants = {
+  TEST_RATE_LIMIT: "slices/app/TEST_RATE_LIMIT",
+};`;
 
-export const cleanConstants = `TEST_RATE_LIMIT: "slices/app/TEST_RATE_LIMIT",`;
-
-export const cleanActions = `testRateLimit: (payload, callback) => {
-  const args = { type: constants.TEST_RATE_LIMIT, payload,  callback };
-  return api.testRateLimit(args);
-},`;
+export const cleanActions = `const appActions = {
+  testRateLimit: (payload, callback) => {
+    const args = { type: constants.TEST_RATE_LIMIT, payload, callback };
+    return api.testRateLimit(args);
+  },
+};`;
 
 export const cleanAppAPI = `export const testRateLimit = args => {
   const { type, callback } = args;
 
- return {
+  return {
     type,
     path: "/sample/limitTest",
     method: "GET",
-    onSuccess: res => callback(res),
-    onFail: res => callback(res),
+    onSuccess: res => callback && callback(res),
+    onFail: res => callback && callback(res),
   };
 };`
 
@@ -44,19 +45,17 @@ const getLimitTest = async (req, res) => {
 
 export const authAndRedirects = `const routes = [
   {
+    path: "/",
+    element: <Navigate to="/ready" />,
+  },
+  {
     path: "/ready",
     element: <DeleteMe />,
   },
   {
-    // Private route example
     path: "/authenticated-route",
     element: <p>Authenticated Content</p>,
     authenticate: true,
-  },
-  {
-    // Redirect example
-    path: "/",
-    element: <Navigate to="/ready" />,
   },
 ];`;
 

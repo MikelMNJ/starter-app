@@ -2,7 +2,6 @@ import React from 'react';
 import {
   authAndRedirects,
   updatePublic,
-  cleanApp,
   cleanConstants,
   cleanActions,
   cleanAppAPI,
@@ -21,7 +20,7 @@ const content = [
         {terminationWarning("Modifying redirect from /ready", "stop rendering")}
 
         <p>
-          <strong>Step 1: Remove /ready and update authenticated routes or redirects.</strong>
+          <strong>Step 1: Remove /ready route and update authenticated routes or redirects.</strong>
         </p>
 
         <strong className="code">
@@ -71,11 +70,6 @@ const content = [
         <p>
           <strong>Step 4: Remove entire /scenes/DeleteMe folder (This component).</strong>
         </p>
-
-        <strong className="code">
-          Also remove import and route in src/App/App.js
-        </strong>:<br />
-        <p className="code">{cleanApp}</p>
 
         <p>
           <strong>Step 5: Remove the rate limit constant, actions and API test call.</strong>

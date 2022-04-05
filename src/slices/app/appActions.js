@@ -14,20 +14,20 @@ import constants from './appConstants';
 */
 
 const appActions = {
+  sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
   addNotification: payload => actionCreator(constants.ADD_NOTIFICATION, payload),
   removeNotification: payload => actionCreator(constants.REMOVE_NOTIFICATION, payload),
   setGlobalBannerContent: payload => actionCreator(constants.SET_GLOBAL_BANNER_CONTENT, payload),
+  sampleAPICall: (payload, callback) => {
+    const args = { type: constants.SAMPLE_API_CALL, payload, callback };
+    return api.sampleAPICall(args);
+  },
   sendEmail: (payload, callback) => {
     const args = { type: constants.SEND_EMAIL, payload, callback };
     return api.sendEmail(args);
   },
 
   // Remove: example only...
-  sampleAction: payload => actionCreator(constants.SAMPLE_ACTION, payload),
-  sampleAPICall: (payload, callback) => {
-    const args = { type: constants.SAMPLE_API_CALL, payload, callback };
-    return api.sampleAPICall(args);
-  },
   testRateLimit: (payload, callback) => {
     const args = { type: constants.TEST_RATE_LIMIT, payload, callback };
     return api.testRateLimit(args);
