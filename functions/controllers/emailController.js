@@ -98,7 +98,7 @@ const sendResetReq = async (req, res) => {
 
     jwt.sign(payload, jwtSecret, { expiresIn: fifteenMinutes }, async (err, token) => {
       if (err) throw err;
-      const resetURL = `https://${url}/reset-password?token=${token}`;
+      const resetURL = `https://${url}/set-password?token=${token}`;
       const msg = {
         to: email,
         from: sendAddress,
