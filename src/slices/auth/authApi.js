@@ -26,7 +26,9 @@ export const createUser = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onComplete: res => callback(res),
+    onComplete: res => {
+      if (callback) callback(res)
+    },
   };
 };
 
@@ -44,7 +46,9 @@ export const updateUser = args => {
       "content-type": "application/json",
       "x-auth-token": `${token}`,
     },
-    onSuccess: res => callback(res),
+    onSuccess: res => {
+      if (callback) callback(res)
+    },
   };
 };
 
@@ -62,7 +66,9 @@ export const deleteUser = args => {
       "content-type": "application/json",
       "x-auth-token": `${token}`,
     },
-    onComplete: res => callback(res),
+    onComplete: res => {
+      if (callback) callback(res)
+    },
   };
 };
 
@@ -78,7 +84,9 @@ export const sendResetEmail = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onComplete: res => callback(res),
+    onComplete: res => {
+      if (callback) callback(res)
+    },
   };
 };
 
@@ -94,6 +102,8 @@ export const login = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onComplete: res => callback(res),
+    onComplete: res => {
+      if (callback) callback(res)
+    },
   };
 };

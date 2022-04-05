@@ -10,6 +10,7 @@ import CheckRateLimit from './CheckRateLimit';
 import CheckHeartbeat from './CheckHeartbeat';
 import CheckMonitoring from './CheckMonitoring';
 import CheckEmail from './CheckEmail';
+import CheckAuth from './CheckAuth';
 import './DeleteMe.scss';
 
 const Checklist = props => {
@@ -34,6 +35,7 @@ const Checklist = props => {
         <CheckAPI />
         <CheckRateLimit />
         <CheckEmail />
+        <CheckAuth />
       </div>
 
       <div className="checklistSection">
