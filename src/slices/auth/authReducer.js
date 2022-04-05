@@ -30,10 +30,6 @@ const reducer = (initialState = initial, action = {}) => {
     case constants.LOG_IN:
       storeToken(state, constants, payload);
       return state.update(constants.STATE_KEY_USER_INFO, payload);
-    case constants.LOG_OUT:
-      const tokenName = state.get(constants.STATE_KEY_TOKEN_NAME);
-      removeToken(tokenName);
-      return rootReducer(rootInitialState, {});
 
     default:
       return initialState;

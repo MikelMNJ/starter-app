@@ -9,6 +9,7 @@ import Notifications from 'components/Notification/Notifications';
 import appActions from 'slices/app/appActions';
 import appSelectors from 'slices/app/appSelectors';
 import authActions from 'slices/auth/authActions';
+import rootActions from 'slices/root/rootActions';
 import authSelectors from 'slices/auth/authSelectors';
 import './App.scss';
 
@@ -19,7 +20,7 @@ const App = props => {
   // Actions and Selectors
   const removeNotification = useCallback(payload => dispatch(appActions?.removeNotification(payload)), [dispatch]);
   const checkToken = useCallback(payload => dispatch(authActions?.checkToken(payload)), [dispatch]);
-  const logout = useCallback(() => dispatch(authActions?.logout()), [dispatch]);
+  const logout = useCallback(() => dispatch(rootActions?.logout()), [dispatch]);
   const notifications = useSelector(state => appSelectors?.notifications(state));
   const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
   const userInfo = useSelector(state => authSelectors.userInfo(state));
