@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
+import { autoLogout, sessionCheck } from 'helpers/authHelpers';
 import makeRoutes from 'helpers/routeHelpers';
 import Banner from 'components/Banner/Banner';
 import Notifications from 'components/Notification/Notifications';
@@ -28,7 +29,13 @@ const App = props => {
     const existingToken = localStorage.getItem(tokenName);
     const payload = { token: existingToken };
     if (existingToken) checkToken(payload);
+
   }, []);
+
+  useEffect(() => {
+    autoLogout(token, tokenName);
+    return () => clearInterval(sessionCheck);
+  }, [token, sessionCheck]);
 
   return (
     <div id="app">
