@@ -6,8 +6,12 @@ export const sampleAPICall = args => {
     type,
     path: "/sample",
     method: "GET",
-    onSuccess: res => callback(res),
-    onFail: res => callback(res),
+    onSuccess: res => {
+      if (callback) callback(res)
+    },
+    onFail: res => {
+      if (callback) callback(res)
+    },
   };
 };
 
@@ -23,8 +27,12 @@ export const sendEmail = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onSuccess: res => callback(res),
-    onFail: res => callback(res),
+    onSuccess: res => {
+      if (callback) callback(res)
+    },
+    onFail: res => {
+      if (callback) callback(res)
+    },
   };
 };
 
@@ -36,7 +44,11 @@ export const testRateLimit = args => {
     type,
     path: "/sample/limitTest",
     method: "GET",
-    onSuccess: res => callback(res),
-    onFail: res => callback(res),
+    onSuccess: res => {
+      if (callback) callback(res)
+    },
+    onFail: res => {
+      if (callback) callback(res)
+    },
   };
 };
