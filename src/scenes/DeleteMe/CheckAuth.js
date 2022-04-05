@@ -28,9 +28,11 @@ export const CheckAuth = props => {
   const expired = !isEmpty(token) && !isValid;
 
   useEffect(() => {
-    const { email, password } = demo ? JSON.parse(demo) : { email: "", password: "" };
-    const payload = { email, password };
-    if (expired || !token) login(payload);
+    if (demo && (expired || !token)) {
+      const { email, password } = JSON.parse(demo);
+      const payload = { email, password };
+      login(payload);
+    }
   }, [expired, token]);
 
   return (
