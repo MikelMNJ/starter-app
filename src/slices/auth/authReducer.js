@@ -24,6 +24,8 @@ const reducer = (initialState = initial, action = {}) => {
       return state.update(constants.STATE_KEY_USER_INFO, payload);
     case constants.DELETE_USER:
       return state.remove(constants.STATE_KEY_USER_INFO);
+    case constants.SEND_RESET_EMAIL:
+      return state.update(constants.STATE_KEY_USER_INFO, payload);
     case constants.LOG_IN:
       storeToken(state, constants, payload);
       return state.update(constants.STATE_KEY_USER_INFO, payload);

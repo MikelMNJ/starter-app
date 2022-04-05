@@ -42,7 +42,8 @@ const CreateAccount = props => {
   ];
 
   // Actions and Selectors
-  const createUser = useCallback((payload, callback) => dispatch(authActions.createUser(payload, callback)), [dispatch]);
+  const createUser = useCallback((payload, callback) =>
+    dispatch(authActions.createUser(payload, callback)), [dispatch]);
   const userInfo = useSelector(state => authSelectors.userInfo(state));
   const token = userInfo?.token;
   const validToken = !isEmpty(token);
@@ -122,7 +123,7 @@ const CreateAccount = props => {
 
             <p className="authOptions">
               <Link to={'/login'}>Log in</Link>
-              &nbsp;or <Link to={'/reset-password'}>Reset your password</Link>.
+              &nbsp;or <Link to={'/reset-password'}>Reset password</Link>.
             </p>
           </Form>
         )}

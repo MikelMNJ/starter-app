@@ -20,6 +20,10 @@ const authActions = {
     const args = { type: constants.DELETE_USER, payload, callback };
     return api.deleteUser(args);
   },
+  sendResetEmail: (payload, callback) => {
+    const args = { type: constants.SEND_RESET_EMAIL, payload, callback };
+    return api.sendResetEmail(args);
+  },
   login: (payload, callback) => {
     const args = { type: constants.LOG_IN, payload, callback };
     return api.login(args);
