@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { storeToken } from 'helpers/authHelpers';
+import { storeToken, removeToken } from 'helpers/authHelpers';
 import StateManager from 'helpers/stateManager/stateManager';
+import { rootReducer, initialState as rootInitialState } from 'store';
 import constants from './authConstants';
 
 const { REACT_APP_NAME: appName } = process.env;
