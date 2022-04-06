@@ -11,7 +11,7 @@ The app contains the following features to get you started:
 **Front-end**:<br />
 * Routing.
 * Global state management (equal to Redux).
-* Token based account creation, authentication and password reset flows with manual/auto log out.
+* Account creation, authentication and password reset flows with manual/auto log out.
 * Feature flags.
 * Front-end middleware/afterware support for global state updates.
 * Notification system &mdash; dispatch from front-end to send UI feedback or send from back-end to convey server feedback (see the **Back-end** section for details).
@@ -22,6 +22,7 @@ The app contains the following features to get you started:
 * Express server with payload validation.
 * Email dispatching.
 * User CRUD and password reset endpoints.
+* JSON Web Token verification and signing.
 * DB interaction with Mongoose.
 * Sample userModel schema.
 * Sample routes for getting started and testing.
