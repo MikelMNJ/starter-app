@@ -78,7 +78,8 @@ export const sendResetEmail = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onComplete: res => callback && callback(res),
+    onSuccess: res => callback && callback(res),
+    onFail: res => callback && callback(res),
   };
 };
 
@@ -94,6 +95,7 @@ export const login = args => {
       accept: "application/json",
       "content-type": "application/json",
     },
-    onComplete: res => callback && callback(res),
+    onSuccess: res => callback && callback(res),
+    onFail: res => callback && callback(res),
   };
 };

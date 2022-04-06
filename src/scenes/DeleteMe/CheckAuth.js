@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { Fragment, useEffect, useCallback } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'helpers/stateHelpers';
 import { isEmpty } from 'lodash';
+import { globalMessage } from './codeStrings';
+import appActions from 'slices/app/appActions';
+import appSelectors from 'slices/app/appSelectors';
 import authActions from 'slices/auth/authActions';
 import authSelectors from 'slices/auth/authSelectors';
 import Status from 'components/Status/Status';
@@ -13,13 +16,16 @@ import colors from 'theme/colors.scss';
 const { REACT_APP_DEMO_CREDENTIALS: demo } = process.env;
 
 export const CheckAuth = props => {
+  const [ status, setStatus ] = useState({});
   const dispatch = useDispatch();
 
   // Actions and Selectors
+  const setGlobalBannerContent = payload => dispatch(appActions.setGlobalBannerContent(payload));
   const login = useCallback((payload, callback) =>
     dispatch(authActions.login(payload, callback)), [dispatch]);
   const userInfo = useSelector(state => authSelectors.userInfo(state));
   const tokenName = useSelector(state => authSelectors.tokenName(state));
+  const globalBannerContent = useSelector(state => appSelectors.globalBannerContent(state));
 
   const existingToken = localStorage.getItem(tokenName);
   const token = existingToken || userInfo?.token;
@@ -31,9 +37,19 @@ export const CheckAuth = props => {
     if (demo && (expired || !token)) {
       const { email, password } = JSON.parse(demo);
       const payload = { email, password };
-      login(payload);
+      const onRes = res => {
+        setStatus({
+          code: res.status,
+          text: res.statusText,
+        });
+      };
+      login(payload, onRes);
     }
-  }, [expired, token]);
+
+    if (!globalBannerContent && status.code === 502) {
+      setGlobalBannerContent(globalMessage);
+    }
+  }, [expired, token, status]);
 
   return (
     <Fragment>
