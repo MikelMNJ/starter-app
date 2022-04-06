@@ -43,6 +43,8 @@ Feel free to clone, modify and start your own projects with this template.
 1. Clone the repo.
 2. Add *.env* to the project root with the following variables:
     ```
+    REACT_APP_NAME=""
+    REACT_APP_BASE_URL=""
     REACT_APP_API_V1="/.netlify/functions/server/v1/"
     REACT_APP_MONGO_URI=""
     REACT_APP_JWT_SECRET=""
@@ -982,6 +984,8 @@ if changes to main have been pushed etc.
 
 **Reminder**: Don't forget to change the publish directory in Netlify's deployment settings to match the *netlify.toml* file ("build").
 Also, add your environment variables in Netlify's *Site settings > Build  and deploy > Environment* section:
+* REACT_APP_NAME=""
+* REACT_APP_BASE_URL=""
 * REACT_APP_API_V1="/.netlify/functions/server/v1/"
 * REACT_APP_SENTRY_DSN
 * REACT_APP_MONGO_URI
