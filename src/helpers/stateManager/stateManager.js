@@ -14,11 +14,11 @@ class StateManager {
     const removed = [];
     let workingState = { ...this.initialState };
 
-    if (!array) console.warn("No merge array provided, state unchanged.");
+    if (!isArray(array)) console.warn("No merge array provided, state unchanged.");
 
     if (!isEmpty(array)) {
       // Record changes for all top-level state keys.
-      array.forEach(modifiedState => {
+      array?.forEach(modifiedState => {
         addedKeys(added, modifiedState, workingState);
         changedKeys(changed, modifiedState, workingState);
         removedKeys(removed, modifiedState, workingState);
@@ -59,7 +59,7 @@ class StateManager {
     return workingState;
   };
 
-  get(stateKey, stringOrIndex) {
+  get(stateKey, stringOrIndex, paths) {
     const target = this.initialState[stateKey];
     const isArr = isArray(target);
     const isObj = isObject(target);
@@ -83,9 +83,51 @@ class StateManager {
     return target;
   };
 
-  addArr(stateKey, payload) {
+  addArr(stateKey, payload, paths) {
     const target = this.initialState[stateKey];
     const updatedArr = [ ...target, payload ];
+
+    /*
+    *  Future self: This block drills into the last value of the path chain
+    *  and adds the payload to it -- if the last value is an array or object.
+
+    *  It still needs to handle if the last value in path chain is a string or
+    *  number and error handling for incompatible types for missing keys, invalid
+    *  indices etc.
+    *
+    *  It also doesn't return the updated nested structure as a complete state object yet.
+    *
+    *  Comprehensive testing still needs to be done when the feature is complete.
+    *  Will also need to be extracted to its own method and called for get/update
+    *  and delete.
+    */
+
+    if (paths && isArray(paths)) {
+      let workingTarget = target;
+
+      paths.forEach((path, i) => {
+        const index = (path && typeof path === "number" && path >= 0) && path;
+        const key = (path && typeof path === "string" && !isEmpty(path)) && path;
+        const nestedTarget = workingTarget[index || key];
+        const endOfPath = i === paths.length - 1;
+
+        if (nestedTarget) {
+          workingTarget = nestedTarget;
+          const isArr = isArray(workingTarget);
+          const isObj = !isArr && isObject(workingTarget);
+          const payloadIsArr = isArray(payload);
+          const payloadIsObj = isObject(payload);
+
+          if (endOfPath && isArr) {
+            console.log('Array: ', [ ...workingTarget, payload ]);
+          }
+
+          if (endOfPath && isObj && payloadIsObj) {
+            console.log('Object: ', { ...workingTarget, ...payload });
+          }
+        }
+      });
+    }
 
     return {
       ...this.initialState,
@@ -93,7 +135,7 @@ class StateManager {
     };
   };
 
-  addObj(stateKey, payload) {
+  addObj(stateKey, payload, paths) {
     const target = this.initialState[stateKey];
 
     if (isObject(payload) && !isArray(payload)) {
@@ -115,7 +157,7 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  add(stateKey, payload) {
+  add(stateKey, payload, paths) {
     const workingState = { ...this.initialState };
     let target = workingState[stateKey];
     const isArr = isArray(target);
@@ -123,8 +165,8 @@ class StateManager {
     const payloadValid = payload || payload === "" || payload === null;
 
     if (stateKey && payloadValid) {
-      if (isArr) return this.addArr(stateKey, payload);
-      if (isObj) return this.addObj(stateKey, payload);
+      if (isArr) return this.addArr(stateKey, payload, paths);
+      if (isObj) return this.addObj(stateKey, payload, paths);
 
       return {
         ...this.initialState,
@@ -191,7 +233,7 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  update(stateKey, payload, stringOrIndex) {
+  update(stateKey, payload, stringOrIndex, paths) {
     const workingState = { ...this.initialState };
     let target = workingState[stateKey];
     const isArr = isArray(target);
@@ -255,7 +297,7 @@ class StateManager {
     return { ...this.initialState };
   };
 
-  remove(stateKey, stringOrIndex) {
+  remove(stateKey, stringOrIndex, paths) {
     const workingState = { ...this.initialState };
     let target = workingState[stateKey];
     const isArr = isArray(target);
