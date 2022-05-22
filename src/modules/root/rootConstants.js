@@ -1,7 +1,7 @@
 
 const constants = {
   // Actions
-  LOG_OUT: "slices/root/LOG_OUT",
+  LOG_OUT: "modules/root/LOG_OUT",
 };
 
 export default constants;

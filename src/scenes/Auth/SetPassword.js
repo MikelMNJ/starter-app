@@ -4,7 +4,7 @@ import { useDispatch } from 'helpers/stateHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { paramsToObject } from 'helpers/paramHelpers';
 import { Formik, Form } from 'formik';
-import authActions from 'slices/auth/authActions';
+import authActions from 'modules/auth/authActions';
 import Checkbox from 'components/Checkbox/Checkbox';
 import FieldReqs from 'components/FieldReqs/FieldReqs';
 import FieldWithAction from 'components/FieldWithAction/FieldWithAction';

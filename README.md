@@ -82,7 +82,7 @@ The structure of this template is as follows:
 * **controllers**: Front-end controllers, i.e. front-end routing.
 * **errors**: Errors and debugging.
 * **helpers**: Utility related functions.
-* **slices**: Anything state related.
+* **modules**: Anything state related.
 * **scenes**: Main route components.
 * **theme**: Anything theme related.
 * **wares**: Front-end middleware/afterware.
@@ -318,7 +318,7 @@ state.merge([
 ```
 
 
-The following can be found in *slices/appReducer.js*:
+The following can be found in *modules/appReducer.js*:
 ```jsx
 import StateManager from 'helpers/stateManager/stateManager';
 import constants from './appConstants';
@@ -355,23 +355,23 @@ const reducer = (initialState = initial, action = {}) => {
 export default reducer;
 ```
 
-**Note**: It's recommended to create a new folder in *slices* for each section or page of your app. These other reducers, actions, selectors etc. will keep things scalable and manageable.
+**Note**: It's recommended to create a new folder in *modules* for each section or page of your app. These other reducers, actions, selectors etc. will keep things scalable and manageable.
 Don't forget to add any new reducers in *store.js* &mdash; they should be added to `const reducers = {}`.
 
 
 
 ## About Actions and Selectors
-Actions and Selectors are defined in objects for their specific slice &mdash; the following can be found in *slices/appConstants.js*, *slices/appActions.js* and *slices/appSelectors.js*:
+Actions and Selectors are defined in objects for their specific module &mdash; the following can be found in *modules/appConstants.js*, *modules/appActions.js* and *modules/appSelectors.js*:
 ```jsx
 // appConstants.js
 const constants = {
   // Actions
-  SAMPLE_ACTION: "slices/app/SAMPLE_ACTION",
-  ADD_NOTIFICATION: "slices/app/ADD_NOTIFICATION",
-  REMOVE_NOTIFICATION: "slices/app/REMOVE_NOTIFICATION",
-  SET_GLOBAL_BANNER: "slices/app/SET_GLOBAL_BANNER",
-  SEND_EMAIL: "slices/app/SEND_EMAIL",
-  SAMPLE_API_CALL: "slices/app/SAMPLE_API_CALL",
+  SAMPLE_ACTION: "modules/app/SAMPLE_ACTION",
+  ADD_NOTIFICATION: "modules/app/ADD_NOTIFICATION",
+  REMOVE_NOTIFICATION: "modules/app/REMOVE_NOTIFICATION",
+  SET_GLOBAL_BANNER: "modules/app/SET_GLOBAL_BANNER",
+  SEND_EMAIL: "modules/app/SEND_EMAIL",
+  SAMPLE_API_CALL: "modules/app/SAMPLE_API_CALL",
 
   // Selectors
   STATE_KEY_SAMPLE_SELECTOR: "sampleSelector",
@@ -418,8 +418,8 @@ A more complete example can be found in *scenes/DeleteMe/CheckState.js*:
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
-import appActions from 'slices/app/appActions';
-import appSelectors from 'slices/app/appSelectors';
+import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
 
 const YourComponent = props => {
   // Sample actions/selectors from global state...
@@ -452,8 +452,8 @@ A more complete example of this can be found in *scenes/DeleteMe/CheckAPI.js*:
 ```jsx
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
-import appActions from 'slices/app/appActions';
-import appSelectors from 'slices/app/appSelectors';
+import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
 
 const YourComponent = props => {
   const dispatch = useDispatch();
@@ -479,7 +479,7 @@ const YourComponent = props => {
 export default YourComponent;
 ```
 
-The difference between a simple action call is that there is an additional *slices/app/appApi.js* file, imported as *api* in *slices/app/appActions.js*,
+The difference between a simple action call is that there is an additional *modules/app/appApi.js* file, imported as *api* in *modules/app/appActions.js*,
 that describes everything the middleware needs to make the call.  Anything you would normally write to make an API call is valid in this object: `headers: {}`,
 `body: JSON.stringify(payload)` etc.
 
@@ -491,7 +491,7 @@ There are extra keys the middleware will use that you should be aware of:
   * **meta**, passes additional data for use in the reducer &mdash; accessible in the reducer with `action.meta`.
 
 ```jsx
-// slices/app/appApi.js
+// modules/app/appApi.js
 export const sampleAPICall = args => {
   const { type, callback } = args;
 
@@ -559,12 +559,12 @@ In a nutshell:
 * Create state by creating *Context* for our app.
 * Set up the ability to use that context with a *useStore* variable.
 * Create `useSelector()` and `useDispatch()` hooks found in *helpers/stateHelpers.js* with *useStore*.
-* Import all reducers from the *slices* folder and store in the `reducers = {}` object &mdash; think of this as an object containing all our slices.
+* Import all reducers from the *modules* folder and store in the `reducers = {}` object &mdash; think of this as an object containing all our modules.
 * Loop through all reducers asking for their initial state object.
-* Loop through all reducers and combine them, as functions, letting each manage their own "slice" of state.
+* Loop through all reducers and combine them, as functions, letting each manage their own "module" of state.
 * Add any middelware/afterware to appropriate arrays.
 * Call modified `useReducerWithWares()` to get the complete state object, execute wares as well as get the dispatch function.
-* Memoize the array to prevent every subscribed component from updating if it's "slice" hasn't been updated.
+* Memoize the array to prevent every subscribed component from updating if it's "module" hasn't been updated.
 * Pass the final `{ state, dispatch }` object to the `<AppContext.Provider />`.
 * Wrap `<App />` in *index.js* with `<AppProvider />`
 
@@ -574,7 +574,7 @@ The following can be found in *store.js*:
 ```jsx
 import React, { createContext, useContext, useMemo } from 'react';
 import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
-import app from 'slices/app/appReducer';
+import app from 'modules/app/appReducer';
 import apiMiddleware from 'wares/apiMiddleware';
 
 export const AppContext = createContext();
@@ -592,7 +592,7 @@ const middlewares = [ apiMiddleware ];
 const afterwares = [];
 
 // How to use: wrap <App /> in index.js with <AppProvider />
-// See 'slices' for reducer and associated state actions/selectors.
+// See 'modules' for reducer and associated state actions/selectors.
 // See 'helpers/stateHelpers' for custom hooks, action creator and StateManager methods.
 
 export const AppProvider = ({ children }) => {
@@ -618,7 +618,7 @@ A banner alert system is included by default in *scenes/App.js*.  There is nothi
 ```jsx
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
-import appSelectors from 'slices/app/appSelectors';
+import appSelectors from 'modules/app/appSelectors';
 import Banner from 'components/Banner/Banner';
 
 const App = props => {
@@ -642,8 +642,8 @@ To have the banner show, you will need to invoke the action from state in your c
 ```jsx
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
-import appActions from 'slices/app/appActions';
-import appSelectors from 'slices/app/appSelectors';
+import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
 
 const YourComponent = props => {
   const dispatch = useDispatch();

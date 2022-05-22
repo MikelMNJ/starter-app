@@ -3,7 +3,7 @@ import constants from './appConstants';
 /*
 * How to use: In component, import and declare variable from state.
 * import { useSelector } from 'helpers/stateHelpers';
-* import appSelectors from 'slices/app/appSelectors';
+* import appSelectors from 'modules/app/appSelectors';
 *
 * const sample = useSelector(state => appSelectors.sampleSelector(state));
 */

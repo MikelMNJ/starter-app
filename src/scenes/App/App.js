@@ -6,11 +6,11 @@ import { autoLogout, sessionCheck } from 'helpers/authHelpers';
 import makeRoutes from 'helpers/routeHelpers';
 import Banner from 'components/Banner/Banner';
 import Notifications from 'components/Notification/Notifications';
-import appActions from 'slices/app/appActions';
-import appSelectors from 'slices/app/appSelectors';
-import authActions from 'slices/auth/authActions';
-import rootActions from 'slices/root/rootActions';
-import authSelectors from 'slices/auth/authSelectors';
+import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
+import authActions from 'modules/auth/authActions';
+import rootActions from 'modules/root/rootActions';
+import authSelectors from 'modules/auth/authSelectors';
 import './App.scss';
 
 const App = props => {

@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useDispatch } from 'helpers/stateHelpers';
 import { buildClasses } from 'helpers/utilityHelpers';
 import { Formik, Form, Field } from 'formik';
-import authActions from 'slices/auth/authActions';
+import authActions from 'modules/auth/authActions';
 import FieldError from 'components/FieldError/FieldError';
 import Button from 'components/Button/Button';
 import jwt_decode from "jwt-decode";

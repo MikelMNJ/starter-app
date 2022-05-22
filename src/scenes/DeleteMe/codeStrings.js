@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 export const globalMessage = "502 Details: There is an issue with Node 16 and AWS Lambda. Fix coming soon, try refreshing the page.";
 
 export const cleanConstants = `const appConstants = {
-  TEST_RATE_LIMIT: "slices/app/TEST_RATE_LIMIT",
+  TEST_RATE_LIMIT: "modules/app/TEST_RATE_LIMIT",
 };`;
 
 export const cleanActions = `const appActions = {

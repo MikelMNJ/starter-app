@@ -2,8 +2,8 @@ import React, { Fragment, useState, useEffect, useCallback } from 'react';
 import { isEmpty } from 'lodash';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import { globalMessage } from './codeStrings';
-import appActions from 'slices/app/appActions';
-import appSelectors from 'slices/app/appSelectors';
+import appActions from 'modules/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
 import Status from 'components/Status/Status';
 import colors from 'theme/colors.scss';
 

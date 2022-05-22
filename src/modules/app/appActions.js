@@ -6,7 +6,7 @@ import constants from './appConstants';
 /*
 * How to use: In component, import and declare variable from state.
 * import { useDispatch } from 'helpers/stateHelpers';
-* import appActions from 'slices/app/appActions';
+* import appActions from 'modules/app/appActions';
 *
 * const dispatch = useDispatch();
 * const setSample = payload => dispatch(appActions.sampleAction(payload));

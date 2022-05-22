@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'helpers/stateHelpers';
 import { iconValid } from 'helpers/validators';
 import { Field } from 'formik';
-import appActions from 'slices/app/appActions';
+import appActions from 'modules/app/appActions';
 import FieldError from 'components/FieldError/FieldError';
 import Button from 'components/Button/Button';
 import './FieldWithAction.scss';

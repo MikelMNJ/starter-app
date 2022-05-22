@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'helpers/stateHelpers';
 import Status from 'components/Status/Status';
-import appSelectors from 'slices/app/appSelectors';
-import appActions from 'slices/app/appActions';
+import appSelectors from 'modules/app/appSelectors';
+import appActions from 'modules/app/appActions';
 import colors from 'theme/colors.scss';
 
 export const CheckNotifications = props => {

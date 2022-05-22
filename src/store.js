@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { makeInitialState, combineReducers, useReducerWithWares } from 'helpers/stateHelpers';
-import rootReducer from 'slices/root/rootReducer';
-import app from 'slices/app/appReducer';
-import auth from 'slices/auth/authReducer';
+import rootReducer from 'modules/root/rootReducer';
+import app from 'modules/app/appReducer';
+import auth from 'modules/auth/authReducer';
 import apiMiddleware from 'wares/apiMiddleware';
 
 export const AppContext = createContext();
@@ -21,7 +21,7 @@ const middlewares = [ apiMiddleware ];
 const afterwares = [];
 
 // How to use: wrap <App /> in index.js with <AppProvider />
-// See 'slices' for reducer and associated state actions/selectors.
+// See 'modules' for reducer and associated state actions/selectors.
 // See 'helpers/stateHelpers' for custom hooks, action creator and StateManager methods.
 
 export const AppProvider = ({ children }) => {
